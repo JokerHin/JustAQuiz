@@ -1,0 +1,92 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+body {
+    background-image: url("images/Home.jpg");
+    background-position: center;
+    background-size: 100% 100% cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+h1 {
+    color: white;
+    font-size: 40pt;
+    text-wrap: wrap;
+}
+p {
+    text-align: center;
+    text-wrap: wrap;
+    font-size: 20pt;
+    color: white;
+}
+span {
+    text-align: center;
+    text-wrap: wrap;
+    font-size: 15pt;
+    color: white;
+}
+.backFont {
+    margin: 70px 50px 0px 50px;
+}
+.wrapper {
+    width: 70%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    border-radius: 20px;
+    gap: 50px;
+  }
+  
+  .col {
+    height: 450px;
+    width: 350px;
+    margin: 20px;
+    perspective: 1000px; 
+    border: 10px solid rgb(255, 255, 255);
+    box-shadow: 0px 0px 40px 0px rgb(255, 255, 255);
+    cursor: pointer;
+  }
+  
+  .front, .back {
+    width: 100%;
+    height: 300px;
+    position: absolute;
+    backface-visibility: hidden;
+    transition: transform 0.5s ease-in-out;
+    cursor: pointer;
+  }
+  
+  .front {
+    z-index: 2;
+  }
+  
+  .back {
+    transform: rotateY(180deg);
+    background: transparent;
+  }
+  
+  .col:hover .front {
+    transform: rotateY(-180deg);
+  }
+  
+  .col:hover .back {
+    transform: rotateY(0deg);
+  }
+  
+  .front img {
+    width: 100%;
+    height: 350px;
+  }
+  
+  .front p, .front span {
+    text-wrap: wrap;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    margin: 0;
+  }
+
