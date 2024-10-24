@@ -105,11 +105,11 @@
     </header>
 
     <nav class="navbar">
-        <a href="Home.html">Home</a>
-        <a href="Quizzez.html">Quizzes</a>
-        <a href="#">Dashboard</a>
-        <a href="#">My Profile</a>
-        <a href="#">Logout</a>
+        <a href="Home.php">Home</a>
+        <a href="Option.php">Quizzes</a>
+        <a href="DashBoard.php">Dashboard</a>
+        <a href="MyProfile.php">My Profile</a>
+        <a href="Login.php">Logout</a>
     </nav>
 
     <main>

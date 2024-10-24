@@ -22,7 +22,7 @@
 
         #rocket {
             position: absolute;
-            width: 350px;
+            width: 300px;
             height: auto;
             animation: flyRocket 10s ease-in-out infinite; 
         }
@@ -100,16 +100,16 @@
             <input type="text" placeholder="Enter ID">
         </div>
         <nav>
-            <div class="btn"><a href="Login.html">Login</a></div>
+            <div class="btn"><a href="Login.php">Login</a></div>
         </nav>
     </header>
 
     <nav class="navbar">
-        <a href="Home.html">Home</a>
-        <a href="Option.html">Quizzes</a>
-        <a href="#">Dashboard</a>
-        <a href="#">My Profile</a>
-        <a href="#">Logout</a>
+        <a href="Home.php">Home</a>
+        <a href="Option.php">Quizzes</a>
+        <a href="DashBoard.php">Dashboard</a>
+        <a href="MyProfile.php">My Profile</a>
+        <a href="Login.php">Logout</a>
     </nav>
 
     <main>

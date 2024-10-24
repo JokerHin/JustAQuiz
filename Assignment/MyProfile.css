@@ -1,5 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Prociono&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Titan+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Londrina+Outline&display=swap');
+
 body {
     font-family: "Prociono", serif;
     font-weight: 400;
@@ -20,76 +22,66 @@ header {
     padding: 20px 30px;
 }
 
+.logo {
+    margin-top: -30px;
+}
 #h1,#h2,#h3 {
     display: inline;
-    font-family: "Titan One", serif;
-    font-weight: 400;
-    font-style: normal;
-}
-#h1 {
-    font-size: 25pt;
-    color: rgb(253, 183, 19);   
-}
-#h2 {
-    font-size: 30pt;
-    color: rgb(152, 147, 137);   
-}
-#h3 {
-    font-size: 25pt;
-    color: rgb(255, 255, 255);  
-}
-
-.quiz-id {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
     font-family: "Titan One", sans-serif;
     font-weight: 400;
     font-style: normal;
-    font-size: 20pt;
 }
-
-.btn {
-  border: 3px solid white;
-  border-radius: 20px;
-  text-align: center;
-  align-items: center;
-  font-size: 15pt;
-  padding: 5px 45px 5px 20px ;
-  margin-right: 20px;
-  background-color: wheat;
-  cursor: pointer;
-}
-.btn:hover {
-  background-color: white;
-}
-
-.quiz-id input {
-    margin-left: 10px;
-    padding: 15px;
-    border-radius: 20px;
+#info {
+    color: black;
+    font-size: 15pt;
     text-align: center;
+    padding: 20px 40px 20px 40px;
+    border: 3px solid white;
+    border-radius: 20px;
+    background-color: wheat;
+    font-weight: 800;
+}
+#Title {
+    font-size: 40pt;
+    font-style:normal;
+    font-weight: 400;
+    text-decoration:underline;
+    color: #3e419d;
+    margin-left: 120px;
+}
+#h1 {
+    font-size: 20pt;
+    color: rgb(253, 183, 19);   
+}
+#h2 {
+    font-size: 25pt;
+    color: rgb(152, 147, 137);   
+}
+#h3 {
+    font-size: 20pt;
+    color: rgb(255, 255, 255);  
 }
 
 nav a {
     text-decoration: none;
-    color: black;
+    color: #000000;
     font-weight: bold;
     margin-left: 30px;
-    background: transparent;
-    cursor: pointer;
 }
 
-
-.navbar{
+.navbar {
     background-color: transparent;
     padding: 0 0 20px;
     text-align: center;
     height: 25px;
+    flex-wrap: wrap;
 }
 
 .navbar a {
     text-decoration: none;
+}
+
+.navbar a {
     display: inline-block;
     transition: all 0.2s ease-in;
     position: relative;
@@ -155,11 +147,10 @@ nav a {
 
 main {
     padding: 20px;
+    display: flex;
+    justify-content: center;
 }
 
-.category {
-    margin-bottom: 40px;
-}
 
 h2 {
     font-size: 32px;
@@ -168,73 +159,83 @@ h2 {
     margin: 20px 60px 20px 20px;
 }
 
-.cards {
+#container {
+    width: 80%;
+    height: 500px;
+    align-items: center;
     display: flex;
-    flex-wrap: wrap;
-    gap: 50px;
-    margin-left: 60px;
+    justify-content: center;
+    margin-top: 30px;
 }
+#left {
+    width:40%;
+    height: 510px;
+    border: 10px solid gray;
+    border-radius: 20px;
+    box-shadow: 0 0 40px white;
+    padding: 10px 0 10px 0;
+    background: white;
+}
+#up {
+    width: 100%;
+    height: 50%;
+    background-image: url(images/user.png);
+    background-size: 50% 100%;
+    background-repeat: no-repeat;
+    background-position: top;
+}
+#down {
+    width: 95%;
+    height: 48%;
+    font-size: 15pt;
+    padding: 10px 0 10px 20px ;
+    border-radius: 20px;
+    font-size: 20pt;
+    color: Black;
+    border: 5px solid gray;
 
-.card {
-    background: rgb(233, 237, 244);
-    padding: 20px;
-    width: 13%;
-    border: 3px solid black;
-    box-shadow: rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset, 0px 35px 0px 0px rgb(84, 91, 98);
+}
+#right {
+    width:60%;
+    height: 500px;
+    border: 5px solid black;
+    border-radius: 20px;
+    display: grid;
+    grid-template-columns: auto auto;
+    background: white;
+    text-wrap: wrap;
+    
+}
+.box {
+    height: 5px;
+    background-color: #a19d9d;
+    padding: 20px 20px 100px 20px;
     text-align: center;
+    font-weight: 800;
+    font-size: 20pt;
+    text-decoration: underline;
+    border: 3px solid black;
     border-radius: 30px;
+    margin:  20px 30px 10px 30px;
+
 }
 
-.card h3 {
-    font-size: 24px;
-    margin-bottom: 10px;
+#input1 , #input2,#input3,#input4,#input5 {
+    font-weight: 800;
+    font-size: 30pt;
 }
 
-.card p {
-    font-size: 18px;
-    margin-bottom: 15px;
+.delete {
+    align-items: center;
+    margin: auto;
+    font-size: 15pt;
+    width: 50%;
+    height: 50%;
+    border-radius: 20px;
+    cursor: pointer;
 }
 
-
-#See-All1, #See-All2 {
-    width: 15%;
-    border-radius: 30px;
-    font-size: 12pt;
-    font-weight: 200;
-}
-#See-All1:hover , #See-All2:hover {
-  background: gray;
-  font-size: 15pt;
-  font-weight: 400;
-  color: white;
-}
-
-
-@media (max-width: 768px) {
-    * {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .card ,#See-All1, #See-All2{
-        width: 80%;
-    }
-    .navbar {
-      margin-bottom: 35px;
-    }
-    .quiz-id  {
-      margin-top: 20px
-    }
-    .quiz-id input {
-      margin: 20px 0 20px 0;
-    }
-    .btn {
-      margin-left: 15px;
-    }
-}
-
-
-.button-73 {
+.delete {
   appearance: none;
   background-color: #FFFFFF;
   border-radius: 40em;
@@ -244,11 +245,10 @@ h2 {
   color: #000000;
   cursor: pointer;
   display: inline-block;
-  font-family: "Prociono", serif;
-  font-size: 10pt;
-  font-weight: 300;
+  font-family: -apple-system,sans-serif;
+  font-size: 1.2rem;
+  font-weight: 700;
   letter-spacing: -.24px;
-  margin: 0;
   outline: none;
   padding: 1rem 1.3rem;
   quotes: auto;
@@ -260,68 +260,61 @@ h2 {
   touch-action: manipulation;
 }
 
-.button-73:hover {
+.delete:hover {
   background-color: #FFC229;
   box-shadow: #FF6314 0 -6px 8px inset;
   transform: scale(1.125);
 }
 
-.button-73:active {
+.delete:active {
   transform: scale(1.025);
 }
 
 @media (min-width: 768px) {
-  .button-73 {
-    font-size: 10pt;
+    .delete {
+    font-size: 1.5rem;
     padding: .75rem 2rem;
   }
 }
 
-#MainB {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 70px;
-    margin-top: -20px;
+
+@media (max-width: 768px) {
+    * {
+        flex-direction: column;
+        align-items: center;
+    }
+    #container, #left, #right {
+        width: 90%;
+    }
+    #up{
+        width: 100%;
+    }
+    #up, #down{
+        height: 280px;
+    }
+    #container {
+        margin-top: 320px;
+        margin-bottom: 20px;
+    }
+    .logo {
+        margin-top: 0;
+    }
+    #Title {
+        margin-left: 0;
+    }
+    #down {
+        font-size: 15pt;
+    }
+    .box{
+        display: flex;
+        width: 80%;
+        padding: 15px 0 100px 0;
+        font-size: 15pt;
+    }
+    
 }
-.Mainbutton {
-    padding: 1em 2em;
-    border: none;
-    border-radius: 5px;
-    font-weight: bold;
-    letter-spacing: 5px;
-    text-transform: uppercase;
-    cursor: pointer;
-    color: #2c9caf;
-    transition: all 1000ms;
-    font-size: 15px;
-    position: relative;
-    overflow: hidden;
-    outline: 2px solid #2c9caf;
-  }
-  
-.Mainbutton:hover {
-    color: #ffffff;
-    transform: scale(1.1);
-    outline: 2px solid #429de3;
-    box-shadow: 4px 5px 17px -4px #268391;
-  }
-  
-.Mainbutton::before {
-    content: "";
-    position: absolute;
-    left: -50px;
-    top: 0;
-    width: 0;
-    height: 100%;
-    background-color: #468add;
-    transform: skewX(45deg);
-    z-index: -1;
-    transition: width 1000ms;
-  }
-  
-.Mainbutton:hover::before {
-    width: 250%;
-  }
+
+
   
 
 

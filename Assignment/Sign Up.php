@@ -34,6 +34,7 @@
             box-shadow: 0px 40px 0px 0px rgb(84, 91, 98);
             }
         #box{ 
+            width: 50%;
             height: 450px;
             border-radius: 20px;
             justify-content: center;
@@ -47,6 +48,7 @@
             border-radius: 20px;
         }
         #Login {
+            width: 50%;
             background: white;
             border: 2px solid rgba(219, 209, 209);
             height: 450px;
@@ -97,52 +99,31 @@
             background-color: rgb(188, 200, 211);
         }
 
-        @media only screen and (min-width: 600px) {
-        /* For tablets: */
-        .col-s-1 { width: 8.33%; }
-        .col-s-2 { width: 16.66%; }
-        .col-s-3 { width: 25%; }
-        .col-s-4 { width: 33.33%; }
-        .col-s-5 { width: 41.66%; }
-        .col-s-6 { width: 50%; }
-        .col-s-7 { width: 58.33%; }
-        .col-s-8 { width: 66.66%; }
-        .col-s-9 { width: 75%; }
-        .col-s-10 { width: 83.33%; }
-        .col-s-11 { width: 91.66%; }
-        .col-s-12 { width: 100%; }
-        }
-        @media only screen and (min-width: 768px) {
-        /* For desktop: */
-        .col-1 { width: 8.33%; }
-        .col-2 { width: 16.66%; }
-        .col-3 { width: 25%; }
-        .col-4 { width: 33.33%; }
-        .col-5 { width: 41.66%; }
-        .col-6 { width: 50%; }
-        .col-7 { width: 58.33%; }
-        .col-8 { width: 66.66%; }
-        .col-9 { width: 75%; }
-        .col-10 { width: 83.33%; }
-        .col-11 { width: 91.66%; }
-        .col-12 { width: 100%; }
-        }
+        @media (max-width: 768px) {
+    * {
+        flex-direction: column;
+        align-items: center;
+    }
+    #box, #Login {
+        width: 100%;
+    }
+}
     
               
     </style>
 </head>
 <body>
-    <div id="container" class="col-12 col-s-12"> 
-        <div id="box" class="col-6 col-s-6">
+    <div id="container" > 
+        <div id="box" >
             <img id="picture" src="images/JustAQuiz.png" alt="JustAQuiz">
         </div>
-        <div id="Login" class="col-6 col-s-6">
+        <div id="Login" >
             <form method="post" action="php_file">        
                 <h1>Create your Account</h1>                
                 <div class="input"><input type="text" name="Name" placeholder="Name" required></div>
                 <div class="input"><input type="password" name="password" placeholder="Password" required></div>
                 <div class="input"><input type="password" name="confirm-password" placeholder="confirm-password" required></div>
-                <a href="Login.html" id="login-link">Login</a>
+                <a href="Login.php" id="login-link">Login</a>
                 <button type="submit">Sign Up</button>
             </form>
         </div>
