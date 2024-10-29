@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JustAQuiz</title>
-    <link rel="stylesheet" href="Quiz.css">
+    <link rel="stylesheet" href="StartQuiz.css">
 </head>
 <body>
     <header>
@@ -18,21 +18,20 @@
     </header>
 
     <nav class="navbar">
-        <a href="Home.php">Home</a>
-        <a href="Option.php">Quizzes</a>
-        <a href="DashBoard.php">Dashboard</a>
-        <a href="MyProfile.php">My Profile</a>
-        <a href="Login.php">Logout</a>
+        <a href="Home.php">HOME</a>
+        <a href="Option.php">QUIZZES</a>
+        <a href="DashBoard.php">DASHBOARD</a>
+        <a href="MyProfile.php">MY PROFILE</a>
+        <a href="Login.php">LOGOUT</a>
     </nav>
     <main>
         <div id="main"> 
-            <div id="Next">&lt;  Question 2/25  &gt;</div>
-            <div id="Question">What does HTML stand for?</div>
             <div id="container">
-                <div class="Option">HTP</div>
-                <div class="Option">HTP</div>
-                <div class="Option">HTP</div>
-                <div class="Option">HTP</div>
+                <h1 class="Title">INTRODUCTION</h1>
+                <h1 class="Title">WHAT IS HTML?</h1>
+                <h1 class="Title2">25 Question</h1>
+                <h1 class="Title2">15 Minutes</h1>
+                <button class="Start" onclick="window.location.href='http://localhost/RWDD/Assignment/User/Quiz.php'">Start</button>
             </div>
         </div>
     </main>

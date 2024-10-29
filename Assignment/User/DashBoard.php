@@ -14,15 +14,15 @@
         <div >
             <h1 id="Title">DASHBOARD</h1>
         </div>
-        <div id="info">Quizzes Completed : <br> Badges Collection : </div>
+        <button id="view-report" onclick="window.location.href='http://localhost/RWDD/Assignment/User/Report.php'">View Report</button>
     </header>
 
     <nav class="navbar">
-        <a href="Home.php">Home</a>
-        <a href="Option.php">Quizzes</a>
-        <a href="DashBoard.php">Dashboard</a>
-        <a href="MyProfile.php">My Profile</a>
-        <a href="Login.php">Logout</a>
+        <a href="Home.php">HOME</a>
+        <a href="Option.php">QUIZZES</a>
+        <a href="DashBoard.php">DASHBOARD</a>
+        <a href="MyProfile.php">MY PROFILE</a>
+        <a href="Login.php">LOGOUT</a>
     </nav>
 
     <main> 
@@ -34,7 +34,8 @@
             <table class="table">
                 <thead>
                   <tr>
-                    <th scope="col">Title</th>
+                    <th scope="col">Subject</th>
+                    <th scope="col">Title-Description</th>
                     <th scope="col">Quiz Summary</th>
                     <th scope="col">Grade</th>
                     <th scope="col">Time Taken</th>
@@ -44,6 +45,7 @@
                 </thead>
                 <tbody>
                   <tr>
+                    <th scope="row" class="row">HTML</th>
                     <th scope="row" class="row">What is HTML?</th>
                     <td>100%</td>
                     <td>A</td>
@@ -52,6 +54,7 @@
                     <td>-</td>
                   </tr>
                   <tr>
+                    <th scope="row" class="row">HTML</th>
                     <th scope="row" class="row">The &lt;form&gt; Element</th>
                     <td>80%</td>
                     <td>B</td>
@@ -60,6 +63,7 @@
                     <td>Well done</td>
                   </tr>
                   <tr>
+                    <th scope="row" class="row">CSS</th>
                     <th scope="row" class="row">What is CSS</th>
                     <td>95%</td>
                     <td>A</td>

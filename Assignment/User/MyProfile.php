@@ -14,15 +14,15 @@
         <div >
             <h1 id="Title">MyProfile</h1>
         </div>
-        <div id="info">Welcome !!!   Name </div>
+        <div id="info"></div>
     </header>
 
     <nav class="navbar">
-        <a href="Home.php">Home</a>
-        <a href="Option.php">Quizzes</a>
-        <a href="DashBoard.php">Dashboard</a>
-        <a href="MyProfile.php">My Profile</a>
-        <a href="Login.php">Logout</a>
+        <a href="Home.php">HOME</a>
+        <a href="Option.php">QUIZZES</a>
+        <a href="DashBoard.php">DASHBOARD</a>
+        <a href="MyProfile.php">MY PROFILE</a>
+        <a href="Login.php">LOGOUT</a>
     </nav>
 
     <main> 
@@ -33,10 +33,10 @@
             </div>
             <div id="right">
                 <div class="box">Total Quizzes Played <br><span id="input1">0</span></div>
-                <div class="box">Level <br><span id="input2">0</span></div>
-                <div class="box">HTML Quizzes Played <br><span id="input3">0</span></div>
-                <div class="box">Badge Collected <br><span id="input4">0</span></div>
-                <div class="box">CSS Quizzes Played <br><span id="input5">0</span></div>
+                <div class="box">HTML Quizzes Played <br><span id="input2">0</span></div>
+                <div class="box">Badge Collected <br><span id="input3">0</span></div>
+                <div class="box">CSS Quizzes Played <br><span id="input4">0</span></div>
+                <button class="delete">Logout </button>
                 <button class="delete">Delete Account </button>
             </div>
         </div>

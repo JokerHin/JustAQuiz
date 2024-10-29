@@ -4,18 +4,19 @@
     padding: 0;
 }
 body {
-    background-image: url("images/Home.jpg");
+    font-family: "Prociono", serif;
+    font-weight: 400;
+    font-style: normal;
+    margin: 0;
+    padding: 0;
+    background-color: rgb(62, 168, 255);
+    background-image: url("../images/Home.jpg");
     background-position: center;
     background-size: 100% 100% cover;
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-}
-h1 {
-    color: white;
-    font-size: 40pt;
-    text-wrap: wrap;
 }
 p {
     text-align: center;
@@ -38,7 +39,7 @@ span {
     flex-wrap: wrap;
     justify-content: center;
     border-radius: 20px;
-    gap: 50px;
+    gap: 100px;
   }
   
   .col {

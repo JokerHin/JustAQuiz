@@ -1,5 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Prociono&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Titan+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Londrina+Outline&display=swap');
+
 body {
     font-family: "Prociono", serif;
     font-weight: 400;
@@ -7,7 +9,7 @@ body {
     margin: 0;
     padding: 0;
     background-color: rgb(62, 168, 255);
-    background-image: url("images/Home.jpg");
+    background-image: url("../images/Home.jpg");
     background-position: center;
     background-size: 100% 100% cover;
 }
@@ -20,12 +22,63 @@ header {
     padding: 20px 30px;
 }
 
-
+.logo {
+    margin-top: -30px;
+}
 #h1,#h2,#h3 {
     display: inline;
-    font-family: "Titan One", serif;
+    font-family: "Titan One", sans-serif;
     font-weight: 400;
     font-style: normal;
+}
+
+#view-report {
+    align-items: center;
+    font-size: 15pt;
+    border-radius: 20px;
+    cursor: pointer;
+    width: 250px;
+    height: 50px;
+    appearance: none;
+    background-color: #ffffff;
+    border-radius: 40em;
+    box-shadow: #e8c76c 0 -12px 6px inset;
+    box-sizing: border-box;
+    color: #000000;
+    cursor: pointer;
+    display: inline-block;
+    font-family: -apple-system,sans-serif;
+    font-size: 15pt;
+    font-weight: 700;
+    letter-spacing: -.24px;
+    outline: none;
+    padding: 10px 30px 30px 30px;
+    quotes: auto;
+    text-align: center;
+    text-decoration: none;
+    transition: all .15s;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+}
+
+#view-report:hover {
+  background-color: #FFC229;
+  box-shadow: #FF6314 0 -6px 8px inset;
+  transform: scale(1.125);
+}
+
+#view-report:active {
+  transform: scale(1.025);
+}
+
+#Title {
+    font-size: 40pt;
+    font-family: "Titan One", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    color: #3e419d;
+    margin-left: 10px;
 }
 #h1 {
     font-size: 20pt;
@@ -42,18 +95,27 @@ header {
 
 .quiz-id {
     display: flex;
+    justify-content: center;
     flex-wrap: wrap;
     align-items: center;
     font-family: "Titan One", sans-serif;
     font-weight: 400;
     font-style: normal;
+    border: 1px solid white;
+    padding: 30px;
+    font-size: 25pt;
+    color: rgb(224, 176, 87);
 }
 
 .quiz-id input {
-    margin-left: 10px;
-    padding: 5px;
+    margin-left: 30px;
+    padding: 15px;
     border-radius: 20px;
     text-align: center;
+    font-family: "Titan One", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 15pt;
 }
 
 nav a {
@@ -143,9 +205,6 @@ main {
     padding: 20px;
 }
 
-.category {
-    margin-bottom: 40px;
-}
 
 h2 {
     font-size: 32px;
@@ -154,145 +213,49 @@ h2 {
     margin: 20px 60px 20px 20px;
 }
 
-.cards {
-    display: flex;
+table {
+    margin: auto;
+    margin-top: 30px;
+    width: 90%;
+    height: 500px;
+    border: 5px solid white;
+    border-radius: 40px;
+    box-shadow: 0 0 40px white;
+    font-size: 20pt;
+    flex-direction: column;
     flex-wrap: wrap;
-    gap: 50px;
-    margin-left: 60px;
+    padding-top: 30px;
+    background: wheat;
 }
-
-.card {
-    background: rgb(233, 237, 244);
-    padding: 20px;
-    width: 13%;
-    border: 3px solid black;
-    box-shadow: rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset, 0px 35px 0px 0px rgb(84, 91, 98);
+table th, table td {
+    padding: 40px;
+}
+.row {
+    align-items: left;
+    text-decoration: underline;
+}
+table tr td {
     text-align: center;
-    border-radius: 30px;
-}
-
-.card h3 {
-    font-size: 24px;
-    margin-bottom: 10px;
-}
-
-.card p {
-    font-size: 18px;
-    margin-bottom: 15px;
-}
-
-
-#See-All1, #See-All2 {
-    width: 15%;
-    border-radius: 30px;
-    font-size: 15pt;
-    font-weight: 200;
 }
 
 
 @media (max-width: 768px) {
-    .cards, #See-All1, #See-All2 {
+    * {
         flex-direction: column;
         align-items: center;
     }
-
-    .card ,#See-All1, #See-All2{
-        width: 80%;
+    .quiz-id {
+        margin-top: 30px;
     }
-    .quiz-id input, .quiz-id {
-        align-items: center;
+    .logo {
+        margin-top: 0;
+    }
+    #Title {
+        margin-left: 0;
     }
 }
 
 
-.button-73 {
-  appearance: none;
-  background-color: #FFFFFF;
-  border-radius: 40em;
-  border-style: none;
-  box-shadow: #ADCFFF 0 -12px 6px inset;
-  box-sizing: border-box;
-  color: #000000;
-  cursor: pointer;
-  display: inline-block;
-  font-family: "Prociono", serif;
-  font-size: 10pt;
-  font-weight: 300;
-  letter-spacing: -.24px;
-  margin: 0;
-  outline: none;
-  padding: 1rem 1.3rem;
-  quotes: auto;
-  text-align: center;
-  text-decoration: none;
-  transition: all .15s;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-}
-
-.button-73:hover {
-  background-color: #FFC229;
-  box-shadow: #FF6314 0 -6px 8px inset;
-  transform: scale(1.125);
-}
-
-.button-73:active {
-  transform: scale(1.025);
-}
-
-@media (min-width: 768px) {
-  .button-73 {
-    font-size: 10pt;
-    padding: .75rem 2rem;
-  }
-}
-
-#MainB {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 70px;
-    margin-top: -20px;
-}
-.Mainbutton {
-    padding: 1em 2em;
-    border: none;
-    border-radius: 5px;
-    font-weight: bold;
-    letter-spacing: 5px;
-    text-transform: uppercase;
-    cursor: pointer;
-    color: #2c9caf;
-    transition: all 1000ms;
-    font-size: 15px;
-    position: relative;
-    overflow: hidden;
-    outline: 2px solid #2c9caf;
-  }
-  
-.Mainbutton:hover {
-    color: #ffffff;
-    transform: scale(1.1);
-    outline: 2px solid #429de3;
-    box-shadow: 4px 5px 17px -4px #268391;
-  }
-  
-.Mainbutton::before {
-    content: "";
-    position: absolute;
-    left: -50px;
-    top: 0;
-    width: 0;
-    height: 100%;
-    background-color: #468add;
-    transform: skewX(45deg);
-    z-index: -1;
-    transition: width 1000ms;
-  }
-  
-.Mainbutton:hover::before {
-    width: 250%;
-  }
   
 
 

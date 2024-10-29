@@ -14,7 +14,7 @@
             
         }
         body {
-            background-image: url("images/Background.jpg");
+            background-image: url("../images/Background.jpg");
             background-position: center;
             background-repeat: no-repeat;
             background-size: cover;
@@ -115,7 +115,7 @@
 <body>
     <div id="container" > 
         <div id="box">
-            <img id="picture" src="images/JustAQuiz.png" alt="JustAQuiz">
+            <img id="picture" src="../images/JustAQuiz.png" alt="JustAQuiz">
         </div>
         <div id="Login">
             <form method="post" action="php_file">        
