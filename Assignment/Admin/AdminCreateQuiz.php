@@ -11,10 +11,6 @@
     <div class="logo">
             <div id="h1">JUST</div><div id="h2">A</div><div id="h3">QUIZ</div>
         </div>
-        <div >
-            <h1 id="Title">Make A Quiz</h1>
-        </div>
-        <div id="info"></div>
     </header>
 
     <nav class="navbar">
@@ -32,11 +28,19 @@
             </div>
             <div class="flex-container-right">
             <p>CHOOSE QUIZ TYPE</p>
-            <div id="radio">
-            <input type="radio" id="HTML">HTML</label><br />
-            <input type="radio" id="CSS" >CSS</label><br />
-            </div>
-            <input type="text" placeholder="Type Text Title here" id="TextBox">
+            <div class="container2">
+                <form class="toggle">  
+                    <input type="radio" id="choice1" name="choice" value="creative">
+                    <label for="choice1">HTML</label>
+            
+                    <input type="radio" id="choice2" name="choice" value="productive">
+                    <label for="choice2">CSS</label>
+            
+                    <div id="flap"><span class="content">HTML</span></div>     
+                </form>            
+            </div> 
+            <input type="text" placeholder="Type Quiz Title here" class="TextBox">
+            <input type="text" placeholder="Type Quiz Description here" class="TextBox">
             </div>
         </div>
 
@@ -65,7 +69,7 @@
             </div>
             <div class="Question-container-right">
                 <div class="container">
-                    <span class="Question-num">Q1</span>
+                    <span class="Question-num">Q2</span>
                     <input type="text" class="Question" placeholder="Type Question Here"></input>
                     <div class="Option-box">
                         <input type="text" class="Option" placeholder="A. Type Answer Here"> <input type="radio" ></input></input>
@@ -78,5 +82,18 @@
         </div>
         <button class="Create-Quiz" >Create-Quiz</button>
     </main>
+    <ul class="bg-bubbles">
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+    </ul>
+    <script src="AdminCreateQuiz.js"></script>
 </body>
 </html>

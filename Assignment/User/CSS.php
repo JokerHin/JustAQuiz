@@ -17,7 +17,7 @@
             <input type="text" placeholder="Enter ID">
         </div>
         <nav>
-            <a href="Login.html">Login</a>
+            <div class="btn"><a href="Login.php">Login</a></div>
         </nav>
     </header>
 
@@ -78,5 +78,17 @@
             
         </section>
     </main>
+    <ul class="bg-bubbles">
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+    </ul>
 </body>
 </html>

@@ -16,7 +16,7 @@
             <input type="text" placeholder="Enter ID">
         </div>
         <nav>
-            <a href="Login.html">Login</a>
+        <div class="btn"><a href="Login.php">Login</a></div>
         </nav>
     </header>
 
@@ -74,8 +74,25 @@
                     <button class="button-73" role="button" onclick="window.location.href='http://localhost/RWDD/Assignment/User/StartQuiz.php'">Play</button>
                 </div>
             </div>
-            
+            <section>
+            <div class='air air1'></div>
+            <div class='air air2'></div>
+            <div class='air air3'></div>
+            <div class='air air4'></div>
+            </section>
         </section>
     </main>
+    <ul class="bg-bubbles">
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+    </ul>
 </body>
 </html>

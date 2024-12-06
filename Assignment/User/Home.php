@@ -171,7 +171,19 @@
                 <button id="See-All2" onclick="window.location.href='http://localhost/RWDD/Assignment/User/CSS.php'">See All</button>
             </div>
             
-        </section>
+        </section>      
     </main>
+    <ul class="bg-bubbles">
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+    </ul>
 </body>
 </html>

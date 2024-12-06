@@ -10,13 +10,13 @@
             if (t == 1) {
                 document.getElementById('content1').style.display = 'block';
                 document.getElementById('content2').style.display = 'none';
-                document.getElementById('tab1').style.background = 'wheat';
+                document.getElementById('tab1').style.background = '#D5F3FE';
                 document.getElementById('tab2').style.background = 'white';
             }
             else if (t == 2) {
                 document.getElementById('content1').style.display = 'none';
                 document.getElementById('content2').style.display = 'block';
-                document.getElementById('tab1').style.background = 'wheat';
+                document.getElementById('tab1').style.background = '#D5F3FE';
                 document.getElementById('tab2').style.background = 'white';
             };
         }
@@ -27,10 +27,6 @@
     <div class="logo">
             <div id="h1">JUST</div><div id="h2">A</div><div id="h3">QUIZ</div>
         </div>
-        <div >
-            <h1 id="Title">Overview</h1>
-        </div>
-        <div id="info"></div>
     </header>
 
     <nav class="navbar">
@@ -118,5 +114,17 @@
         </div>
         </div>
     </main>
+    <ul class="bg-bubbles">
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+    </ul>
 </body>
 </html>

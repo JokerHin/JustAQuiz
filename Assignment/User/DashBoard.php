@@ -11,9 +11,6 @@
         <div class="logo">
             <div id="h1">JUST</div><div id="h2">A</div><div id="h3">QUIZ</div>
         </div>
-        <div >
-            <h1 id="Title">DASHBOARD</h1>
-        </div>
         <button id="view-report" onclick="window.location.href='http://localhost/RWDD/Assignment/User/Report.php'">View Report</button>
     </header>
 
@@ -24,7 +21,12 @@
         <a href="MyProfile.php">MY PROFILE</a>
         <a href="Login.php">LOGOUT</a>
     </nav>
-
+    <section>
+            <div class='air air1'></div>
+            <div class='air air2'></div>
+            <div class='air air3'></div>
+            <div class='air air4'></div>
+      </section>
     <main> 
         <div class="quiz-id">
             <span>JOIN QUIZ? ENTER QUIZID: </span>
@@ -75,5 +77,17 @@
               </table>  
             </div>
     </main>
+    <ul class="bg-bubbles">
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+    </ul>
 </body>
 </html>
