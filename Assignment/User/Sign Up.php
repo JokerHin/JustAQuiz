@@ -278,18 +278,34 @@
                     <div id="flap"><span class="content">Student</span></div>     
                 </form>            
             </div>  
-            <form method="post">                   
+            <form method="post" action="#" >                   
                 <div class="input"><input type="text" name="Name" placeholder="Name" required></div>
                 <div class="input"><input type="email" name="Email" placeholder="Email" required></div>
                 <div class="input"><input type="password" name="password" placeholder="Password" required></div>
                 <div class="input"><input type="password" name="confirm-password" placeholder="confirm-password" required></div>
                 <p id="word">Already have an account?<a href="Login.php" id="login-link">Login</a></p>
-                <button type="submit">Sign Up</button>
+                <button type="submit" name="signupBtn">Sign Up</button>
             </form>
         </div>
     </div>  
    
     <div class="wrapper"></div> 
     <script src="signup.js"></script>
+    <?php
+        if (isset($_POST['signupBtn'])) {
+            include("../../main.php");
+            $status=sign_up($_POST['Name'], $_POST['password'], $_POST['confirm-password'], $_POST['Email'], $_POST['choice'], $conn);
+            $role=$_POST['choice'];
+            echo "<script>console.log('$role');</script>";
+            if ($status){
+                echo '<script>alert("Successful");
+                    window.location.href = "DashBoard.php";
+                    </script>';
+            }else{
+                echo "<script>alert('Failed');</script>";
+            }
+            // mysqli_close($con);
+        }
+    ?>
 </body>
 </html>
