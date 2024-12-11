@@ -11,25 +11,25 @@
                 document.getElementById('content1').style.display = 'block';
                 document.getElementById('content2').style.display = 'none';
                 document.getElementById('content3').style.display = 'none';
-                document.getElementById('tab1').style.background = 'wheat';
-                document.getElementById('tab2').style.background = 'white';
-                document.getElementById('tab3').style.background = 'rgb(240, 166, 81)';
+                document.getElementById('tab1').style.background = '#D5F3FE';
+                document.getElementById('tab2').style.background = '#66D3FA';
+                document.getElementById('tab3').style.background = '#3CAEA3';
             }
             else if (t == 2) {
                 document.getElementById('content1').style.display = 'none';
                 document.getElementById('content2').style.display = 'block';
                 document.getElementById('content3').style.display = 'none';
-                document.getElementById('tab1').style.background = 'wheat';
-                document.getElementById('tab2').style.background = 'white';
-                document.getElementById('tab3').style.background = 'rgb(240, 166, 81)';
+                document.getElementById('tab1').style.background = '#D5F3FE';
+                document.getElementById('tab2').style.background = '#66D3FA';
+                document.getElementById('tab3').style.background = '#3CAEA3';
             }
             else if (t == 3) {
                 document.getElementById('content1').style.display = 'none';
                 document.getElementById('content2').style.display = 'none';
                 document.getElementById('content3').style.display = 'block';
-                document.getElementById('tab1').style.background = 'wheat';
-                document.getElementById('tab2').style.background = 'white';
-                document.getElementById('tab3').style.background = 'rgb(240, 166, 81)';
+                document.getElementById('tab1').style.background = '#D5F3FE';
+                document.getElementById('tab2').style.background = '#66D3FA';
+                document.getElementById('tab3').style.background = '#3CAEA3';
             };
         }
     </script>
@@ -39,10 +39,6 @@
     <div class="logo">
             <div id="h1">JUST</div><div id="h2">A</div><div id="h3">QUIZ</div>
         </div>
-        <div >
-            <h1 id="Title">UserManagement</h1>
-        </div>
-        <div id="info"></div>
     </header>
 
     <nav class="navbar">
@@ -153,18 +149,21 @@
                       <td>Yong</td>
                       <td>12</td>
                       <td>50</td>
+                      <td class="bin"></td>
                     </tr>
                     <tr>
                       <th scope="row" class="row">ST12345</th>
                       <td>Yong</td>
                       <td>12</td>
                       <td>50</td>
+                      <td class="bin"></td>
                     </tr>
                     <tr>
                       <th scope="row" class="row">ST12345</th>
                       <td>Yong</td>
                       <td>12</td>
                       <td>50</td>
+                      <td class="bin"></td>
                     </tr>
                   </tbody>
                 </table>  
@@ -172,5 +171,17 @@
         </div>
       </div>
     </main>
+    <ul class="bg-bubbles">
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+    </ul>
 </body>
 </html>

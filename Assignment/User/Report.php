@@ -11,10 +11,6 @@
         <div class="logo">
             <div id="h1">JUST</div><div id="h2">A</div><div id="h3">QUIZ</div>
         </div>
-        <div >
-            <h1 id="Title">Report</h1>
-        </div>
-        <div id="info"></div>
     </header>
 
     <nav class="navbar">
@@ -71,5 +67,17 @@
             </div>
         </div>
     </main>
+    <ul class="bg-bubbles">
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+    </ul>
 </body>
 </html>

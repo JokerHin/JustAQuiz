@@ -11,9 +11,6 @@
     <div class="logo">
             <div id="h1">JUST</div><div id="h2">A</div><div id="h3">QUIZ</div>
         </div>
-        <div >
-            <h1 id="Title">Home</h1>
-        </div>
         <div id="button" onclick="window.location.href='http://localhost/RWDD/Assignment/Admin/AdminCreateQuiz.php'"><button class="create-quiz">CREATE QUIZ</button></div>
     </header>
 
@@ -55,18 +52,72 @@
         </div>
         <div class="right-container">
             <div class="profile-box">
-                <div id="up"></div>
+            <div class="profilepic">
+            <img class="profilepic__image" src="https://images.unsplash.com/photo-1510227272981-87123e259b17?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=3759e09a5b9fbe53088b23c615b6312e" width="150" height="150" alt="Profibild" />
+            <div class="profilepic__content">
+                <span class="profilepic__icon"><i class="fas fa-camera"></i></span>
+                <span class="profilepic__text">Edit Profile</span>
+            </div>
+            </div>
                 <div id="down">
                     Admin ID: <span id="info1">123456</span> 
                     <br> Name : <span id="info2">Yong Wai</span> 
                     <br> Email : <span id="info3">yongwai@gmail.com</span>
                     <br> Password : <span id="info4">********</span><br>
-                    <button class="del-button">Delete Account</button>
+                    <button class="del-button" onclick="window.location.href='http://localhost/RWDD/Assignment/User/Login.php'">Delete Account</button>
                 </div>
                 </div>
             </div>
         </div>
     </div>
+    <div class="popup"> 
+      <div class="popup-content">
+        <form>
+          <img id="close-button" src="../images/close.png" alt="close-button">
+          <h2>Profile</h2>
+          <hr>
+        
+          <div class="input-info">
+            <label for="basic-name">Title</label>
+            <input type="text" id="basic-name" placeholder="Song Title" name="Title-Name" required />
+          </div>
+        
+          <div class="input-info">
+            <label for="additional-info">Artist</label>
+            <input type="text" id="additional-info" placeholder="Artist Name" name="Artist-Name" required/>
+          </div>
+        
+          <div class="input-info">
+            <label for="custom-label">URL (YouTube & MP3)</label>
+            <input type="text" id="custom-label" placeholder="Song URL" name="URL" />
+          </div>
+
+          <label for="images" class="drop-container" id="dropcontainer">
+            <span class="drop-title">Drop files here</span>
+            or
+            <input type="file" id="images" accept="image/*">
+          </label>
+        
+          <div class="button-container">
+            <button type="submit" class="upload-button">Upload</button>
+          </div>
+        </form>
+      </div>
+    </div>
     </main>
+    
+    <ul class="bg-bubbles">
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+    </ul>
+    <script src="AdminHome.js"><script>
 </body>
 </html>

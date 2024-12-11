@@ -11,10 +11,6 @@
     <div class="logo">
             <div id="h1">JUST</div><div id="h2">A</div><div id="h3">QUIZ</div>
         </div>
-        <div >
-            <h1 id="Title">Make A Quiz</h1>
-        </div>
-        <div id="info"></div>
     </header>
 
     <nav class="navbar">
@@ -31,11 +27,19 @@
             </div>
             <div class="flex-container-right">
             <p>CHOOSE QUIZ TYPE</p>
-            <div id="radio">
-            <input type="radio" id="HTML">HTML</label><br />
-            <input type="radio" id="CSS" >CSS</label><br />
-            </div>
-            <input type="text" placeholder="Type Text Title here" id="TextBox">
+            <div class="container2">
+                <form class="toggle">  
+                    <input type="radio" id="choice1" name="choice" value="creative">
+                    <label for="choice1">HTML</label>
+            
+                    <input type="radio" id="choice2" name="choice" value="productive">
+                    <label for="choice2">CSS</label>
+            
+                    <div id="flap"><span class="content">HTML</span></div>     
+                </form>            
+            </div> 
+            <input type="text" placeholder="Type Quiz Title here" class="TextBox">
+            <input type="text" placeholder="Type Quiz Description here" class="TextBox">
             </div>
         </div>
 
@@ -77,5 +81,18 @@
         </div>
         <button class="Create-Quiz" >Create-Quiz</button>
     </main>
+    <ul class="bg-bubbles">
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+    </ul>
+    <script src="InstructorCreateQuiz.js"></script>
 </body>
 </html>

@@ -7,14 +7,20 @@
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Rubik+Mono+One&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Itim&family=Londrina+Outline&family=Sour+Gummy:ital,wght@0,100..900;1,100..900&display=swap');
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
+            font-family: "Sour Gummy", sans-serif;
+            font-optical-sizing: auto;
+            font-weight: <weight>;
+            font-style: normal;
+            font-variation-settings:
+                "wdth" 100;
             
         }
         body {
-            background-image: url("../images/Background.jpg");
             background-position: center;
             background-repeat: no-repeat;
             background-size: cover;
@@ -24,13 +30,36 @@
             min-height: 100vh;
 
             }
+            .wrapper {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            
+            background-color: #FFE0AF;
+            background-image:
+            linear-gradient(45deg, #FFDD88 25%, transparent 25%, transparent 75%, #FFDD88 75%, #FFDD88), 
+            linear-gradient(45deg, #FFDD88 25%, transparent 25%, transparent 75%, #FFDD88 75%, #FFDD88),
+            linear-gradient(45deg, transparent, transparent 50%, #FFC87F 50%, #FFC87F);
+            background-size: 100px 100px;
+            background-position: 0 0, 50px 50px, 50px 0px;
+            -webkit-animation: scroll 5s linear infinite;
+            }
+
+            @-webkit-keyframes scroll {
+            from { background-position: 0 0, 50px 50px, 50px 0; }
+            to { background-position: -100px -100px, -50px -50px, -50px -100px; }
+            }
         #container {
             width: 70%;
             display: flex;
             justify-content: center;
-            border: 3px solid rgb(0, 0, 0);
+            border: 3px solid #049ada;
             border-radius: 20px;
             box-shadow: 0px 40px 0px 0px rgb(84, 91, 98);
+            z-index: 1;
+            background: white;
             }
         #box{ 
             width: 50%;
@@ -48,8 +77,7 @@
         }
         #Login {
             width: 50%;
-            background: white;
-            border: 2px solid rgba(219, 209, 209);
+            background: radial-gradient( #e6e3e3,white);
             height: 450px;
             text-align: center;
             border-radius: 20px;
@@ -58,6 +86,8 @@
         }
         #Login h1 {
             margin-bottom: 10px;
+            color: #049ada;
+            
         }
         #Login .input {
             width: 100%;
@@ -71,31 +101,61 @@
             border: 1px solid rgb(179, 162, 162);
             background: rgb(255, 255, 255);
             border-radius: 40px;
-            font-size: 16px;
+            font-size: 16pt;
             padding: 30px 45px 30px 20px;
         }
         .input input::placeholder {
             color: rgb(196, 196, 196);
+            font-size: 15pt;
         }
-        #login-link {
-            margin-top: 40px;
-            display: block;
-            padding-right: 300px;
-            float: left;
+        .input input:focus {
+            outline: 1px solid #049ada;
+            box-shadow: 0px 0px 20px 0px #8aabe6;
         }
         button {
             width: 40%;
             height: 45px;
             background: white;
-            border: none;
+            border: 2px solid grey;
             border-radius: 40px;
             box-shadow: 0 0 10px gray;
             cursor: pointer;
-            font-size: 16px;
+            font-size: 16pt;
             margin-top: 20px;
+            appearance: none;
+            background-color: #FFFFFF;
+            border-radius: 40em;
+            box-shadow: #ADCFFF 0 -12px 6px inset;
+            box-sizing: border-box;
+            color: #000000;
+            cursor: pointer;
+            display: inline-block;
+            letter-spacing: -.24px;
+            outline: none;
+            padding: 10px;
+            quotes: auto;
+            text-align: center;
+            text-decoration: none;
+            transition: all .15s;
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: manipulation;
         }
+
         button:hover {
-            background-color: rgb(188, 200, 211);
+        background-color: #FFC229;
+        box-shadow: #FF6314 0 -6px 8px inset;
+        transform: scale(1.125);
+        }
+
+        button:active {
+        transform: scale(1.025);
+        }
+        p {
+            margin-top: 40px;
+            display: flex;
+            font-size: 15pt;
+            color: #049ada;
         }
 
         @media (max-width: 768px) {
@@ -118,15 +178,15 @@
             <img id="picture" src="../images/JustAQuiz.png" alt="JustAQuiz">
         </div>
         <div id="Login">
-            <form method="post" action="php_file">        
+            <form method="post">        
                 <h1>Login to your Account</h1>                
                 <div class="input"><input type="text" name="Name" placeholder="Username" required></div>
                 <div class="input"><input type="password" name="password" placeholder="Password" required></div>
-                <a  id="login-link" href="Sign Up.php">Sign Up</a>
+                <p>Don't have an account?  <a  id="login-link" href="Sign Up.php">Sign Up</a></p>
                 <button type="submit">Login</button>
             </form>
         </div>
-        
-    </div>   
+    </div>  
+    <div class="wrapper"></div> 
 </body>
 </html>

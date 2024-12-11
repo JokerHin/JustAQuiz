@@ -11,10 +11,6 @@
     <div class="logo">
             <div id="h1">JUST</div><div id="h2">A</div><div id="h3">QUIZ</div>
         </div>
-        <div >
-            <h1 id="Title">Badges</h1>
-        </div>
-        <div id="info"></div>
     </header>
 
     <nav class="navbar">
@@ -30,10 +26,14 @@
             <div class="left-container">
                 <h2>CREATE BADGE</h2>
                 <form>
-                    <input type="text" placeholder="Name" id="badge-name">
-                    <input type="text" placeholder="Category" id="badge-category">
-                    <input type="number" placeholder="Grade" id="badge-grade">
-                    <input type="file" id="badge-image" accept=".png">
+                    <input type="text" placeholder="Name" id="badge-name" class="form-input">
+                    <input type="text" placeholder="Category" id="badge-category" class="form-input">
+                    <input type="number" placeholder="Grade" id="badge-grade" class="form-input">
+                    <label for="images" class="drop-container" id="dropcontainer" class="form-input">
+                    <span class="drop-title">Drop files here</span>
+                    or
+                    <input type="file" id="images" accept="image/*" required>
+                    </label>
                     <button id="create-badge">CREATE</button>
                 </form>
             </div>
@@ -64,5 +64,17 @@
             </div>
         </div>
     </main>
+    <ul class="bg-bubbles">
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+    </ul>
 </body>
 </html>

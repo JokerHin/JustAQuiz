@@ -5,16 +5,82 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JustAQuiz</title>
     <link rel="stylesheet" href="Quiz.css">
+    <style>
+        #rocket {
+            position: absolute;
+            width: 300px;
+            height: auto;
+            animation: flyRocket 10s ease-in-out infinite; 
+        }
+
+        @keyframes flyRocket {
+        
+        0% {
+            top: 100px; 
+            left: -70px;
+            transform: rotate(-30deg);
+        }
+
+        10%{
+            top: 80px; 
+            left: -70px;
+            transform: rotate(-30deg);
+        }
+        20% {
+            top: 60px; 
+            left: -70px;
+            transform: rotate(-30deg);
+        }
+        30% {
+            top: -300px; 
+            left: 70px;
+            transform: rotate(0deg);       
+        } 
+        40% {
+            top: -300px;
+            left: 1000px;
+            transform: rotate(145deg);  
+            
+        }
+        50% {
+            top: 0px;
+            left: 1200px;
+            transform: rotate(180deg);   
+        }
+        
+        60% {
+            top: 600px;
+            left: 1000px; 
+            transform: rotate(180deg);
+        }
+        70% {
+            top: 800px;
+            left: 800px; 
+            transform: rotate(245deg); 
+        }
+        80% {
+            top: 400px;
+            left: 200px; 
+            transform: rotate(275deg);
+        }
+        90% {
+            top: 200px;
+            left: -400px; 
+            transform: rotate(275deg); 
+        }       
+        100% {
+            top: 100px; 
+            left: -70px;
+            transform: rotate(-30deg);
+        }*/
+    }
+    </style>
 </head>
 <body>
     <header>
         <div class="logo">
             <div id="h1">JUST</div><div id="h2">A</div><div id="h3">QUIZ</div>
         </div>
-        <div >
-            <h1 id="Title">HTML TIME</h1>
-        </div>
-        <div id="info"></div>
     </header>
 
     <nav class="navbar">
@@ -26,7 +92,7 @@
     </nav>
     <main>
         <div id="main"> 
-            <div id="time-left">Time Left &#9200 : <br> 01.55</div>
+            <div id="time">Time Left &#9200 : <span id="time-left"> 01.55<span></div>
             <div id="Next"><button class="NextB"> < </button> Question 2/25 <button class="NextB"> > </button></div>
             <div id="Question">What does HTML stand for?</div>
             <div id="container">
@@ -37,6 +103,29 @@
             </div>
             <button class="Submit" onclick="window.location.href='http://localhost/RWDD/Assignment/User/QuizSummary'">Submit</button>
         </div>
+        <div class="loop-wrapper">
+    <div class="mountain"></div>
+    <div class="hill"></div>
+    <div class="tree"></div>
+    <div class="tree"></div>
+    <div class="tree"></div>
+    <div class="rock"></div>
+    <div class="truck"></div>
+    <div class="wheels"></div>
+  </div> 
     </main>
+    <img id="rocket" src="../images/Rocket.png" alt="rocket">
+    <ul class="bg-bubbles">
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+    </ul>
 </body>
 </html>
