@@ -283,7 +283,7 @@
                 <div class="input"><input type="text" name="Name" placeholder="Name" required></div>
                 <div class="input"><input type="email" name="Email" placeholder="Email" required></div>
                 <div class="input"><input type="password" name="password" placeholder="Password" required></div>
-                <div class="input"><input type="password" name="confirm-password" placeholder="confirm-password" required></div>
+                <div class="input"><input type="password" name="confirm-password" placeholder="Confirm Password" required></div>
                 <p id="word">Already have an account?<a href="Login.php" id="login-link">Login</a></p>
                 <button type="submit" name="signupBtn">Sign Up</button>
             </form>

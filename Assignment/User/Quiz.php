@@ -5,6 +5,9 @@ if (isset($_GET['id']) && isset($_GET['q'])) {
     $quizid = intval($_GET['id']);
     $qnum = intval($_GET['q']);
     $amount=total_question($quizid, $conn);
+    $quiz = mysqli_query($conn, "SELECT * FROM quiz WHERE quiz_id=$quizid");
+    $row = mysqli_fetch_array($quiz);
+    $time_remain = $row['time_limit'];
 
     //fetch question
     $questions = mysqli_query($conn, "SELECT * FROM question WHERE quiz_id=$quizid");
@@ -24,8 +27,6 @@ if (isset($_GET['id']) && isset($_GET['q'])) {
         $text = $row['text'];
         array_push($choiceidArray, $cid);
         array_push($choiceArray, $text);
-        // Debug or process
-        echo "<script>console.log('Question ID: $cid, Text: $text');</script>";
     }
 } else {
     echo "<script>alert('Please choose quiz to start.');window.location.href='HTML.php';</script>";
@@ -108,6 +109,54 @@ if (isset($_GET['id']) && isset($_GET['q'])) {
         }*/
     }
     </style>
+    <script>
+        quizid = new URLSearchParams(window.location.search).get('id');
+        qnum = parseInt(new URLSearchParams(window.location.search).get('q')) || 0;
+
+        function fetchQuestion() {
+            // Make an AJAX request to get the next question
+            console.log(qnum);
+            fetch(`get_question.php?id=${quizid}&q=${qnum}`)
+                .then(response => response.json())
+                .then(data => {
+                    // Update the question and choices on the page
+                    document.getElementById('Question').innerText = data.question;
+                    document.getElementById('answer1').innerText = data.choices[0];
+                    document.getElementById('answer2').innerText = data.choices[1];
+                    document.getElementById('answer3').innerText = data.choices[2];
+                    document.getElementById('answer4').innerText = data.choices[3];
+                    
+                    // Update the current question number and total questions
+                    document.getElementById('questionnum').innerText =  `Question ${data.qnum}/${data.amount}`;
+
+                    // Update the question number for the next request
+                    qnum = data.qnum;
+
+                    submitButton = document.getElementById('Submit');
+                    if (qnum === data.amount) {
+                        submitButton.style.display = 'inline-block'; // Show button
+                    } else {
+                        submitButton.style.display = 'none'; // Hide button
+                    }
+
+                })
+                .catch(error => console.error('Error fetching question:', error));
+        }
+
+        // Function to go to the next question
+        function nextQuestion() {
+            fetchQuestion();
+        }
+
+        function prevQuestion() {
+            if (qnum-1 > 0) { // Ensure we don't go below the first question
+                qnum=qnum-2; // Decrement question number
+                fetchQuestion();
+            } else {
+                console.log('Already at the first question.');
+            }
+        }
+    </script>
 </head>
 <body>
     <header>
@@ -125,8 +174,10 @@ if (isset($_GET['id']) && isset($_GET['q'])) {
     </nav>
     <main>
         <div id="main"> 
-            <div id="time">Time Left &#9200 : <span id="time-left"> 01.55<span></div>
-            <div id="Next"><button class="NextB"> < </button> Question <?php echo $qnum; ?>/<?php echo $amount; ?> <button class="NextB"> > </button></div>
+            <div id="time">Time Left &#9200 : <span id="time-left"> <?php echo $time_remain; ?>:00<span></div>
+            <div id="Next">
+                <button class="NextB" onclick="prevQuestion()"> < </button><span id="questionnum"> Question <?php echo $qnum; ?>/<?php echo $amount; ?></span> 
+                <button class="NextB" onclick="nextQuestion()"> > </button></div>
             <div id="Question"><?php echo $question_text; ?></div>
             <div id="container">
                 <button class="Option">A. <span id="answer1"><?php echo $choiceArray[0]; ?></span></button>
@@ -134,12 +185,7 @@ if (isset($_GET['id']) && isset($_GET['q'])) {
                 <button class="Option">C. <span id="answer3"><?php echo $choiceArray[2]; ?></span></button>
                 <button class="Option">D. <span id="answer4"><?php echo $choiceArray[3]; ?></span></button>
             </div>
-            <?php
-                //submit button appear or not
-                if ($qnum==$amount){
-                    echo '<button class="Submit" onclick="window.location.href=\'QuizSummary\'">Submit</button>';
-                }
-            ?>
+            <button id="Submit" class="Submit" onclick="window.location.href='QuizSummary.php'" style="display: none;">Submit</button>
             
         </div>
         <div class="loop-wrapper">
@@ -166,5 +212,25 @@ if (isset($_GET['id']) && isset($_GET['q'])) {
       <li></li>
       <li></li>
     </ul>
+
+    <script>
+        timerElement=document.getElementById('time-left');
+        timeLeft=<?php echo $time_remain; ?>*60;
+
+        function startTimer() {
+        const timerInterval = setInterval(() => {
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                alert('Time is up!');
+            } else {
+                timeLeft--;
+                minutes = Math.floor(timeLeft / 60);
+                seconds = timeLeft % 60;
+                timerElement.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+            }
+        }, 1000);
+        }
+        startTimer();
+    </script>
 </body>
 </html>
