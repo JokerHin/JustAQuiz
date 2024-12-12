@@ -1,3 +1,9 @@
+<?php
+include('../../main.php');
+include('../session.php');
+$user_id=$_SESSION['user_id'];
+echo "<script>console.log('$user_id');</script>";
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

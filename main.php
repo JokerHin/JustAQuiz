@@ -17,7 +17,7 @@ if ($conn->connect_error) {
 
 
 // Sign Up function  (6 javascript alert)
-function sign_up($name, $password, $confirm_password, $email, $role, $conn) { // role id: 1 admin, 2 instructor 3 student
+function sign_up($name, $password, $confirm_password, $email, $conn, $role="2") { // role id: 1 admin, 2 instructor 3 student
     // protect against xss server scripting attack ( not sure if needed)
     $name = htmlspecialchars($name);
     $password = htmlspecialchars($password);
@@ -533,24 +533,20 @@ function view_available_quiz($conn) {
 
 
 // User Profile Function
-function user_profile($user_id, $conn, $data) {
+function user_profile($conn, $data) {
+    $user_id=$_SESSION['user_id'];
     $sql = "SELECT $data FROM Users WHERE user_id = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $user_id);
+    $stmt->bind_param("i", $_SESSION['user_id']);
     $stmt->execute();
     $result = $stmt->get_result();
 
     if ($result->num_rows > 0) {
-        $row = $result->fetch_assoc();
-        /* depends how html want to show these
-        user_id = htmlspecialchars($row['user_id']);
-        user_name = htmlspecialchars($row['name']);
-        email = htmlspecialchars($row['email']);
-        password = htmlspecialchars($row['password_hash']);
-        date_joined = htmlspecialchars($row['date_joined']);
-        */
+        $info = $result->fetch_assoc();
+        return $info;
     } else {
-        # echo // javascript alert box here
+        echo "<script>console.log('Error.')</script>";
+        return false;
     }
 }
 

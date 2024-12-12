@@ -295,7 +295,7 @@
     <?php
         if (isset($_POST['signupBtn'])) {
             include("../../main.php");
-            $status=sign_up($_POST['Name'], $_POST['password'], $_POST['confirm-password'], $_POST['Email'], $_POST['choice'], $conn);
+            $status=sign_up($_POST['Name'], $_POST['password'], $_POST['confirm-password'], $_POST['Email'], $conn, $_POST['choice']);
             // $role=$_POST['choice'];
             // $name=$_POST['Name'];
             // echo "<script>console.log('$role');</script>";

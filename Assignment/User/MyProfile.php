@@ -1,12 +1,10 @@
 <?php
-include("main.php");
-
-$user = $_SESSION['user_id']; // This could come from user input, database, etc.
-$name = user_profile($user, $conn, "user_id");
-$name = user_profile($user, $conn, "name");
-$name = user_profile($user, $conn, "email");
-$name = user_profile($user, $conn, "password_hash");
-$name = user_profile($user, $conn, "name");
+include("../../main.php");
+include('../session.php');
+$id = user_profile($conn, "user_id");
+$name = user_profile($conn, "name");
+$email = user_profile($conn, "email");
+echo "<script>console.log('$name');</script>";
 ?>
 
 <!DOCTYPE html>
@@ -45,11 +43,10 @@ $name = user_profile($user, $conn, "name");
                 <span class="profilepic__text">Edit Profile</span>
             </div>
             </div>
-                <div id="down">StudentID : <span id="info1"><?php include("../../main.php");user_profile() ?></span> 
-                <br> Name : <span id="info2"> </span>
-                <br> Email : <span id="info3"> </span>
-                <br> Password : <span id="info4"> </span>
-                <br> Instructor : <span id="info5"> </span></div>
+                <div id="down">StudentID : <span id="info1"><?php echo $id; ?></span> 
+                <br> Name : <span id="info2"><?php echo $name; ?></span>
+                <br> Email : <span id="info3"><?php echo $email; ?></span>
+                <br> Password : <span id="info4">Hidden</span></div>
             </div>
             <div id="right">
                 <div class="box">Total Quizzes Played <br><span id="input1">0</span></div>

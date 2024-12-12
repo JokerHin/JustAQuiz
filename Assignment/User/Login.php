@@ -1,3 +1,6 @@
+<?php
+session_start()
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -194,7 +197,9 @@
             include("../../main.php");
             $status=login($_POST['loginEmail'],$_POST['loginPassword'],$conn);
             if ($status){
-                echo '<script>alert("Successful");
+                $user_id=$_SESSION['user_id'];
+                echo "<script>console.log('$user_id');</script>";
+                echo '<script>alert("Successful")
                     window.location.href = "Home.php";
                     </script>';
             }else{
