@@ -1,3 +1,14 @@
+<?php
+include("main.php");
+
+$user = $_SESSION['user_id']; // This could come from user input, database, etc.
+$name = user_profile($user, $conn, "user_id");
+$name = user_profile($user, $conn, "name");
+$name = user_profile($user, $conn, "email");
+$name = user_profile($user, $conn, "password_hash");
+$name = user_profile($user, $conn, "name");
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -34,7 +45,7 @@
                 <span class="profilepic__text">Edit Profile</span>
             </div>
             </div>
-                <div id="down">StudentID : <span id="info1"><?php ?></span> 
+                <div id="down">StudentID : <span id="info1"><?php include("../../main.php");user_profile() ?></span> 
                 <br> Name : <span id="info2"> </span>
                 <br> Email : <span id="info3"> </span>
                 <br> Password : <span id="info4"> </span>

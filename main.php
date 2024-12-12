@@ -17,9 +17,9 @@ if ($conn->connect_error) {
 
 
 // Sign Up function  (6 javascript alert)
-function sign_up($name, $password, $confirm_password, $email, $role, $conn) {
+function sign_up($name, $password, $confirm_password, $email, $role, $conn) { // role id: 1 admin, 2 instructor 3 student
     // protect against xss server scripting attack ( not sure if needed)
-    $name = htmlspecialchars($username);
+    $name = htmlspecialchars($name);
     $password = htmlspecialchars($password);
     $email = htmlspecialchars($email);
     $confirm_password = htmlspecialchars($confirm_password);
@@ -131,7 +131,7 @@ function delete_user($user_id, $conn) {
 
 
 // Update User Function (change username or password or email) (4 javascript alert)
-function upate_user($user_id, $updated_data, $conn){
+function update_user($user_id, $updated_data, $conn){
     $new_name = htmlspecialchars($updated_data['name']);
     $new_password = htmlspecialchars($updated_data['password']);
     $new_email = htmlspecialchars($updated_data['email']);
@@ -533,8 +533,8 @@ function view_available_quiz($conn) {
 
 
 // User Profile Function
-function user_profile($user_id, $conn) {
-    $sql = "SELECT * FROM Users WHERE user_id = ?";
+function user_profile($user_id, $conn, $data) {
+    $sql = "SELECT $data FROM Users WHERE user_id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $user_id);
     $stmt->execute();
