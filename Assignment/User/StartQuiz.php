@@ -31,7 +31,7 @@
                 <h1 class="Title">WHAT IS HTML?</h1>
                 <h1 class="Title2">25 Question</h1>
                 <h1 class="Title2">15 Minutes</h1>
-                <button class="Start" onclick="window.location.href='http://localhost/RWDD/Assignment/User/Quiz.php'">Start</button>
+                <button class="Start" onclick="window.location.href='Quiz.php'">Start</button>
             </div>
         </div>
     </main>

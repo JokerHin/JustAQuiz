@@ -35,17 +35,17 @@
                 <div class="card">
                     <h3>Introduction</h3>
                     <p>What is HTML?</p>
-                    <button class="button-73" role="button" onclick="window.location.href='http://localhost/RWDD/Assignment/User/StartQuiz.php'">Play</button>
+                    <button class="button-73" role="button" onclick="window.location.href='StartQuiz.php'">Play</button>
                 </div>
                 <div class="card">
                     <h3>Form</h3>
                     <p>The &lt;form&gt; Element</p>
-                    <button class="button-73" role="button" onclick="window.location.href='http://localhost/RWDD/Assignment/User/StartQuiz.php'">Play</button>
+                    <button class="button-73" role="button" onclick="window.location.href='StartQuiz.php'">Play</button>
                 </div>
                 <div class="card">
                     <h3>Images</h3>
                     <p>HTML Images Syntax</p>
-                    <button class="button-73" role="button" onclick="window.location.href='http://localhost/RWDD/Assignment/User/StartQuiz.php'">Play</button>
+                    <button class="button-73" role="button" onclick="window.location.href='StartQuiz.php'">Play</button>
                 </div>
                 <div class="card">
                     <h3>Classes</h3>

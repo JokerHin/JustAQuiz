@@ -46,15 +46,16 @@ echo "<script>console.log('$name');</script>";
                 <div id="down">StudentID : <span id="info1"><?php echo $id; ?></span> 
                 <br> Name : <span id="info2"><?php echo $name; ?></span>
                 <br> Email : <span id="info3"><?php echo $email; ?></span>
-                <br> Password : <span id="info4">Hidden</span></div>
+                <!-- <br> Password : <span id="info4">Hidden</span> -->
+            </div>
             </div>
             <div id="right">
                 <div class="box">Total Quizzes Played <br><span id="input1">0</span></div>
                 <div class="box">HTML Quizzes Played <br><span id="input2">0</span></div>
                 <div class="box">Badge Collected <br><span id="input3">0</span></div>
                 <div class="box">CSS Quizzes Played <br><span id="input4">0</span></div>
-                <button class="delete" onclick="window.location.href='http://localhost/RWDD/Assignment/User/Login.php'">Logout </button>
-                <button class="delete" onclick="window.location.href='http://localhost/RWDD/Assignment/User/Login.php'">Delete Account </button>
+                <button class="delete" onclick="window.location.href='Login.php'">Logout </button>
+                <button class="delete" onclick="window.location.href='Login.php'">Delete Account </button>
             </div>
         </div>
     </main>

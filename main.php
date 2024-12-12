@@ -537,18 +537,20 @@ function user_profile($conn, $data) {
     $user_id=$_SESSION['user_id'];
     $sql = "SELECT $data FROM Users WHERE user_id = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $_SESSION['user_id']);
+    $stmt->bind_param("i", $user_id);
     $stmt->execute();
     $result = $stmt->get_result();
-
+ 
     if ($result->num_rows > 0) {
-        $info = $result->fetch_assoc();
+        $row = $result->fetch_assoc();
+        $info = htmlspecialchars($row[$data]);
         return $info;
     } else {
         echo "<script>console.log('Error.')</script>";
         return false;
     }
 }
+
 
 
 // Calculate Used Time Function
