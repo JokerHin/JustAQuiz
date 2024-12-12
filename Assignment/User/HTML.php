@@ -1,3 +1,7 @@
+<?php
+include('../../main.php');
+include('../session.php');
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -32,7 +36,25 @@
         <section class="category">
             <h2>HTML</h2>
             <div class="cards">
-                <div class="card">
+                <?php
+                    $sql = "SELECT * FROM Quiz";
+                    $result = $conn->query($sql);
+
+                    if ($result->num_rows > 0) {
+                        while ($row = $result->fetch_assoc()) {
+                            # echo html code here
+                            echo '<div class="card">';
+                            echo '<h3>' . $row['title'] . '</h3>';
+                            echo '<p>' . $row['description'] . '</p>';
+                            // echo '<button class="button-73" role="button" onclick="window.location.href='StartQuiz.php'">Play</button>';
+                            echo '<button class="button-73" role="button" onclick="window.location.href=\'StartQuiz.php?id='.$row['quiz_id'] .'\'">Play</button>';
+                            echo '</div>';
+                        }
+                    } else {
+                        echo "No quiz available at the moment.";
+                    }
+                ?>
+                <!-- <div class="card">
                     <h3>Introduction</h3>
                     <p>What is HTML?</p>
                     <button class="button-73" role="button" onclick="window.location.href='StartQuiz.php'">Play</button>
@@ -72,8 +94,9 @@
                     <h3>Paragraph</h3>
                     <p>&lt;p&gt; This is a paragraph. &lt;p&gt;</p>
                     <button class="button-73" role="button" onclick="window.location.href='http://localhost/RWDD/Assignment/User/StartQuiz.php'">Play</button>
-                </div>
+                </div> -->
             </div>
+            
             <section>
             <div class='air air1'></div>
             <div class='air air2'></div>

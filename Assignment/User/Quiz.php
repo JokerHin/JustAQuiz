@@ -1,3 +1,36 @@
+<?php
+include('../../main.php');
+include('../session.php');
+if (isset($_GET['id']) && isset($_GET['q'])) {
+    $quizid = intval($_GET['id']);
+    $qnum = intval($_GET['q']);
+    $amount=total_question($quizid, $conn);
+
+    //fetch question
+    $questions = mysqli_query($conn, "SELECT * FROM question WHERE quiz_id=$quizid");
+    $allRows = $questions->fetch_all(MYSQLI_ASSOC);
+    for ($i = 0; $i < $qnum; $i++) {
+        $row = $allRows[$i];
+        $qid = $row['question_id'];
+        $question_text = $row['question_text'];
+    }
+
+    //fetch choices
+    $choices = mysqli_query($conn, "SELECT * FROM choices WHERE question_id=$qid");
+    $choiceArray = array();
+    $choiceidArray = array();
+    while ($row = mysqli_fetch_array($choices)) {
+        $cid = $row['choice_id'];
+        $text = $row['text'];
+        array_push($choiceidArray, $cid);
+        array_push($choiceArray, $text);
+        // Debug or process
+        echo "<script>console.log('Question ID: $cid, Text: $text');</script>";
+    }
+} else {
+    echo "<script>alert('Please choose quiz to start.');window.location.href='HTML.php';</script>";
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,7 +43,7 @@
             position: absolute;
             width: 300px;
             height: auto;
-            animation: flyRocket 10s ease-in-out infinite; 
+            animation: flyRocket 10s ease-in-out infinite;
         }
 
         @keyframes flyRocket {
@@ -93,15 +126,21 @@
     <main>
         <div id="main"> 
             <div id="time">Time Left &#9200 : <span id="time-left"> 01.55<span></div>
-            <div id="Next"><button class="NextB"> < </button> Question 2/25 <button class="NextB"> > </button></div>
-            <div id="Question">What does HTML stand for?</div>
+            <div id="Next"><button class="NextB"> < </button> Question <?php echo $qnum; ?>/<?php echo $amount; ?> <button class="NextB"> > </button></div>
+            <div id="Question"><?php echo $question_text; ?></div>
             <div id="container">
-                <button class="Option">A. <span id="answer1"></span></button>
-                <button class="Option">B. <span id="answer2"></span></button>
-                <button class="Option">C. <span id="answer3"></span></button>
-                <button class="Option">D. <span id="answer4"></span></button>
+                <button class="Option">A. <span id="answer1"><?php echo $choiceArray[0]; ?></span></button>
+                <button class="Option">B. <span id="answer2"><?php echo $choiceArray[1]; ?></span></button>
+                <button class="Option">C. <span id="answer3"><?php echo $choiceArray[2]; ?></span></button>
+                <button class="Option">D. <span id="answer4"><?php echo $choiceArray[3]; ?></span></button>
             </div>
-            <button class="Submit" onclick="window.location.href='http://localhost/RWDD/Assignment/User/QuizSummary'">Submit</button>
+            <?php
+                //submit button appear or not
+                if ($qnum==$amount){
+                    echo '<button class="Submit" onclick="window.location.href=\'QuizSummary\'">Submit</button>';
+                }
+            ?>
+            
         </div>
         <div class="loop-wrapper">
     <div class="mountain"></div>

@@ -518,7 +518,7 @@ function finish_quiz_attempt($attempt_id, $time_remaining, $conn) {
 
 
 // View all available quiz function
-function view_available_quiz($conn) {
+function view_available_quiz($conn) { //copied code to quiz.php, no need appear here anymore
     $sql = "SELECT * FROM Quiz";
     $result = $conn->query($sql);
 
