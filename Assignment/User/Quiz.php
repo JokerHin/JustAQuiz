@@ -1,6 +1,7 @@
 <?php
 include('../../main.php');
 include('../session.php');
+
 if (isset($_GET['id']) && isset($_GET['q'])) {
     $quizid = intval($_GET['id']);
     $qnum = intval($_GET['q']);
@@ -8,6 +9,7 @@ if (isset($_GET['id']) && isset($_GET['q'])) {
     $quiz = mysqli_query($conn, "SELECT * FROM quiz WHERE quiz_id=$quizid");
     $row = mysqli_fetch_array($quiz);
     $time_remain = $row['time_limit'];
+    $status=start_quiz_attempt($quizid,$conn); //create attempt
 
     //fetch question
     $questions = mysqli_query($conn, "SELECT * FROM question WHERE quiz_id=$quizid");
@@ -115,7 +117,6 @@ if (isset($_GET['id']) && isset($_GET['q'])) {
 
         function fetchQuestion() {
             // Make an AJAX request to get the next question
-            console.log(qnum);
             fetch(`get_question.php?id=${quizid}&q=${qnum}`)
                 .then(response => response.json())
                 .then(data => {
@@ -185,7 +186,7 @@ if (isset($_GET['id']) && isset($_GET['q'])) {
                 <button class="Option">C. <span id="answer3"><?php echo $choiceArray[2]; ?></span></button>
                 <button class="Option">D. <span id="answer4"><?php echo $choiceArray[3]; ?></span></button>
             </div>
-            <button id="Submit" class="Submit" onclick="window.location.href='QuizSummary.php'" style="display: none;">Submit</button>
+            <button id="Submit" class="Submit" onclick="endTimer()" style="display: none;">Submit</button>
             
         </div>
         <div class="loop-wrapper">
@@ -230,6 +231,12 @@ if (isset($_GET['id']) && isset($_GET['q'])) {
             }
         }, 1000);
         }
+
+        function endTimer(){
+            remaining_time=timeLeft/60;
+            window.location.href='QuizSummary.php?time='+remaining_time;
+        }
+
         startTimer();
     </script>
 </body>
