@@ -268,22 +268,23 @@
         <div id="Login" >
             <h1>Create your Account</h1>  
                 <div class="container2">
-                <form class="toggle">  
-                    <input type="radio" id="choice1" name="choice" value="creative">
-                    <label for="choice1">Student</label>
-            
-                    <input type="radio" id="choice2" name="choice" value="productive">
-                    <label for="choice2">Instructor</label>
-            
-                    <div id="flap"><span class="content">Student</span></div>     
-                </form>            
+            <form method="post">  
+                <div class="toggle">  
+                    <input type="radio" id="choice1" name="choice" value="3">
+                        <label for="choice1">Instructor</label>
+               
+                        <input type="radio" id="choice2" name="choice" value="2">
+                        <label for="choice2">Student</label>
+               
+                        <div id="flap"><span class="content">Student</span></div>
+                </div>            
             </div>  
-            <form method="post">                   
+                             
                 <div class="input"><input type="text" name="Name" placeholder="Name" required></div>
                 <div class="input"><input type="email" name="Email" placeholder="Email" required></div>
                 <div class="input"><input type="password" name="password" placeholder="Password" required></div>
                 <div class="input"><input type="password" name="confirm-password" placeholder="confirm-password" required></div>
-                <p id="word">Already have an account?<a href="Login.php" id="login-link">Login</a></p>
+                <p id="word">Already have an account?&nbsp<a href="Login.php" id="login-link">Login</a></p>
                 <button type="submit">Sign Up</button>
             </form>
         </div>

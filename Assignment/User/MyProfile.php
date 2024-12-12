@@ -45,6 +45,43 @@
                 <button class="delete" onclick="window.location.href='http://localhost/RWDD/Assignment/User/Login.php'">Delete Account </button>
             </div>
         </div>
+        <div class="popup"> 
+        <div class="popup-content">
+            <form>
+            <img id="close-button" src="../images/close.png" alt="close-button">
+            <h2>Profile</h2>
+            <hr>
+            
+            <div class="input-info">
+                <label for="basic-name">Name</label>
+                <input type="text" id="basic-name" placeholder="Name" name="name" required />
+            </div>
+            
+            <div class="input-info">
+                <label for="additional-info">Email</label>
+                <input type="text" id="additional-info" placeholder="Email" name="Email" required/>
+            </div>
+            
+            <div class="input-info">
+                <label for="custom-label">Password</label>
+                <input type="text" id="custom-label" placeholder="Password" name="Password" required />
+            </div>
+
+            <div class="images-container">
+                <label for="images" class="drop-container" id="dropcontainer">
+                <p class="drop-title">Drop files here</p>
+                or
+                <br>
+                <input type="file" id="images" accept="image/*">
+                </label>
+            </div>
+            
+            <div class="button-container">
+                <button type="submit" class="update-button">Update</button>
+            </div>
+            </form>
+        </div>
+    </div>
     </main>
     <ul class="bg-bubbles">
       <li></li>
@@ -58,5 +95,6 @@
       <li></li>
       <li></li>
     </ul>
+    <script src=MyProfile.js></script>
 </body>
 </html>

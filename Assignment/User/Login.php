@@ -182,7 +182,7 @@
                 <h1>Login to your Account</h1>                
                 <div class="input"><input type="text" name="Name" placeholder="Username" required></div>
                 <div class="input"><input type="password" name="password" placeholder="Password" required></div>
-                <p>Don't have an account?  <a  id="login-link" href="Sign Up.php">Sign Up</a></p>
+                <p>Don't have an account?&nbsp<a  id="login-link" href="Sign Up.php">Sign Up</a></p>
                 <button type="submit">Login</button>
             </form>
         </div>
