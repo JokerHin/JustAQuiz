@@ -34,7 +34,11 @@
                 <span class="profilepic__text">Edit Profile</span>
             </div>
             </div>
-                <div id="down">StudentID : <span id="info1"></span> <br> Name : <span id="info2"></span> <br> Email : <span id="info3"></span><br> Password : <span id="info4"></span><br> Instructor : <span id="info5"></span></div>
+                <div id="down">StudentID : <span id="info1"><?php ?></span> 
+                <br> Name : <span id="info2"> </span>
+                <br> Email : <span id="info3"> </span>
+                <br> Password : <span id="info4"> </span>
+                <br> Instructor : <span id="info5"> </span></div>
             </div>
             <div id="right">
                 <div class="box">Total Quizzes Played <br><span id="input1">0</span></div>

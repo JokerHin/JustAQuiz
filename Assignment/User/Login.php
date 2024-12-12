@@ -195,10 +195,12 @@
             $status=login($_POST['loginEmail'],$_POST['loginPassword'],$conn);
             if ($status){
                 echo '<script>alert("Successful");
-                    window.location.href = "DashBoard.php";
+                    window.location.href = "Home.php";
                     </script>';
             }else{
-                echo "<script>alert('Failed');</script>";
+                echo '<script>alert("Failed");
+                    window.location.href = "Login.php";
+                    </script>';
             }
         }
     ?>

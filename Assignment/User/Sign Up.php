@@ -266,28 +266,32 @@
             <img id="picture" src="../images/JustAQuiz.png" alt="JustAQuiz">
         </div>
         <div id="Login" >
-            <h1>Create your Account</h1>  
-                <div class="container2">
-                <form class="toggle">  
-                    <input type="radio" id="choice1" name="choice" value="creative">
-                    <label for="choice1">Student</label>
+            <h1>Create your Account</h1>
             
-                    <input type="radio" id="choice2" name="choice" value="productive">
-                    <label for="choice2">Instructor</label>
+            <div class="container2">
             
-                    <div id="flap"><span class="content">Student</span></div>     
-                </form>            
-            </div>  
-            <form method="post" action="#" >                   
+                <form method="post">  
+                    <div class="toggle">
+                        <input type="radio" id="choice1" name="choice" value="3">
+                        <label for="choice1">Student</label>
+                
+                        <input type="radio" id="choice2" name="choice" value="2">
+                        <label for="choice2">Instructor</label>
+                
+                        <div id="flap"><span class="content">Student</span></div>     
+                    </div>            
+                
                 <div class="input"><input type="text" name="Name" placeholder="Name" required></div>
                 <div class="input"><input type="email" name="Email" placeholder="Email" required></div>
                 <div class="input"><input type="password" name="password" placeholder="Password" required></div>
                 <div class="input"><input type="password" name="confirm-password" placeholder="confirm-password" required></div>
                 <p id="word">Already have an account?<a href="Login.php" id="login-link">Login</a></p>
                 <button type="submit" name="signupBtn">Sign Up</button>
-            </form>
+                
+                </form>
+            </div>
         </div>
-    </div>  
+    </div>
    
     <div class="wrapper"></div> 
     <script src="signup.js"></script>
@@ -296,13 +300,18 @@
             include("../../main.php");
             $status=sign_up($_POST['Name'], $_POST['password'], $_POST['confirm-password'], $_POST['Email'], $_POST['choice'], $conn);
             $role=$_POST['choice'];
+            $name=$_POST['Name'];
             echo "<script>console.log('$role');</script>";
+            echo "<script>console.log('$name');</script>";
+            echo "<script>console.log('$status');</script>";
             if ($status){
                 echo '<script>alert("Successful");
-                    window.location.href = "DashBoard.php";
+                    window.location.href = "Home.php";
                     </script>';
             }else{
-                echo "<script>alert('Failed');</script>";
+                echo '<script>alert("Failed");
+                    window.location.href = "Sign Up.php";
+                    </script>';
             }
             // mysqli_close($con);
         }
