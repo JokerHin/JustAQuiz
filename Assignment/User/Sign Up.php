@@ -296,11 +296,6 @@
         if (isset($_POST['signupBtn'])) {
             include("../../main.php");
             $status=sign_up($_POST['Name'], $_POST['password'], $_POST['confirm-password'], $_POST['Email'], $conn, $_POST['choice']);
-            // $role=$_POST['choice'];
-            // $name=$_POST['Name'];
-            // echo "<script>console.log('$role');</script>";
-            // echo "<script>console.log('$name');</script>";
-            // echo "<script>console.log('$status');</script>";
             if ($status){
                 echo '<script>alert("Successful");
                     window.location.href = "Home.php";

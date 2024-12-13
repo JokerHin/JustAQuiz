@@ -30,6 +30,7 @@ if (isset($_GET['id']) && isset($_GET['q'])) {
         array_push($choiceidArray, $cid);
         array_push($choiceArray, $text);
     }
+    $answers=array();
 } else {
     echo "<script>alert('Please choose quiz to start.');window.location.href='HTML.php';</script>";
 }
@@ -126,6 +127,26 @@ if (isset($_GET['id']) && isset($_GET['q'])) {
                     document.getElementById('answer2').innerText = data.choices[1];
                     document.getElementById('answer3').innerText = data.choices[2];
                     document.getElementById('answer4').innerText = data.choices[3];
+                    document.getElementById('answer1').value = data.values[0];
+                    document.getElementById('answer2').value = data.values[1];
+                    document.getElementById('answer3').value = data.values[2];
+                    document.getElementById('answer4').value = data.values[3];
+                    document.getElementById('answer1').onclick = function () {
+                        nextQuestion(data.values[0]);
+                        console.log(data.values[0]);
+                    };
+                    document.getElementById('answer2').onclick = function () {
+                        nextQuestion(data.values[1]);
+                        console.log(data.values[1]);
+                    };
+                    document.getElementById('answer3').onclick = function () {
+                        nextQuestion(data.values[2]);
+                        console.log(data.values[2]);
+                    };
+                    document.getElementById('answer4').onclick = function () {
+                        nextQuestion(data.values[3]);
+                        console.log(data.values[3]);
+                    };
                     
                     // Update the current question number and total questions
                     document.getElementById('questionnum').innerText =  `Question ${data.qnum}/${data.amount}`;
@@ -145,7 +166,8 @@ if (isset($_GET['id']) && isset($_GET['q'])) {
         }
 
         // Function to go to the next question
-        function nextQuestion() {
+        function nextQuestion(value) {
+            console.log(value);
             fetchQuestion();
         }
 
@@ -174,19 +196,21 @@ if (isset($_GET['id']) && isset($_GET['q'])) {
         <a href="Login.php">LOGOUT</a>
     </nav>
     <main>
-        <div id="main"> 
+        <div id="main">
             <div id="time">Time Left &#9200 : <span id="time-left"> <?php echo $time_remain; ?>:00<span></div>
             <div id="Next">
-                <button class="NextB" onclick="prevQuestion()"> < </button><span id="questionnum"> Question <?php echo $qnum; ?>/<?php echo $amount; ?></span> 
+                <button class="NextB" onclick="prevQuestion()"> < </button><span id="questionnum"> Question <?php echo $qnum; ?>/<?php echo $amount; ?></span>
                 <button class="NextB" onclick="nextQuestion()"> > </button></div>
             <div id="Question"><?php echo $question_text; ?></div>
+            <!-- <form method="post" onsubmit="return false"> -->
             <div id="container">
-                <button class="Option">A. <span id="answer1"><?php echo $choiceArray[0]; ?></span></button>
-                <button class="Option">B. <span id="answer2"><?php echo $choiceArray[1]; ?></span></button>
-                <button class="Option">C. <span id="answer3"><?php echo $choiceArray[2]; ?></span></button>
-                <button class="Option">D. <span id="answer4"><?php echo $choiceArray[3]; ?></span></button>
+                <button class="Option" onclick="nextQuestion(<?php echo $choiceidArray[0]; ?>)" name="answerBtn">A. <span id="answer1"><?php echo $choiceArray[0]; ?></span></button>
+                <button class="Option" onclick="nextQuestion(<?php echo $choiceidArray[1]; ?>)" name="answerBtn">B. <span id="answer2"><?php echo $choiceArray[1]; ?></span></button>
+                <button class="Option" onclick="nextQuestion(<?php echo $choiceidArray[2]; ?>)" name="answerBtn">C. <span id="answer3"><?php echo $choiceArray[2]; ?></span></button>
+                <button class="Option" onclick="nextQuestion(<?php echo $choiceidArray[3]; ?>)" name="answerBtn">D. <span id="answer4"><?php echo $choiceArray[3]; ?></span></button>
             </div>
-            <button id="Submit" class="Submit" onclick="endTimer()" style="display: none;">Submit</button>
+            <!-- </form> -->
+            <button name="submitBtn" id="Submit" class="Submit" onclick="endTimer()" style="display: none;">Submit</button>
             
         </div>
         <div class="loop-wrapper">
@@ -214,7 +238,7 @@ if (isset($_GET['id']) && isset($_GET['q'])) {
       <li></li>
     </ul>
 
-    <script>
+    <script> //timer
         timerElement=document.getElementById('time-left');
         timeLeft=<?php echo $time_remain; ?>*60;
 

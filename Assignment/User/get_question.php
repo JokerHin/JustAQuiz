@@ -17,14 +17,18 @@ if (isset($_GET['id']) && isset($_GET['q'])) {
     // Fetch choices
     $choices = mysqli_query($conn, "SELECT * FROM choices WHERE question_id=$qid");
     $choiceArray = array();
+    $choiceidArray = array();
     while ($row = mysqli_fetch_array($choices)) {
         array_push($choiceArray, $row['text']);
+        array_push($choiceidArray, $row['choice_id']);
     }
+
 
     // Return data as JSON
     echo json_encode([
         'question' => $question_text,
         'choices' => $choiceArray,
+        'values' => $choiceidArray,
         'qnum' => $qnum + 1,
         'amount' => $amount
     ]);
