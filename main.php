@@ -504,7 +504,7 @@ function finish_quiz_attempt($attempt_id, $time_remaining, $conn) {
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("si", $attempt_id, $time_remaining);
         if ($stmt->execute()) { // then change result table
-            unset($_SESSION['attempt_id']);
+            // unset($_SESSION['attempt_id']);
             return true;
         } else {
             # echo // javascript alert box here
@@ -563,8 +563,8 @@ function calculate_used_time($attempt_id, $conn) {
 
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
-        $used_time = $row['time_limit'] - $row['time_remaining'];
-        return $used_time * 60;
+        $used_time = $row['time_limit']*60 - $row['time_remaining'];
+        return $used_time/60;
     } else {
         # echo // javascript alert box here
     }
@@ -629,7 +629,7 @@ function write_feedback($result_id, $feedback, $conn) {
 
 // Calculate score function (add liao attempt id in table)
 function calculate_score($attempt_id, $conn){
-    $sql = "SELECT sa.question_id, c.is_correct FROM Student_Answer sa INNER JOIN Choices c ON sa.choice_id = c.choice_id WHERE sa.attempt_id = ?"; // can use sum if want
+    $sql = "SELECT c.question_id, c.is_correct FROM Student_Answer sa INNER JOIN Choices c ON sa.choice_id = c.choice_id WHERE sa.attempt_id = ?"; // can use sum if want
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $attempt_id);
     $stmt->execute();
@@ -701,7 +701,7 @@ function total_question($quiz_id, $conn){
 
 
 // Quiz result function
-function quiz_result($attempt_id, $conn){
+function quiz_result($attempt_id, $conn){ //not working
     $sql = "SELECT q.subject, q.title, a.attempt_id, q.quiz_id, r.time_remaining, r.date, r.feedback FROM Attempt a INNER JOIN Quiz q ON a.quiz_id = q.quiz_id INNER JOIN Result r ON r.attempt_id = a.attempt_id WHERE a.attempt_id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $attempt_id);

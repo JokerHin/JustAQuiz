@@ -166,12 +166,10 @@ if (isset($_GET['id']) && isset($_GET['q'])) {
         function nextQuestion(value=-1) {
             console.log(qnum);
             console.log(chosenAnswers.length);
-            if (value!=-1){
-                if (chosenAnswers.length!=qnum-1){
+            if (chosenAnswers.length!=qnum-1 && value!=-1){ //go back previous question and chose a new answer
                     chosenAnswers[qnum-1]=value.toString();
-                }else{
+            }else{ //pressed next button or chose a choice to go next question
                     chosenAnswers.push(value.toString());
-                }
             }
 
             if (qnum >= amount-1) {
@@ -282,7 +280,7 @@ if (isset($_GET['id']) && isset($_GET['q'])) {
 
         function endQuiz(){
             console.log(chosenAnswers);
-            remaining_time=timeLeft/60;
+            remaining_time=timeLeft;
             const payload = {
                 answers: chosenAnswers, // This array contains the selected choice IDs
             };
