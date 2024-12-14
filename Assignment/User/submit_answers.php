@@ -9,6 +9,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $answers = $data['answers']; // Array of choice IDs
 
     if (submit_answer($answers, $conn)) {
+        $attemptid=$_SESSION['attempt_id'];
+        $remain_time = intval($_GET['time']);
+        $status=finish_quiz_attempt($attemptid,$remain_time,$conn);
         echo json_encode([
             'success' => true,
             'message' => 'Answers submitted successfully!',

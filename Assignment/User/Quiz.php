@@ -115,6 +115,7 @@ if (isset($_GET['id']) && isset($_GET['q'])) {
     <script>
         quizid = new URLSearchParams(window.location.search).get('id');
         qnum = parseInt(new URLSearchParams(window.location.search).get('q')) || 0;
+        amount = <?php echo $amount; ?>;
         let chosenAnswers = [];
 
         function fetchQuestion() {
@@ -128,7 +129,16 @@ if (isset($_GET['id']) && isset($_GET['q'])) {
                     document.getElementById('answer2').innerText = data.choices[1];
                     document.getElementById('answer3').innerText = data.choices[2];
                     document.getElementById('answer4').innerText = data.choices[3];
-                    // document.getElementById('answer1').value = data.values[0];
+
+                    if (data.values[0]==chosenAnswers[qnum]){
+                        document.getElementById('choice1').focus();
+                    }else if (data.values[1]==chosenAnswers[qnum]){
+                        document.getElementById('choice2').focus();
+                    }else if (data.values[2]==chosenAnswers[qnum]){
+                        document.getElementById('choice3').focus();
+                    }else if (data.values[3]==chosenAnswers[qnum]){
+                        document.getElementById('choice4').focus();
+                    }
 
                     document.querySelector('.Option:nth-child(1)').setAttribute('data-choice-id', data.values[0]);
                     document.querySelector('.Option:nth-child(2)').setAttribute('data-choice-id', data.values[1]);
@@ -153,8 +163,32 @@ if (isset($_GET['id']) && isset($_GET['q'])) {
         }
 
         // Function to go to the next question
-        function nextQuestion(value) {
-            chosenAnswers.push(value);
+        function nextQuestion(value=-1) {
+            console.log(qnum);
+            console.log(chosenAnswers.length);
+            if (value!=-1){
+                if (chosenAnswers.length!=qnum-1){
+                    chosenAnswers[qnum-1]=value.toString();
+                }else{
+                    chosenAnswers.push(value.toString());
+                }
+            }
+
+            if (qnum >= amount-1) {
+                console.log("Last question reached, keeping focus.");
+                document.querySelectorAll('.Option').forEach(button => {
+                    button.addEventListener('click', function () {
+                        this.focus(); // remain focus
+                    });
+                });
+            }else{
+                document.querySelectorAll('.Option').forEach(button => {
+                    button.addEventListener('click', function () {
+                        this.blur(); // Remove focus
+                    });
+                });
+            }
+
             fetchQuestion();
         }
 
@@ -166,6 +200,8 @@ if (isset($_GET['id']) && isset($_GET['q'])) {
                 console.log('Already at the first question.');
             }
         }
+
+
     </script>
 </head>
 <body>
@@ -191,10 +227,10 @@ if (isset($_GET['id']) && isset($_GET['q'])) {
             <div id="Question"><?php echo $question_text; ?></div>
             <!-- <form method="post" onsubmit="return false"> -->
             <div id="container">
-                <button class="Option" data-choice-id="<?php echo $choiceidArray[0]; ?>" name="answerBtn">A. <span id="answer1"><?php echo $choiceArray[0]; ?></span></button>
-                <button class="Option" data-choice-id="<?php echo $choiceidArray[1]; ?>" name="answerBtn">B. <span id="answer2"><?php echo $choiceArray[1]; ?></span></button>
-                <button class="Option" data-choice-id="<?php echo $choiceidArray[2]; ?>" name="answerBtn">C. <span id="answer3"><?php echo $choiceArray[2]; ?></span></button>
-                <button class="Option" data-choice-id="<?php echo $choiceidArray[3]; ?>" name="answerBtn">D. <span id="answer4"><?php echo $choiceArray[3]; ?></span></button>
+                <button id="choice1" tabindex="-1" class="Option" data-choice-id="<?php echo $choiceidArray[0]; ?>" name="answerBtn">A. <span id="answer1"><?php echo $choiceArray[0]; ?></span></button>
+                <button id="choice2" tabindex="-1" class="Option" data-choice-id="<?php echo $choiceidArray[1]; ?>" name="answerBtn">B. <span id="answer2"><?php echo $choiceArray[1]; ?></span></button>
+                <button id="choice3" tabindex="-1" class="Option" data-choice-id="<?php echo $choiceidArray[2]; ?>" name="answerBtn">C. <span id="answer3"><?php echo $choiceArray[2]; ?></span></button>
+                <button id="choice4" tabindex="-1" class="Option" data-choice-id="<?php echo $choiceidArray[3]; ?>" name="answerBtn">D. <span id="answer4"><?php echo $choiceArray[3]; ?></span></button>
             </div>
             <!-- </form> -->
             <button name="submitBtn" id="Submit" class="Submit" onclick="endQuiz()" style="display: none;">Submit</button>
@@ -252,7 +288,7 @@ if (isset($_GET['id']) && isset($_GET['q'])) {
             };
 
             // Send the data to the server
-            fetch('submit_answers.php', {
+            fetch('submit_answers.php?time='+remaining_time, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -263,7 +299,7 @@ if (isset($_GET['id']) && isset($_GET['q'])) {
                 .then(data => {
                     if (data.success) {
                         alert(data.message); // "Answers submitted successfully!"
-                        window.location.href = 'QuizSummary.php'; // Redirect to summary page
+                        window.location.href = 'QuizSummary.php?time='+remaining_time; // Redirect to summary page
                     } else {
                         alert(data.message); // Show error message
                     }

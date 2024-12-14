@@ -1,11 +1,6 @@
 <?php
 include('../../main.php');
 include('../session.php');
-$attemptid=$_SESSION['attempt_id'];
-if (isset($_GET['time'])) {
-    $remain_time = intval($_GET['time']);
-    $status=finish_quiz_attempt($attemptid,$remain_time,$conn);
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">
