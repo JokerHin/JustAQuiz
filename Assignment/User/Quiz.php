@@ -234,6 +234,7 @@ if (isset($_GET['id']) && isset($_GET['q'])) {
             if (timeLeft <= 0) {
                 clearInterval(timerInterval);
                 alert('Time is up!');
+                endQuiz();
             } else {
                 timeLeft--;
                 minutes = Math.floor(timeLeft / 60);
@@ -246,7 +247,32 @@ if (isset($_GET['id']) && isset($_GET['q'])) {
         function endQuiz(){
             console.log(chosenAnswers);
             remaining_time=timeLeft/60;
-            window.location.href='QuizSummary.php?time='+remaining_time;
+            const payload = {
+                answers: chosenAnswers, // This array contains the selected choice IDs
+            };
+
+            // Send the data to the server
+            fetch('submit_answers.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(payload),
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert(data.message); // "Answers submitted successfully!"
+                        window.location.href = 'QuizSummary.php'; // Redirect to summary page
+                    } else {
+                        alert(data.message); // Show error message
+                    }
+                })
+                .catch(error => {
+                    console.error('Error submitting answers:', error);
+                    alert('An error occurred while submitting your answers.');
+                });
+            // window.location.href='QuizSummary.php?time='+remaining_time;
         }
 
         startTimer();
