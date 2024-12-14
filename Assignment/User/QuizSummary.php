@@ -42,6 +42,20 @@ if ($row['feedback']===null){
     $feedback=$row['feedback'];
 }
 
+//pie chart
+$greenAngle = ($score / 100) * 360; // Example: Starting angle for the green section
+$redAngle = 360; // Example: Ending angle for the pink section
+echo "<script>console.log('$greenAngle');</script>";
+echo "<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        let greenAngle = $greenAngle; // PHP value inserted into JS variable
+        document.querySelector('.pie-chart').style.backgroundImage = 
+            `conic-gradient(
+                #00ff00 0deg {$greenAngle}deg, 
+                #f39fab {$greenAngle}deg 360deg
+            )`;
+    });
+</script>";
 unset($_SESSION['attempt_id']);
 ?>
 <!DOCTYPE html>
@@ -110,7 +124,7 @@ unset($_SESSION['attempt_id']);
                     <div class="correct-label"> correct</div>
                     <div class="incorrect-label"> incorrect</div>
                 </div>
-                <div class="pie-chart"></div>
+                <div id="pie-chart" class="pie-chart"></div>
             </div>
         </div>
         <div class="loop-wrapper">
