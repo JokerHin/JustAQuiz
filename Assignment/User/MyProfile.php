@@ -34,7 +34,7 @@ echo "<script>console.log('$name');</script>";
         <a href="Option.php">QUIZZES</a>
         <a href="DashBoard.php">DASHBOARD</a>
         <a href="MyProfile.php">MY PROFILE</a>
-        <a href="Login.php">LOGOUT</a>
+        <!-- <a href="logout.php">LOGOUT</a> -->
     </nav>
 
     <main> 
@@ -58,7 +58,7 @@ echo "<script>console.log('$name');</script>";
                 <div class="box">HTML Quizzes Played <br><span id="input2"><?php echo $total_html; ?></span></div>
                 <div class="box">Badge Collected <br><span id="input3"><?php echo $total_badges; ?></span></div>
                 <div class="box">CSS Quizzes Played <br><span id="input4"><?php echo $total_css; ?></span></div>
-                <button class="delete" onclick="window.location.href='Login.php'">Logout </button>
+                <button class="delete" onclick="window.location.href='../logout.php'">Logout </button>
                 <button class="delete" onclick="window.location.href='Login.php'">Delete Account </button>
             </div>
         </div>

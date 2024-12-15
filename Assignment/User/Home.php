@@ -1,8 +1,15 @@
 <?php
 include('../../main.php');
-include('../session.php');
-$user_id=$_SESSION['user_id'];
-echo "<script>console.log('$user_id');</script>";
+//user can access to this page no matter logged in or not
+if (isset($_SESSION['user_id'])) { //already login
+    $user_id=$_SESSION['user_id'];
+    echo "<script>console.log('$user_id');</script>";
+}else{
+    echo "<script>console.log('Not logged in');</script>";
+}
+
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -106,7 +113,14 @@ echo "<script>console.log('$user_id');</script>";
             <input type="text" placeholder="Enter ID">
         </div>
         <nav>
-            <div class="btn"><a href="Login.php">Login</a></div>
+            <?php
+                if (!isset($_SESSION['user_id'])) { //already login
+                    echo '<div class="btn"><a href="Login.php">Login</a></div>';
+                }else{
+                    echo '<div class="emptyBtn"></div>';
+                }
+            ?>
+            <!-- <div id="loginBtn" class="btn"><a href="Login.php">Login</a></div> -->
         </nav>
     </header>
 
@@ -115,7 +129,7 @@ echo "<script>console.log('$user_id');</script>";
         <a href="Option.php">QUIZZES</a>
         <a href="DashBoard.php">DASHBOARD</a>
         <a href="MyProfile.php">MY PROFILE</a>
-        <a href="Login.php">LOGOUT</a>
+        <!-- <a href="Login.php">LOGOUT</a> -->
     </nav>
 
     <main>
