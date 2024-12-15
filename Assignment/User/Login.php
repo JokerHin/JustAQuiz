@@ -199,11 +199,11 @@ session_start()
             if ($status){
                 $user_id=$_SESSION['user_id'];
                 echo "<script>console.log('$user_id');</script>";
-                echo '<script>alert("Successful")
+                echo '<script>alert("Login successful")
                     window.location.href = "Home.php";
                     </script>';
             }else{
-                echo '<script>alert("Failed");
+                echo '<script>alert("Login failed");
                     window.location.href = "Login.php";
                     </script>';
             }

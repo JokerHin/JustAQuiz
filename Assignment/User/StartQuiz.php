@@ -4,13 +4,16 @@ include('../session.php');
 if (isset($_GET['id'])) {
     $id = intval($_GET['id']);
     $quiz = mysqli_query($conn, "SELECT * FROM quiz WHERE quiz_id=$id");
+    if (mysqli_num_rows($quiz) < 1) {
+        echo "<script>alert('Invalid Quiz ID.');window.location.href='Home.php';</script>";
+    }
     $row = mysqli_fetch_array($quiz);
     $title = $row['title'];
     $description = $row['description'];
     $time = $row['time_limit'];
     $amount=total_question($id, $conn);
 } else {
-    echo "<script>alert('Please choose quiz to start.');window.location.href='HTML.php';</script>";
+    echo "<script>alert('Please choose quiz to start.');window.location.href='Home.php';</script>";
 }
 ?>
 <!DOCTYPE html>

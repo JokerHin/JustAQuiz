@@ -1,6 +1,5 @@
 <?php
 include('../../main.php');
-// include('../session.php');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -17,10 +16,16 @@ include('../../main.php');
         </div>
         <div class="quiz-id">
             <span>JOIN QUIZ? ENTER QUIZID: </span>
-            <input type="text" placeholder="Enter ID">
+            <input id="joinQuiz" type="text" placeholder="Enter ID">
         </div>
         <nav>
-        <div class="btn"><a href="Login.php">Login</a></div>
+            <?php //login button appear or not
+                if (!isset($_SESSION['user_id'])) { //already login
+                    echo '<div class="btn"><a href="Login.php">Login</a></div>';
+                }else{ //not yet log in
+                    echo '<div class="emptyBtn"></div>';
+                }
+            ?>
         </nav>
     </header>
 
@@ -29,7 +34,6 @@ include('../../main.php');
         <a href="Option.php">QUIZZES</a>
         <a href="DashBoard.php">DASHBOARD</a>
         <a href="MyProfile.php">MY PROFILE</a>
-        <a href="Login.php">LOGOUT</a>
     </nav>
 
     <main>    
@@ -37,10 +41,11 @@ include('../../main.php');
             <h2>HTML</h2>
             <div class="cards">
                 <?php
-                    $sql = "SELECT * FROM Quiz";
+                    $sql = "SELECT * FROM Quiz WHERE subject = 'HTML'";
                     $result = $conn->query($sql);
 
                     if ($result->num_rows > 0) {
+                        $count=1;
                         while ($row = $result->fetch_assoc()) {
                             # echo html code here
                             echo '<div class="card">';
@@ -54,49 +59,8 @@ include('../../main.php');
                         echo "No quiz available at the moment.";
                     }
                 ?>
-                <!-- <div class="card">
-                    <h3>Introduction</h3>
-                    <p>What is HTML?</p>
-                    <button class="button-73" role="button" onclick="window.location.href='StartQuiz.php'">Play</button>
-                </div>
-                <div class="card">
-                    <h3>Form</h3>
-                    <p>The &lt;form&gt; Element</p>
-                    <button class="button-73" role="button" onclick="window.location.href='StartQuiz.php'">Play</button>
-                </div>
-                <div class="card">
-                    <h3>Images</h3>
-                    <p>HTML Images Syntax</p>
-                    <button class="button-73" role="button" onclick="window.location.href='StartQuiz.php'">Play</button>
-                </div>
-                <div class="card">
-                    <h3>Classes</h3>
-                    <p>Using The class Attribute</p>
-                    <button class="button-73" role="button" onclick="window.location.href='http://localhost/RWDD/Assignment/User/StartQuiz.php'">Play</button>
-                </div>
-                <div class="card">
-                    <h3>Elements</h3>
-                    <p>&lt;h1&gt; My first Heading &lt;h1&gt;</p>
-                    <button class="button-73" role="button" onclick="window.location.href='http://localhost/RWDD/Assignment/User/StartQuiz.php'">Play</button>
-                </div>
-                <div class="card">
-                    <h3>Attribute</h3>
-                    <p>name="value"</p>
-                    <button class="button-73" role="button" onclick="window.location.href='http://localhost/RWDD/Assignment/User/StartQuiz.php'">Play</button>
-                </div>
-                <div class="card">
-                    <h3>Headings</h3>
-                    <h4>Heading1</h4>
-                    <h5>Heading2</h5>
-                    <button class="button-73" role="button" onclick="window.location.href='http://localhost/RWDD/Assignment/User/StartQuiz.php'">Play</button>
-                </div>
-                <div class="card">
-                    <h3>Paragraph</h3>
-                    <p>&lt;p&gt; This is a paragraph. &lt;p&gt;</p>
-                    <button class="button-73" role="button" onclick="window.location.href='http://localhost/RWDD/Assignment/User/StartQuiz.php'">Play</button>
-                </div> -->
             </div>
-            
+
             <section>
             <div class='air air1'></div>
             <div class='air air2'></div>
@@ -117,5 +81,15 @@ include('../../main.php');
       <li></li>
       <li></li>
     </ul>
+
+    <script>
+        textbox = document.getElementById("joinQuiz");
+        textbox.addEventListener("keydown", function(event) {
+            if (event.key === "Enter") {
+                quizid=textbox.value;
+                window.location.href="StartQuiz.php?id="+quizid;
+            }
+        });
+    </script>
 </body>
 </html>

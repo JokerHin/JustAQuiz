@@ -59,7 +59,7 @@ echo "<script>console.log('$name');</script>";
                 <div class="box">Badge Collected <br><span id="input3"><?php echo $total_badges; ?></span></div>
                 <div class="box">CSS Quizzes Played <br><span id="input4"><?php echo $total_css; ?></span></div>
                 <button class="delete" onclick="window.location.href='../logout.php'">Logout </button>
-                <button class="delete" onclick="window.location.href='Login.php'">Delete Account </button>
+                <button class="delete" onclick="window.location.href='delete_account.php'">Delete Account </button>
             </div>
         </div>
     </main>

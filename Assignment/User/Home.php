@@ -1,12 +1,6 @@
 <?php
 include('../../main.php');
 //user can access to this page no matter logged in or not
-if (isset($_SESSION['user_id'])) { //already login
-    $user_id=$_SESSION['user_id'];
-    echo "<script>console.log('$user_id');</script>";
-}else{
-    echo "<script>console.log('Not logged in');</script>";
-}
 
 
 
@@ -110,17 +104,16 @@ if (isset($_SESSION['user_id'])) { //already login
         </div>
         <div class="quiz-id">
             <span>JOIN QUIZ? ENTER QUIZID: </span>
-            <input type="text" placeholder="Enter ID">
+            <input id="joinQuiz" type="text" placeholder="Enter ID">
         </div>
         <nav>
-            <?php
+            <?php //login button appear or not
                 if (!isset($_SESSION['user_id'])) { //already login
                     echo '<div class="btn"><a href="Login.php">Login</a></div>';
-                }else{
+                }else{ //not yet log in
                     echo '<div class="emptyBtn"></div>';
                 }
             ?>
-            <!-- <div id="loginBtn" class="btn"><a href="Login.php">Login</a></div> -->
         </nav>
     </header>
 
@@ -129,38 +122,42 @@ if (isset($_SESSION['user_id'])) { //already login
         <a href="Option.php">QUIZZES</a>
         <a href="DashBoard.php">DASHBOARD</a>
         <a href="MyProfile.php">MY PROFILE</a>
-        <!-- <a href="Login.php">LOGOUT</a> -->
     </nav>
 
     <main>
         <div id="picture1">
             <img id="rocket" src="../images/Rocket.png" alt="rocket">
         </div>      
-        <div id=MainB><button class="Mainbutton" href="#cards" onclick="window.location.href='http://localhost/RWDD/Assignment/User/Option.php'">Let's Start</button></div>
+        <div id=MainB><button class="Mainbutton" href="#cards" onclick="window.location.href='Option.php'">Let's Start</button></div>
         <section class="category">
             <h2>HTML</h2>
             <div class="cards">
-                <div class="card">
-                    <h3>Introduction</h3>
-                    <p>What is HTML?</p>
-                    <button class="button-73" role="button" onclick="window.location.href='http://localhost/RWDD/Assignment/User/StartQuiz.php'">Play</button>
-                </div>
-                <div class="card">
-                    <h3>Form</h3>
-                    <p>The &lt;form&gt; Element</p>
-                    <button class="button-73" role="button" onclick="window.location.href='http://localhost/RWDD/Assignment/User/StartQuiz.php'">Play</button>
-                </div>
-                <div class="card">
-                    <h3>Images</h3>
-                    <p>HTML Images Syntax</p>
-                    <button class="button-73" role="button" onclick="window.location.href='http://localhost/RWDD/Assignment/User/StartQuiz.php'">Play</button>
-                </div>
-                <div class="card">
-                    <h3>Classes</h3>
-                    <p>Using The class Attribute</p>
-                    <button class="button-73" role="button" onclick="window.location.href='http://localhost/RWDD/Assignment/User/StartQuiz.php'">Play</button>
-                </div>
-                <button id="See-All1" onclick="window.location.href='http://localhost/RWDD/Assignment/User/HTML.php'">See All</button>
+                <?php
+                    $sql = "SELECT * FROM Quiz WHERE subject = 'HTML'";
+                    $result = $conn->query($sql);
+                    $quiz_amount=$result->num_rows;
+
+                    if ($quiz_amount > 0) {
+                        $count=0;
+                        while ($row = $result->fetch_assoc()) {
+                            # echo html code here
+                            echo '<div class="card">';
+                            echo '<h3>' . $row['title'] . '</h3>';
+                            echo '<p>' . $row['description'] . '</p>';
+                            echo '<button class="button-73" role="button" onclick="window.location.href=\'StartQuiz.php?id='.$row['quiz_id'] .'\'">Play</button>';
+                            echo '</div>';
+                            $count++;
+                            if ($count>=4 && $quiz_amount>5){
+                                break;
+                            }
+                        }
+                    } else {
+                        echo "No quiz available at the moment.";
+                    }
+                    if ($quiz_amount>5){
+                        echo '<button id="See-All1" onclick="window.location.href=\'HTML.php\'">See All</button>';
+                    }
+                ?>
             </div>
            
         </section>
@@ -168,27 +165,33 @@ if (isset($_SESSION['user_id'])) { //already login
         <section class="category">
             <h2>CSS</h2>
             <div class="cards">
-                <div class="card">
-                    <h3>Introduction</h3>
-                    <p>What is CSS?</p>
-                    <button class="button-73" role="button" onclick="window.location.href='http://localhost/RWDD/Assignment/User/StartQuiz.php'">Play</button>
-                </div>
-                <div class="card">
-                    <h3>Colors</h3>
-                    <p>RGB, HEX, HSL</p>
-                    <button class="button-73" role="button" onclick="window.location.href='http://localhost/RWDD/Assignment/User/StartQuiz.php'">Play</button>
-                </div>
-                <div class="card">
-                    <h3>Syntax</h3>
-                    <p>Selector & Syntax</p>
-                    <button class="button-73" role="button" onclick="window.location.href='http://localhost/RWDD/Assignment/User/StartQuiz.php'">Play</button>
-                </div>
-                <div class="card">
-                    <h3>Text</h3>
-                    <p>Formatting text</p>
-                    <button class="button-73" role="button" onclick="window.location.href='http://localhost/RWDD/Assignment/User/StartQuiz.php'">Play</button>
-                </div>
-                <button id="See-All2" onclick="window.location.href='http://localhost/RWDD/Assignment/User/CSS.php'">See All</button>
+                <?php
+                    $sql = "SELECT * FROM Quiz WHERE subject = 'CSS'";
+                    $result = $conn->query($sql);
+                    $quiz_amount=$result->num_rows;
+
+                    if ($quiz_amount > 0) {
+                        $count=0;
+                        while ($row = $result->fetch_assoc()) {
+                            # echo html code here
+                            echo '<div class="card">';
+                            echo '<h3>' . $row['title'] . '</h3>';
+                            echo '<p>' . $row['description'] . '</p>';
+                            // echo '<button class="button-73" role="button" onclick="window.location.href='StartQuiz.php'">Play</button>';
+                            echo '<button class="button-73" role="button" onclick="window.location.href=\'StartQuiz.php?id='.$row['quiz_id'] .'\'">Play</button>';
+                            echo '</div>';
+                            $count++;
+                            if ($count>=4 && $quiz_amount>5){
+                                break;
+                            }
+                        }
+                    } else {
+                        echo "No quiz available at the moment.";
+                    }
+                    if ($quiz_amount>5){
+                        echo '<button id="See-All1" onclick="window.location.href=\'CSS.php\'">See All</button>';
+                    }
+                ?>
             </div>
             
         </section>      
@@ -205,5 +208,15 @@ if (isset($_SESSION['user_id'])) { //already login
       <li></li>
       <li></li>
     </ul>
+
+    <script>
+        textbox = document.getElementById("joinQuiz");
+        textbox.addEventListener("keydown", function(event) {
+            if (event.key === "Enter") {
+                quizid=textbox.value;
+                window.location.href="StartQuiz.php?id="+quizid;
+            }
+        });
+    </script>
 </body>
 </html>

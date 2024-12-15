@@ -101,7 +101,7 @@ function login($email, $password, $conn){
 
 
 // Logout function (1 javascript alert)
-function logout_user(){
+function logout_user(){ //not used
     session_unset();
     session_destroy();
     #echo // javascript alert box here

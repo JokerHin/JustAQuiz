@@ -36,7 +36,7 @@ include('../session.php');
     <main> 
         <div class="quiz-id">
             <span>JOIN QUIZ? ENTER QUIZID: </span>
-            <input type="text" placeholder="Enter ID">
+            <input id="joinQuiz" type="text" placeholder="Enter ID">
         </div>
         <div style="overflow-x: auto;">
             <table class="table">
@@ -110,5 +110,15 @@ include('../session.php');
       <li></li>
       <li></li>
     </ul>
+
+    <script>
+        textbox = document.getElementById("joinQuiz");
+        textbox.addEventListener("keydown", function(event) {
+            if (event.key === "Enter") {
+                quizid=textbox.value;
+                window.location.href="StartQuiz.php?id="+quizid;
+            }
+        });
+    </script>
 </body>
 </html>
