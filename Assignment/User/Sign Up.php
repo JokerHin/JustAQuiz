@@ -271,6 +271,7 @@
             <form method="post">  
                 <div class="toggle">  
                     <input type="radio" id="choice1" name="choice" value="3">
+
                         <label for="choice1">Student</label>
                
                         <input type="radio" id="choice2" name="choice" value="2">
@@ -283,9 +284,11 @@
                 <div class="input"><input type="text" name="Name" placeholder="Name" required></div>
                 <div class="input"><input type="email" name="Email" placeholder="Email" required></div>
                 <div class="input"><input type="password" name="password" placeholder="Password" required></div>
-                <div class="input"><input type="password" name="confirm-password" placeholder="Confirm Password" required></div>
-                <p id="word">Already have an account?<a href="Login.php" id="login-link">Login</a></p>
-                <button type="submit" name="signupBtn">Sign Up</button>
+
+                <div class="input"><input type="password" name="confirm-password" placeholder="confirm-password" required></div>
+                <p id="word">Already have an account?&nbsp<a href="Login.php" id="login-link">Login</a></p>
+                <button type="submit">Sign Up</button>
+
             </form>
         </div>
     </div>
