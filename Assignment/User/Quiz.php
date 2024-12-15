@@ -279,6 +279,9 @@ if (isset($_GET['id']) && isset($_GET['q'])) {
         }
 
         function endQuiz(){
+            if (chosenAnswers.length!=amount){
+                chosenAnswers.push(-1);
+            }
             console.log(chosenAnswers);
             remaining_time=timeLeft;
             const payload = {

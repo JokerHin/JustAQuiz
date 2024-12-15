@@ -45,7 +45,6 @@ if ($row['feedback']===null){
 //pie chart
 $greenAngle = ($score / 100) * 360; // Example: Starting angle for the green section
 $redAngle = 360; // Example: Ending angle for the pink section
-echo "<script>console.log('$greenAngle');</script>";
 echo "<script>
     document.addEventListener('DOMContentLoaded', function() {
         let greenAngle = $greenAngle; // PHP value inserted into JS variable
@@ -121,8 +120,8 @@ unset($_SESSION['attempt_id']);
             </div>
             <div class="chart">
                 <div class="chart-title">
-                    <div class="correct-label"> correct</div>
                     <div class="incorrect-label"> incorrect</div>
+                    <div class="correct-label"> correct</div>
                 </div>
                 <div id="pie-chart" class="pie-chart"></div>
             </div>

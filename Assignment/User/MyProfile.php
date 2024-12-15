@@ -4,6 +4,10 @@ include('../session.php');
 $id = user_profile($conn, "user_id");
 $name = user_profile($conn, "name");
 $email = user_profile($conn, "email");
+$total_quiz = total_quiz_done($id,$conn);
+$total_html = total_quiz_done($id,$conn,"HTML");
+$total_css = total_quiz_done($id,$conn,"CSS");
+$total_badges = calculate_total_badges_collected($id,$conn);
 echo "<script>console.log('$name');</script>";
 ?>
 
@@ -50,10 +54,10 @@ echo "<script>console.log('$name');</script>";
             </div>
             </div>
             <div id="right">
-                <div class="box">Total Quizzes Played <br><span id="input1">0</span></div>
-                <div class="box">HTML Quizzes Played <br><span id="input2">0</span></div>
-                <div class="box">Badge Collected <br><span id="input3">0</span></div>
-                <div class="box">CSS Quizzes Played <br><span id="input4">0</span></div>
+                <div class="box">Total Quizzes Played <br><span id="input1"><?php echo $total_quiz; ?></span></div>
+                <div class="box">HTML Quizzes Played <br><span id="input2"><?php echo $total_html; ?></span></div>
+                <div class="box">Badge Collected <br><span id="input3"><?php echo $total_badges; ?></span></div>
+                <div class="box">CSS Quizzes Played <br><span id="input4"><?php echo $total_css; ?></span></div>
                 <button class="delete" onclick="window.location.href='Login.php'">Logout </button>
                 <button class="delete" onclick="window.location.href='Login.php'">Delete Account </button>
             </div>

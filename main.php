@@ -495,14 +495,15 @@ function start_quiz_attempt($quiz_id, $conn) {
 // Finish Quiz Attempt Function
 function finish_quiz_attempt($attempt_id, $time_remaining, $conn) {
     $stat = 'completed';
+    $feedback = '-';
 
     $sql = "UPDATE Attempt SET stat = ? WHERE attempt_id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("si", $stat, $attempt_id);
     if ($stmt->execute()) { // change attempt table first
-        $sql = "INSERT INTO Result (attempt_id, time_remaining) VALUES (?, ? )";
+        $sql = "INSERT INTO Result (attempt_id, time_remaining, feedback) VALUES (?, ? , ? )";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("si", $attempt_id, $time_remaining);
+        $stmt->bind_param("sis", $attempt_id, $time_remaining, $feedback);
         if ($stmt->execute()) { // then change result table
             // unset($_SESSION['attempt_id']);
             return true;
@@ -648,8 +649,14 @@ function calculate_score($attempt_id, $conn){
 
 
 // Calculate Total Quiz Done by the Student Function
-function total_quiz_done($student_id, $conn) {
-    $sql = "SELECT COUNT(DISTINCT quiz_id) AS total FROM Attempt WHERE student_id = ? AND stat = 'completed'";
+function total_quiz_done($student_id, $conn, $subject="") {
+    if ($subject!=""){
+        $sql = "SELECT COUNT(DISTINCT a.quiz_id) AS total FROM Attempt a INNER JOIN Quiz q ON a.quiz_id = q.quiz_id WHERE a.student_id = ? AND a.stat = 'completed' AND q.subject = '$subject'";
+
+    }else{
+        $sql = "SELECT COUNT(DISTINCT quiz_id) AS total FROM Attempt WHERE student_id = ? AND stat = 'completed'";
+
+    }
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $student_id);
     $stmt->execute();
@@ -728,7 +735,7 @@ function quiz_result($attempt_id, $conn){ //not working
 
 
 // Get Student Recent Activity Function
-function get_student_recent_activity($conn) {
+function get_student_recent_activity($conn) { //not using
     $student_id = $_SESSION['user_id'];
     $sql = "SELECT q.subject, q.title, q.description, r.date, r.feedback, a.attempt_id FROM Attempt a INNER JOIN Quiz q ON a.quiz_id = q.quiz_id INNER JOIN Result r ON r.attempt_id = a.attempt_id WHERE a.student_id = ? AND a.stat = 'completed' ORDER BY r.date DESC";
     $stmt = $conn->prepare($sql);
