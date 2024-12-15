@@ -77,7 +77,6 @@ unset($_SESSION['attempt_id']);
         <a href="Option.php">QUIZZES</a>
         <a href="DashBoard.php">DASHBOARD</a>
         <a href="MyProfile.php">MY PROFILE</a>
-        <a href="Login.php">LOGOUT</a>
     </nav>
     <main>
         <div id="main">

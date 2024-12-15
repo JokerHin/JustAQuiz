@@ -8,6 +8,7 @@ if (isset($_GET['id'])) {
         echo "<script>alert('Invalid Quiz ID.');window.location.href='Home.php';</script>";
     }
     $row = mysqli_fetch_array($quiz);
+    $subject = $row['subject'];
     $title = $row['title'];
     $description = $row['description'];
     $time = $row['time_limit'];
@@ -30,7 +31,7 @@ if (isset($_GET['id'])) {
             <div id="h1">JUST</div><div id="h2">A</div><div id="h3">QUIZ</div>
         </div>
         <div >
-            <h1 id="Title">HTML TIME</h1>
+            <h1 id="Title"><?php echo $subject; ?> TIME</h1>
         </div>
         <div id="info"></div>
     </header>
@@ -40,7 +41,6 @@ if (isset($_GET['id'])) {
         <a href="Option.php">QUIZZES</a>
         <a href="DashBoard.php">DASHBOARD</a>
         <a href="MyProfile.php">MY PROFILE</a>
-        <a href="Login.php">LOGOUT</a>
     </nav>
     <main>
         <div id="main"> 

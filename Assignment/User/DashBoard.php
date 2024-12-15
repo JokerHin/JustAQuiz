@@ -25,7 +25,6 @@ include('../session.php');
         <a href="Option.php">QUIZZES</a>
         <a href="DashBoard.php">DASHBOARD</a>
         <a href="MyProfile.php">MY PROFILE</a>
-        <a href="Login.php">LOGOUT</a>
     </nav>
     <section>
             <div class='air air1'></div>

@@ -839,7 +839,7 @@ function overall_report($conn) {
         }
     }
 
-    $average_score = round($total_score_percentage / $total_attempts, 2);
+    $average_score = round($total_score_percent / $total_attempts, 2);
     if ($average_score > 80) {
         $average_grade = 'A';
     } elseif ($average_score > 70) {
@@ -854,7 +854,7 @@ function overall_report($conn) {
         $average_grade = 'F';
     }
 
-    // return $average_score$aver, age_grade, $total_quiz_completed; cannot return multiple value 1
+    return array($average_score, $average_grade, $total_quiz_completed); //cannot return multiple value 1
 }
 
 
