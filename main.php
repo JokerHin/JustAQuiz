@@ -946,6 +946,26 @@ function admin_instructors_info($conn) {
     }
 }
 
+function calculate_total_badges_created($conn) {
+    $creator_id = $_SESSION['user_id'];
+    $sql = "SELECT COUNT(*) AS total FROM badges WHERE creator_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $creator_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        return $row['total'];
+    } else {
+        return 0;
+    }
+}
+
+function getTodayDate($format = "M j, Y") {
+    return date($format);
+}
+
 //Timer function made with javascript
 // not sure want quiz summary report for a specific quiz anot. (average score, etc, total attempts) instructor n admin de
 

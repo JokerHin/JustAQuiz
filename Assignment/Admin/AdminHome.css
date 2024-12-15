@@ -358,20 +358,21 @@ nav a {
 }
 
 .popup-content {
-  height: 700px;
-  width: 400px;
+  height: 680px;
+  width: 450px;
   background: white;
   padding: 10px 30px;
-  border-radius: 5px;
+  border-radius: 20px;
+  border: 6px solid black;
   position: relative;
   z-index: 3;
-  margin-top: -100px;
-  
+  margin-top: -200px;
+  box-shadow: 0px 20px 0px 0px rgb(36, 36, 36), rgba(0, 0, 0, 0.17) 0px -30px 50px 0px inset;
 }
 
 .popup-content hr{
-  border: 2px solid #23d5ab;
-  color: #23d5ab;
+  border: 2px solid #049ada;
+  color: #049ada;
 }
 
 .input-info {
@@ -381,13 +382,13 @@ nav a {
 .input-info label {
   display: block;
   font-weight: bold;
-  margin-bottom: 5px;
+  margin: 20px 0px;
   color: #333;
   text-align: left;
 }
 
 .input-info input {
-  width: 100%;
+  width: 95%;
   padding: 10px;
   font-size: 16px;
   border: 1px solid #ccc;
@@ -397,7 +398,16 @@ nav a {
 }
 
 .input-info input:focus {
-  border: 2px solid #67e9c2;
+  border: 2px solid rgb(108, 203, 222);
+}
+
+.images-container {
+  border: 2px solid #049ada;
+  border-radius: 10px;
+  height: 100%;
+  width: 100%;
+  padding: 50px 0px;
+  cursor: pointer;
 }
 
 .button-container {
@@ -405,8 +415,8 @@ nav a {
   margin-top: 30px;
 }
 
-.upload-button {
-  background-color: #5ede9a; /* Green color */
+.update-button {
+  background-color: #1981cb; 
   color: #fff;
   border: none;
   padding: 10px 20px;
@@ -417,11 +427,11 @@ nav a {
   transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.upload-button:hover {
-  background-color: #24bb60; 
+.update-button:hover {
+  background-color: #0d9aff; 
 }
 
-.upload-button:active {
+.update-button:active {
   transform: scale(0.98); 
 }
 

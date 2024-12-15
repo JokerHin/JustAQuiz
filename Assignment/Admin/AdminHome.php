@@ -1,3 +1,12 @@
+<?php
+include("../../main.php");
+include('../session.php');
+$id = user_profile($conn, "user_id");
+$name = user_profile($conn, "name");
+$email = user_profile($conn, "email");
+echo "<script>console.log('$name');</script>";
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,7 +20,7 @@
     <div class="logo">
             <div id="h1">JUST</div><div id="h2">A</div><div id="h3">QUIZ</div>
         </div>
-        <div id="button" onclick="window.location.href='http://localhost/RWDD/Assignment/Admin/AdminCreateQuiz.php'"><button class="create-quiz">CREATE QUIZ</button></div>
+        <div id="button" onclick="window.location.href='AdminCreateQuiz.php'"><button class="create-quiz">CREATE QUIZ</button></div>
     </header>
 
     <nav class="navbar">
@@ -26,28 +35,28 @@
     <div class="container">
         <div class="left-container">
             <div class="box">
-                <p class="update">Last updated: Oct 22, 2024</p>
-                <p class="number">103</p>
+                <p class="update">Last updated: <?php echo getTodayDate();?></p>
+                <p class="number"><?php echo calculate_total_quiz_created($conn);?></p>
                 <p class="Total">Total Quizzes Created</p>
-                <a class="link">VIEW</a>
+                <a class="link" href="UserManagement.php">VIEW</a>
             </div>
             <div class="box">
-                <p class="update">Last updated: Oct 22, 2024</p>
-                <p class="number">1120</p>
+                <p class="update">Last updated: <?php echo getTodayDate();?></p>
+                <p class="number"><?php echo total_student($conn);?></p>
                 <p class="Total">Total Students</p>
-                <a class="link">VIEW</a>
+                <a class="link" href="UserManagement.php#tab3">VIEW</a>
             </div>
             <div class="box">
-                <p class="update">Last updated: Oct 22, 2024</p>
-                <p class="number">2846</p>
+                <p class="update">Last updated: <?php echo getTodayDate();?></p>
+                <p class="number"><?php echo total_instructor($conn);?></p>
                 <p class="Total">Total Instructors</p>
-                <a class="link">VIEW</a>
+                <a class="link" href="UserManagement.php#tab2">VIEW</a>
             </div>
             <div class="box">
-                <p class="update">Last updated: Oct 22, 2024</p>
-                <p class="number">20</p>
+                <p class="update">Last updated: <?php echo getTodayDate();?></p>
+                <p class="number"><?php echo calculate_total_badges_created($conn);?></p>
                 <p class="Total">Total Badges Created</p>
-                <a class="link">VIEW</a>
+                <a class="link" href="Badges.php">VIEW</a>
             </div>
         </div>
         <div class="right-container">
@@ -60,11 +69,9 @@
             </div>
             </div>
                 <div id="down">
-                    Admin ID: <span id="info1">123456</span> 
-                    <br> Name : <span id="info2">Yong Wai</span> 
-                    <br> Email : <span id="info3">yongwai@gmail.com</span>
-                    <br> Password : <span id="info4">********</span><br>
-                    <button class="del-button" onclick="window.location.href='http://localhost/RWDD/Assignment/User/Login.php'">Delete Account</button>
+                    Admin ID: <span id="info1"><?php echo $id; ?></span> 
+                    <br> Name : <span id="info2"><?php echo $name; ?></span> 
+                    <br> Email : <span id="info3"><?php echo $email; ?></span>
                 </div>
                 </div>
             </div>
