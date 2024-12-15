@@ -1,3 +1,9 @@
+<?php
+include('../../main.php');
+include('../session.php');
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,7 +17,7 @@
         <div class="logo">
             <div id="h1">JUST</div><div id="h2">A</div><div id="h3">QUIZ</div>
         </div>
-        <button id="view-report" onclick="window.location.href='http://localhost/RWDD/Assignment/User/Report.php'">View Report</button>
+        <button id="view-report" onclick="window.location.href='Report.php'">View Report</button>
     </header>
 
     <nav class="navbar">
@@ -35,6 +41,43 @@
         <div style="overflow-x: auto;">
             <table class="table">
                 <thead>
+                  <?php
+                    $student_id = $_SESSION['user_id'];
+                    $sql = "SELECT q.subject, q.title, q.description, r.date, r.feedback, a.attempt_id FROM Attempt a INNER JOIN Quiz q ON a.quiz_id = q.quiz_id INNER JOIN Result r ON r.attempt_id = a.attempt_id WHERE a.student_id = ? AND a.stat = 'completed' ORDER BY r.date DESC";
+                    $stmt = $conn->prepare($sql);
+                    $stmt->bind_param("i", $student_id);
+                    $stmt->execute();
+                    $result = $stmt->get_result();
+                
+                    if ($result->num_rows > 0) { //not fixed
+                      while ($row = $result->fetch_assoc()) {
+                          $subject = htmlspecialchars($row['subject']);
+                          $title_description = htmlspecialchars($row['title']) . " - " . htmlspecialchars($row['description']);
+                          $score = calculate_score($row['attempt_id'], $conn);
+                          $total_questions = total_question($row['attempt_id'], $conn);
+                          if ($total_questions>0){
+                            $quiz_summary = ($score / $total_questions) * 100 . "%";
+                          }else{
+                            $quiz_summary = "0%";
+                          }
+                          $grade = calculate_grade($score, $total_questions);
+                          $used_time = calculate_used_time($row['attempt_id'], $conn) . "s";
+                          $date = htmlspecialchars($row['date']);
+                          $feedback = htmlspecialchars($row['feedback']);
+                          echo "<tr>";
+                          echo "<th scope='col'>$subject</th>";
+                          echo "<th scope='col'>$title_description</th>";
+                          echo "<th scope='col'>$quiz_summary</th>";
+                          echo "<th scope='col'>$grade</th>";
+                          echo "<th scope='col'>$used_time</th>";
+                          echo "<th scope='col'>$date</th>";
+                          echo "<th scope='col'>$feedback</th>";
+                      }
+                    }
+                  ?>
+                  <tr>
+                    <th scope="col">Subject</th>
+                  </tr>
                   <tr>
                     <th scope="col">Subject</th>
                     <th scope="col">Title-Description</th>

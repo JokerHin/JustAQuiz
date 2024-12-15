@@ -1,3 +1,7 @@
+CREATE DATABASE justaquiz;
+
+USE justaquiz;
+
 CREATE TABLE Users (
     user_id INT AUTO_INCREMENT PRIMARY KEY,
     role_id INT, -- 1 admin 2 instructor 3 student
