@@ -160,6 +160,7 @@ include('../session.php');
                       <th scope="col">Student Name</th>
                       <th scope="col">Badges Collected</th>
                       <th scope="col">Quizzes Completed</th>
+                      <th scope="col"></th>
                     </tr>
                   </thead>
                   <tbody>

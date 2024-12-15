@@ -372,25 +372,23 @@ function edit_choice($choice_id, $new_text, $is_correct, $conn) {
 
 
 // Create Badge Function (gpt, not sure correct anot)
-function create_badge($creator_id, $achievement_name, $category, $badge_file, $conn) {
+function create_badge($creator_id, $achievement_name, $category, $criteria, $badge_file, $conn) {
     $creator_id = $_SESSION['user_id'];
     $achievement_name = htmlspecialchars($achievement_name);
     $category = htmlspecialchars($category);
+    $criteria = htmlspecialchars($criteria);
     $badge_image = file_get_contents($badge_file['tmp_name']);
     $image_type = htmlspecialchars($badge_file['type']);
-
-    $sql = "INSERT INTO Badges (creator_id, achievement_name, category, badge_image, image_type) VALUES (?, ?, ?, ?, ?)";
+ 
+    $sql = "INSERT INTO Badges (creator_id, achievement_name, category, criteria, badge_image, image_type) VALUES (?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("issss", $creator_id, $achievement_name, $category, $badge_image, $image_type);
+    $stmt->bind_param("isssss", $creator_id, $achievement_name, $category, $criteria, $badge_image, $image_type);
     if ($stmt->execute()) {
-        #echo // javascript alert box here
         return true;
     } else {
-        #echo // javascript alert box here
         return false;
     }
 }
-
 
 // Delete Badge Function
 function delete_badge($badge_id, $conn) {
