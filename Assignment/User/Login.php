@@ -1,3 +1,6 @@
+<?php
+session_start()
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -180,13 +183,31 @@
         <div id="Login">
             <form method="post">        
                 <h1>Login to your Account</h1>                
-                <div class="input"><input type="text" name="Name" placeholder="Username" required></div>
-                <div class="input"><input type="password" name="password" placeholder="Password" required></div>
-                <p>Don't have an account?&nbsp<a  id="login-link" href="Sign Up.php">Sign Up</a></p>
-                <button type="submit">Login</button>
+                <div class="input"><input type="email" name="loginEmail" placeholder="Email" required></div>
+                <div class="input"><input type="password" name="loginPassword" placeholder="Password" required></div>
+                <p>Don't have an account?  <a  id="login-link" href="Sign Up.php">Sign Up</a></p>
+                <button type="submit" name="loginBtn">Login</button>
             </form>
         </div>
     </div>  
     <div class="wrapper"></div> 
+
+    <?php
+        if (isset($_POST['loginBtn'])) {
+            include("../../main.php");
+            $status=login($_POST['loginEmail'],$_POST['loginPassword'],$conn);
+            if ($status){
+                $user_id=$_SESSION['user_id'];
+                echo "<script>console.log('$user_id');</script>";
+                echo '<script>alert("Login successful")
+                    window.location.href = "Home.php";
+                    </script>';
+            }else{
+                echo '<script>alert("Login failed");
+                    window.location.href = "Login.php";
+                    </script>';
+            }
+        }
+    ?>
 </body>
 </html>

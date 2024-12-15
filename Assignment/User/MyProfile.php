@@ -1,3 +1,16 @@
+<?php
+include("../../main.php");
+include('../session.php');
+$id = user_profile($conn, "user_id");
+$name = user_profile($conn, "name");
+$email = user_profile($conn, "email");
+$total_quiz = total_quiz_done($id,$conn);
+$total_html = total_quiz_done($id,$conn,"HTML");
+$total_css = total_quiz_done($id,$conn,"CSS");
+$total_badges = calculate_total_badges_collected($id,$conn);
+echo "<script>console.log('$name');</script>";
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,7 +34,7 @@
         <a href="Option.php">QUIZZES</a>
         <a href="DashBoard.php">DASHBOARD</a>
         <a href="MyProfile.php">MY PROFILE</a>
-        <a href="Login.php">LOGOUT</a>
+        <!-- <a href="logout.php">LOGOUT</a> -->
     </nav>
 
     <main> 
@@ -34,15 +47,19 @@
                 <span class="profilepic__text">Edit Profile</span>
             </div>
             </div>
-                <div id="down">StudentID : <span id="info1"></span> <br> Name : <span id="info2"></span> <br> Email : <span id="info3"></span><br> Password : <span id="info4"></span><br> Instructor : <span id="info5"></span></div>
+                <div id="down">StudentID : <span id="info1"><?php echo $id; ?></span> 
+                <br> Name : <span id="info2"><?php echo $name; ?></span>
+                <br> Email : <span id="info3"><?php echo $email; ?></span>
+                <!-- <br> Password : <span id="info4">Hidden</span> -->
+            </div>
             </div>
             <div id="right">
-                <div class="box">Total Quizzes Played <br><span id="input1">0</span></div>
-                <div class="box">HTML Quizzes Played <br><span id="input2">0</span></div>
-                <div class="box">Badge Collected <br><span id="input3">0</span></div>
-                <div class="box">CSS Quizzes Played <br><span id="input4">0</span></div>
-                <button class="delete" onclick="window.location.href='http://localhost/RWDD/Assignment/User/Login.php'">Logout </button>
-                <button class="delete" onclick="window.location.href='http://localhost/RWDD/Assignment/User/Login.php'">Delete Account </button>
+                <div class="box">Total Quizzes Played <br><span id="input1"><?php echo $total_quiz; ?></span></div>
+                <div class="box">HTML Quizzes Played <br><span id="input2"><?php echo $total_html; ?></span></div>
+                <div class="box">Badge Collected <br><span id="input3"><?php echo $total_badges; ?></span></div>
+                <div class="box">CSS Quizzes Played <br><span id="input4"><?php echo $total_css; ?></span></div>
+                <button class="delete" onclick="window.location.href='../logout.php'">Logout </button>
+                <button class="delete" onclick="window.location.href='delete_account.php'">Delete Account </button>
             </div>
         </div>
         <div class="popup"> 

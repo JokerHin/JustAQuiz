@@ -261,7 +261,7 @@
     </style>
 </head>
 <body>
-    <div id="container"> 
+<div id="container">
         <div id="box" >
             <img id="picture" src="../images/JustAQuiz.png" alt="JustAQuiz">
         </div>
@@ -271,10 +271,11 @@
             <form method="post">  
                 <div class="toggle">  
                     <input type="radio" id="choice1" name="choice" value="3">
-                        <label for="choice1">Instructor</label>
+
+                        <label for="choice1">Student</label>
                
                         <input type="radio" id="choice2" name="choice" value="2">
-                        <label for="choice2">Student</label>
+                        <label for="choice2">Instructor</label>
                
                         <div id="flap"><span class="content">Student</span></div>
                 </div>            
@@ -283,14 +284,32 @@
                 <div class="input"><input type="text" name="Name" placeholder="Name" required></div>
                 <div class="input"><input type="email" name="Email" placeholder="Email" required></div>
                 <div class="input"><input type="password" name="password" placeholder="Password" required></div>
+
                 <div class="input"><input type="password" name="confirm-password" placeholder="confirm-password" required></div>
                 <p id="word">Already have an account?&nbsp<a href="Login.php" id="login-link">Login</a></p>
                 <button type="submit">Sign Up</button>
+
             </form>
         </div>
-    </div>  
+    </div>
    
     <div class="wrapper"></div> 
     <script src="signup.js"></script>
+    <?php
+        if (isset($_POST['signupBtn'])) {
+            include("../../main.php");
+            $status=sign_up($_POST['Name'], $_POST['password'], $_POST['confirm-password'], $_POST['Email'], $conn, $_POST['choice']);
+            if ($status){
+                echo '<script>alert("Successful");
+                    window.location.href = "Home.php";
+                    </script>';
+            }else{
+                echo '<script>alert("Failed");
+                    window.location.href = "Sign Up.php";
+                    </script>';
+            }
+            // mysqli_close($con);
+        }
+    ?>
 </body>
 </html>

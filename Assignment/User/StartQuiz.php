@@ -1,3 +1,22 @@
+<?php
+include('../../main.php');
+include('../session.php');
+if (isset($_GET['id'])) {
+    $id = intval($_GET['id']);
+    $quiz = mysqli_query($conn, "SELECT * FROM quiz WHERE quiz_id=$id");
+    if (mysqli_num_rows($quiz) < 1) {
+        echo "<script>alert('Invalid Quiz ID.');window.location.href='Home.php';</script>";
+    }
+    $row = mysqli_fetch_array($quiz);
+    $subject = $row['subject'];
+    $title = $row['title'];
+    $description = $row['description'];
+    $time = $row['time_limit'];
+    $amount=total_question($id, $conn);
+} else {
+    echo "<script>alert('Please choose quiz to start.');window.location.href='Home.php';</script>";
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,7 +31,7 @@
             <div id="h1">JUST</div><div id="h2">A</div><div id="h3">QUIZ</div>
         </div>
         <div >
-            <h1 id="Title">HTML TIME</h1>
+            <h1 id="Title"><?php echo $subject; ?> TIME</h1>
         </div>
         <div id="info"></div>
     </header>
@@ -22,16 +41,15 @@
         <a href="Option.php">QUIZZES</a>
         <a href="DashBoard.php">DASHBOARD</a>
         <a href="MyProfile.php">MY PROFILE</a>
-        <a href="Login.php">LOGOUT</a>
     </nav>
     <main>
         <div id="main"> 
             <div id="container">
-                <h1 class="Title">INTRODUCTION</h1>
-                <h1 class="Title">WHAT IS HTML?</h1>
-                <h1 class="Title2">25 Question</h1>
-                <h1 class="Title2">15 Minutes</h1>
-                <button class="Start" onclick="window.location.href='http://localhost/RWDD/Assignment/User/Quiz.php'">Start</button>
+                <h1 class="Title"><?php echo $title; ?></h1>
+                <h1 class="Title"><?php echo $description; ?></h1>
+                <h1 class="Title2"><?php echo $amount; ?> Question</h1>
+                <h1 class="Title2"><?php echo $time; ?> minutes</h1>
+                <button class="Start" onclick="window.location.href='Quiz.php?id=<?php echo $id; ?>&q=1'">Start</button>
             </div>
         </div>
     </main>

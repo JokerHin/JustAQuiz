@@ -17,9 +17,9 @@ if ($conn->connect_error) {
 
 
 // Sign Up function  (6 javascript alert)
-function sign_up($name, $password, $confirm_password, $email, $role, $conn) {
+function sign_up($name, $password, $confirm_password, $email, $conn, $role="2") { // role id: 1 admin, 2 instructor 3 student
     // protect against xss server scripting attack ( not sure if needed)
-    $name = htmlspecialchars($username);
+    $name = htmlspecialchars($name);
     $password = htmlspecialchars($password);
     $email = htmlspecialchars($email);
     $confirm_password = htmlspecialchars($confirm_password);
@@ -101,7 +101,7 @@ function login($email, $password, $conn){
 
 
 // Logout function (1 javascript alert)
-function logout_user(){
+function logout_user(){ //not used
     session_unset();
     session_destroy();
     #echo // javascript alert box here
@@ -131,7 +131,7 @@ function delete_user($user_id, $conn) {
 
 
 // Update User Function (change username or password or email) (4 javascript alert)
-function upate_user($user_id, $updated_data, $conn){
+function update_user($user_id, $updated_data, $conn){
     $new_name = htmlspecialchars($updated_data['name']);
     $new_password = htmlspecialchars($updated_data['password']);
     $new_email = htmlspecialchars($updated_data['email']);
@@ -495,16 +495,17 @@ function start_quiz_attempt($quiz_id, $conn) {
 // Finish Quiz Attempt Function
 function finish_quiz_attempt($attempt_id, $time_remaining, $conn) {
     $stat = 'completed';
+    $feedback = '-';
 
     $sql = "UPDATE Attempt SET stat = ? WHERE attempt_id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("si", $stat, $attempt_id);
     if ($stmt->execute()) { // change attempt table first
-        $sql = "INSERT INTO Result (attempt_id, time_remaining) VALUES (?, ? )";
+        $sql = "INSERT INTO Result (attempt_id, time_remaining, feedback) VALUES (?, ? , ? )";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("si", $attempt_id, $time_remaining);
+        $stmt->bind_param("sis", $attempt_id, $time_remaining, $feedback);
         if ($stmt->execute()) { // then change result table
-            unset($_SESSION['attempt_id']);
+            // unset($_SESSION['attempt_id']);
             return true;
         } else {
             # echo // javascript alert box here
@@ -518,7 +519,7 @@ function finish_quiz_attempt($attempt_id, $time_remaining, $conn) {
 
 
 // View all available quiz function
-function view_available_quiz($conn) {
+function view_available_quiz($conn) { //copied code to quiz.php, no need appear here anymore
     $sql = "SELECT * FROM Quiz";
     $result = $conn->query($sql);
 
@@ -533,26 +534,24 @@ function view_available_quiz($conn) {
 
 
 // User Profile Function
-function user_profile($user_id, $conn) {
-    $sql = "SELECT * FROM Users WHERE user_id = ?";
+function user_profile($conn, $data) {
+    $user_id=$_SESSION['user_id'];
+    $sql = "SELECT $data FROM Users WHERE user_id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $user_id);
     $stmt->execute();
     $result = $stmt->get_result();
-
+ 
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
-        /* depends how html want to show these
-        user_id = htmlspecialchars($row['user_id']);
-        user_name = htmlspecialchars($row['name']);
-        email = htmlspecialchars($row['email']);
-        password = htmlspecialchars($row['password_hash']);
-        date_joined = htmlspecialchars($row['date_joined']);
-        */
+        $info = htmlspecialchars($row[$data]);
+        return $info;
     } else {
-        # echo // javascript alert box here
+        echo "<script>console.log('Error.')</script>";
+        return false;
     }
 }
+
 
 
 // Calculate Used Time Function
@@ -565,8 +564,8 @@ function calculate_used_time($attempt_id, $conn) {
 
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
-        $used_time = $row['time_limit'] - $row['time_remaining'];
-        return $used_time * 60;
+        $used_time = $row['time_limit']*60 - $row['time_remaining'];
+        return $used_time/60;
     } else {
         # echo // javascript alert box here
     }
@@ -631,7 +630,7 @@ function write_feedback($result_id, $feedback, $conn) {
 
 // Calculate score function (add liao attempt id in table)
 function calculate_score($attempt_id, $conn){
-    $sql = "SELECT sa.question_id, c.is_correct FROM Student_Answer sa INNER JOIN Choices c ON sa.choice_id = c.choice_id WHERE sa.attempt_id = ?"; // can use sum if want
+    $sql = "SELECT c.question_id, c.is_correct FROM Student_Answer sa INNER JOIN Choices c ON sa.choice_id = c.choice_id WHERE sa.attempt_id = ?"; // can use sum if want
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $attempt_id);
     $stmt->execute();
@@ -650,8 +649,14 @@ function calculate_score($attempt_id, $conn){
 
 
 // Calculate Total Quiz Done by the Student Function
-function total_quiz_done($student_id, $conn) {
-    $sql = "SELECT COUNT(DISTINCT quiz_id) AS total FROM Attempt WHERE student_id = ? AND stat = 'completed'";
+function total_quiz_done($student_id, $conn, $subject="") {
+    if ($subject!=""){
+        $sql = "SELECT COUNT(DISTINCT a.quiz_id) AS total FROM Attempt a INNER JOIN Quiz q ON a.quiz_id = q.quiz_id WHERE a.student_id = ? AND a.stat = 'completed' AND q.subject = '$subject'";
+
+    }else{
+        $sql = "SELECT COUNT(DISTINCT quiz_id) AS total FROM Attempt WHERE student_id = ? AND stat = 'completed'";
+
+    }
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $student_id);
     $stmt->execute();
@@ -703,7 +708,7 @@ function total_question($quiz_id, $conn){
 
 
 // Quiz result function
-function quiz_result($attempt_id, $conn){
+function quiz_result($attempt_id, $conn){ //not working
     $sql = "SELECT q.subject, q.title, a.attempt_id, q.quiz_id, r.time_remaining, r.date, r.feedback FROM Attempt a INNER JOIN Quiz q ON a.quiz_id = q.quiz_id INNER JOIN Result r ON r.attempt_id = a.attempt_id WHERE a.attempt_id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $attempt_id);
@@ -730,7 +735,7 @@ function quiz_result($attempt_id, $conn){
 
 
 // Get Student Recent Activity Function
-function get_student_recent_activity($conn) {
+function get_student_recent_activity($conn) { //not using
     $student_id = $_SESSION['user_id'];
     $sql = "SELECT q.subject, q.title, q.description, r.date, r.feedback, a.attempt_id FROM Attempt a INNER JOIN Quiz q ON a.quiz_id = q.quiz_id INNER JOIN Result r ON r.attempt_id = a.attempt_id WHERE a.student_id = ? AND a.stat = 'completed' ORDER BY r.date DESC";
     $stmt = $conn->prepare($sql);
@@ -834,7 +839,7 @@ function overall_report($conn) {
         }
     }
 
-    $average_score = round($total_score_percentage / $total_attempts, 2);
+    $average_score = round($total_score_percent / $total_attempts, 2);
     if ($average_score > 80) {
         $average_grade = 'A';
     } elseif ($average_score > 70) {
@@ -849,7 +854,7 @@ function overall_report($conn) {
         $average_grade = 'F';
     }
 
-    // return $average_score$aver, age_grade, $total_quiz_completed; cannot return multiple value 1
+    return array($average_score, $average_grade, $total_quiz_completed); //cannot return multiple value 1
 }
 
 

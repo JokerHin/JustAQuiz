@@ -1,3 +1,13 @@
+<?php
+include('../../main.php');
+include('../session.php');
+$id = user_profile($conn, "user_id");
+$name = user_profile($conn, "name");
+$report_data=overall_report($conn);
+$score=$report_data[0];
+$grade=$report_data[1];
+$total_quiz=$report_data[2];
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,11 +28,10 @@
         <a href="Option.php">QUIZZES</a>
         <a href="DashBoard.php">DASHBOARD</a>
         <a href="MyProfile.php">MY PROFILE</a>
-        <a href="Login.php">LOGOUT</a>
     </nav>
     <main>
-        <div id="main"> 
-            <div class="header">123456 Yong Wai</div>
+        <div id="main">
+            <div class="header"><?php echo "$id $name"; ?></div>
             <div class="container">
                 <div class="content">
                     <div class="report">
@@ -30,22 +39,25 @@
                         <div class="info">
                             <div class="info-item">
                                 <div class="label">Average Score:</div>
-                                <div class="value">85%</div>
+                                <div class="value"><?php echo $score; ?></div>
                             </div>
                             <div class="info-item">
                                 <div class="label">Total Quizzes Completed:</div>
-                                <div class="value">10</div>
+                                <div class="value"><?php echo $total_quiz; ?></div>
                             </div>
                             <div class="info-item">
                                 <div class="label">Average Grade:</div>
-                                <div class="value">A</div>
+                                <div class="value"><?php echo $grade; ?></div>
                             </div>
                         </div>
                     </div>
                     <div class="right">
                         <h2>Badges</h2>
                         <div class="badges">
-                            <div class="box">
+                            <?php
+                                student_obtained_badges($id,$conn)
+                            ?>
+                            <!-- <div class="box">
                                 <img src="../images/CSS-Badge.png" alt="CSS Knight Badge">
                                 <p>CSS Knight</p>
                             </div>
@@ -60,7 +72,7 @@
                             <div class="box">
                                 <img src="../images/HTML-Badge.png" alt="CSS Knight Badge">
                                 <p>CSS Knight</p>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>

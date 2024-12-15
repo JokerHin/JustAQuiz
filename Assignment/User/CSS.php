@@ -1,3 +1,6 @@
+<?php
+include('../../main.php');
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,7 +8,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JustAQuiz</title>
     <link rel="stylesheet" href="CSS.css">
-    </style>
 </head>
 <body>
     <header>
@@ -14,10 +16,16 @@
         </div>
         <div class="quiz-id">
             <span>JOIN QUIZ? ENTER QUIZID: </span>
-            <input type="text" placeholder="Enter ID">
+            <input id="joinQuiz" type="text" placeholder="Enter ID">
         </div>
         <nav>
-            <div class="btn"><a href="Login.php">Login</a></div>
+        <?php //login button appear or not
+                if (!isset($_SESSION['user_id'])) { //already login
+                    echo '<div class="btn"><a href="Login.php">Login</a></div>';
+                }else{ //not yet log in
+                    echo '<div class="emptyBtn"></div>';
+                }
+            ?>
         </nav>
     </header>
 
@@ -26,54 +34,31 @@
         <a href="Option.php">QUIZZES</a>
         <a href="DashBoard.php">DASHBOARD</a>
         <a href="MyProfile.php">MY PROFILE</a>
-        <a href="Login.php">LOGOUT</a>
     </nav>
 
     <main>   
         <section class="category">
             <h2>CSS</h2>
             <div class="cards">
-                <div class="card">
-                    <h3>Introduction</h3>
-                    <p>What is CSS?</p>
-                    <button class="button-73" role="button" onclick="window.location.href='http://localhost/RWDD/Assignment/User/StartQuiz.php'">Play</button>
-                </div>
-                <div class="card">
-                    <h3>Colors</h3>
-                    <p>RGB, HEX, HSL</p>
-                    <button class="button-73" role="button" onclick="window.location.href='http://localhost/RWDD/Assignment/User/StartQuiz.php'">Play</button>
-                </div>
-                <div class="card">
-                    <h3>Syntax</h3>
-                    <p>Selector</p>
-                    <button class="button-73" role="button" onclick="window.location.href='http://localhost/RWDD/Assignment/User/StartQuiz.php'">Play</button>
-                </div>
-                <div class="card">
-                    <h3>Text</h3>
-                    <p>Formating Text</p>
-                    <button class="button-73" role="button" onclick="window.location.href='http://localhost/RWDD/Assignment/User/StartQuiz.php'">Play</button>
-                </div>
-                <div class="card">
-                    <h3>Elements</h3>
-                    <p>&lt;h1&gt; My first Heading &lt;h1&gt;</p>
-                    <button class="button-73" role="button" onclick="window.location.href='http://localhost/RWDD/Assignment/User/StartQuiz.php'">Play</button>
-                </div>
-                <div class="card">
-                    <h3>Attribute</h3>
-                    <p>name="value"</p>
-                    <button class="button-73" role="button" onclick="window.location.href='http://localhost/RWDD/Assignment/User/StartQuiz.php'">Play</button>
-                </div>
-                <div class="card">
-                    <h3>Headings</h3>
-                    <h4>Heading1</h4>
-                    <h5>Heading2</h5>
-                    <button class="button-73" role="button" onclick="window.location.href='http://localhost/RWDD/Assignment/User/StartQuiz.php'">Play</button>
-                </div>
-                <div class="card">
-                    <h3>Paragraph</h3>
-                    <p>&lt;p&gt; This is a paragraph. &lt;p&gt;</p>
-                    <button class="button-73" role="button" onclick="window.location.href='http://localhost/RWDD/Assignment/User/StartQuiz.php'">Play</button>
-                </div>
+            <?php
+                    $sql = "SELECT * FROM Quiz WHERE subject = 'CSS'";
+                    $result = $conn->query($sql);
+
+                    if ($result->num_rows > 0) {
+                        $count=1;
+                        while ($row = $result->fetch_assoc()) {
+                            # echo html code here
+                            echo '<div class="card">';
+                            echo '<h3>' . $row['title'] . '</h3>';
+                            echo '<p>' . $row['description'] . '</p>';
+                            // echo '<button class="button-73" role="button" onclick="window.location.href='StartQuiz.php'">Play</button>';
+                            echo '<button class="button-73" role="button" onclick="window.location.href=\'StartQuiz.php?id='.$row['quiz_id'] .'\'">Play</button>';
+                            echo '</div>';
+                        }
+                    } else {
+                        echo "No quiz available at the moment.";
+                    }
+                ?>
             </div>
             
         </section>
@@ -90,5 +75,15 @@
       <li></li>
       <li></li>
     </ul>
+
+    <script>
+        textbox = document.getElementById("joinQuiz");
+        textbox.addEventListener("keydown", function(event) {
+            if (event.key === "Enter") {
+                quizid=textbox.value;
+                window.location.href="StartQuiz.php?id="+quizid;
+            }
+        });
+    </script>
 </body>
 </html>
