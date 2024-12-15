@@ -198,10 +198,16 @@ session_start()
             $status=login($_POST['loginEmail'],$_POST['loginPassword'],$conn);
             if ($status){
                 $user_id=$_SESSION['user_id'];
-                echo "<script>console.log('$user_id');</script>";
-                echo '<script>alert("Login successful")
-                    window.location.href = "Home.php";
-                    </script>';
+                $user_role=$_SESSION['role_id'];
+                if ($user_role==1){
+                    echo '<script>alert("Login successful")
+                        window.location.href = "../Admin/AdminHome.php";
+                        </script>';
+                }else if ($user_role==3){
+                    echo '<script>alert("Login successful")
+                        window.location.href = "Home.php";
+                        </script>';
+                }
             }else{
                 echo '<script>alert("Login failed");
                     window.location.href = "Login.php";

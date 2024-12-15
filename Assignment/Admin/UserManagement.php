@@ -1,3 +1,7 @@
+<?php
+include("../../main.php");
+include('../session.php');
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -71,35 +75,36 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <th scope="row" class="row">01</th>
-                      <td>HTML</td>
-                      <td>Introduction -  What is HTML?</td>
-                      <td>10</td>
-                      <td>10 October 2024</td>
-                      <td><a class="edit">Edit</a></td>
-                      <td class="bin"></td>
-                    </tr>
-                    <tr>
-                    <th scope="row" class="row">01</th>
-                      <td>HTML</td>
-                      <td>Introduction -  What is HTML?</td>
-                      <td>10</td>
-                      <td>10 October 2024</td>
-                      <td><a class="edit">Edit</a></td>
-                      <td class="bin"></td>
-                    </tr>
-                    <tr>
-                      <th scope="row" class="row">01</th>
-                        <td>HTML</td>
-                        <td>Introduction -  What is HTML?</td>
-                        <td>10</td>
-                        <td>10 October 2024</td>
-                        <td><a class="edit">Edit</a></td>
-                        <td class="bin"></td>
-                    </tr>
+
+                    <?php
+                      $sql = "SELECT * FROM Quiz";
+                      $result = $conn->query($sql);
+                  
+                      if ($result->num_rows > 0) {
+                          while ($row = $result->fetch_assoc()) {
+                            $quizid=$row['quiz_id'];
+                            $subject = htmlspecialchars($row['subject']);
+                            $title_description = htmlspecialchars($row['title']) . " - " . htmlspecialchars($row['description']);
+                            $total_questions = total_question($row['quiz_id'], $conn);
+                            $datetime = htmlspecialchars($row['date_created']);
+                            $date = explode(" ", $datetime)[0];
+                            echo '<tr>';
+                            echo "<th scope='row' class='row'>$quizid</th>";
+                            echo "<td>$subject</td>";
+                            echo "<td>$title_description</td>";
+                            echo "<td>$total_questions</td>";
+                            echo "<td>$date</td>";
+                            echo "<td><a class='edit'>Edit</a></td>";
+                            echo "<td class='bin'></td>";
+                            echo '</tr>';
+                          }
+                      } else {
+                          echo "No quiz available at the moment.";
+                      }
+                    ?>
+
                   </tbody>
-                </table>  
+                </table>
             </div>
           <div class="content" id="content2" style="overflow-x: auto;">
               <table class="table">
@@ -107,29 +112,43 @@
                     <tr>
                       <th scope="col">Instructor ID</th>
                       <th scope="col">Instructor Name</th>
-                      <th scope="col">Badges Collected</th>
+                      <th scope="col">Total Quizzes Created</th>
                       <th scope="col"></th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <th scope="row" class="row">INST12345</th>
-                      <td>Yong</td>
-                      <td>12</td>
-                      <td class="bin"></td>
-                    </tr>
-                    <tr>
-                      <th scope="row" class="row">INST12345</th>
-                      <td>Yong</td>
-                      <td>12</td>
-                      <td class="bin"></td>
-                    </tr>
-                    <tr>
-                      <th scope="row" class="row">INST12345</th>
-                      <td>Yong</td>
-                      <td>12</td>
-                      <td class="bin"></td>
-                    </tr>
+
+                    <?php
+                      $sql = "SELECT user_id, name FROM Users WHERE role_id = 2";
+                      $result = $conn->query($sql);
+                  
+                      if ($result->num_rows > 0) {
+                          while ($row = $result->fetch_assoc()) {
+                              $instructor_id = $row['user_id'];
+                              $instructor_name = $row['name'];
+                  
+                              $sql_quiz_count = "SELECT COUNT(*) AS total FROM Quiz WHERE creator_id = ?";
+                              $stmt = $conn->prepare($sql_quiz_count);
+                              $stmt->bind_param("i", $instructor_id);
+                              $stmt->execute();
+                              $result_quiz_count = $stmt->get_result();
+                              $total_quiz_create = 0;
+                              if ($result_quiz_count->num_rows > 0) {
+                                  $row_quiz_count = $result_quiz_count->fetch_assoc();
+                                  $total_quiz_create = $row_quiz_count['total'];
+                              }
+                              echo '<tr>';
+                              echo "<th scope='row' class='row'>$instructor_id</th>";
+                              echo "<td>$instructor_name</td>";
+                              echo "<td>$total_quiz_create</td>";
+                              echo "<td class='bin'></td>";
+                              echo '</tr>';
+                          }
+                      } else {
+                          echo "No instructors found.";
+                      }
+                    ?>
+
                   </tbody>
                 </table>  
               </div>
@@ -144,27 +163,30 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <th scope="row" class="row">ST12345</th>
-                      <td>Yong</td>
-                      <td>12</td>
-                      <td>50</td>
-                      <td class="bin"></td>
-                    </tr>
-                    <tr>
-                      <th scope="row" class="row">ST12345</th>
-                      <td>Yong</td>
-                      <td>12</td>
-                      <td>50</td>
-                      <td class="bin"></td>
-                    </tr>
-                    <tr>
-                      <th scope="row" class="row">ST12345</th>
-                      <td>Yong</td>
-                      <td>12</td>
-                      <td>50</td>
-                      <td class="bin"></td>
-                    </tr>
+
+                    <?php
+                      $sql = "SELECT user_id, name FROM Users WHERE role_id = 3";
+                      $result = $conn->query($sql);
+                  
+                      if ($result->num_rows > 0) {
+                          while ($row = $result->fetch_assoc()) {
+                              $student_id = $row['user_id'];
+                              $student_name = $row['name'];
+                              $badges_collected = calculate_total_badges_collected($student_id, $conn);
+                              $quiz_completed = total_quiz_done($student_id, $conn);
+                              echo '<tr>';
+                              echo "<th scope='row' class='row'>$student_id</th>";
+                              echo "<td>$student_name</td>";
+                              echo "<td>$badges_collected</td>";
+                              echo "<td>$quiz_completed</td>";
+                              echo "<td class='bin'></td>";
+                              echo '</tr>';
+                          }
+                      } else {
+                          echo "No student found.";
+                      }
+                    ?>
+
                   </tbody>
                 </table>  
           </div>

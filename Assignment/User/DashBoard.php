@@ -51,7 +51,6 @@ include('../session.php');
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
                   <?php
                     $student_id = $_SESSION['user_id'];
                     $sql = "SELECT q.quiz_id, q.subject, q.title, q.description, r.datetime, r.feedback, a.attempt_id FROM Attempt a INNER JOIN Quiz q ON a.quiz_id = q.quiz_id INNER JOIN Result r ON r.attempt_id = a.attempt_id WHERE a.student_id = ? AND a.stat = 'completed' ORDER BY r.datetime DESC";
