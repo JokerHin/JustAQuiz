@@ -144,7 +144,7 @@ function creator_display_badges($conn) {
                         badgeDiv.remove(); // Remove the badge element
                     }
                     alert("Badge deleted successfully.");
-                    location.reload();
+                    window.location.href = "Badges.php"; 
                 } else {
                     alert("Error deleting badge.");
                 }
