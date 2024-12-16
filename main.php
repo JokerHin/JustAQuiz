@@ -884,27 +884,27 @@ function total_quiz_attempt($conn){
 
 
 //Display all quiz attempt function
-function display_attempt($conn){
-    $sql = "SELECT a.attempt_id, a.student_id, u.name, q.title, q.description, r.time_remaining, r.feedback
-        FROM Attempt a
-        INNER JOIN Users u ON a.student_id = u.user_id
-        INNER JOIN Quiz q ON a.quiz_id = q.quiz_id
-        INNER JOIN Result r ON a.attempt_id = r.attempt_id";
-    $result = $conn->query($sql);
+// function display_attempt($conn){
+//     $sql = "SELECT a.attempt_id, a.student_id, u.name, q.title, q.description, r.time_remaining, r.feedback
+//         FROM Attempt a
+//         INNER JOIN Users u ON a.student_id = u.user_id
+//         INNER JOIN Quiz q ON a.quiz_id = q.quiz_id
+//         INNER JOIN Result r ON a.attempt_id = r.attempt_id";
+//     $result = $conn->query($sql);
 
-    if ($result->num_rows > 0) {
-        while ($row = $result->fetch_assoc()) {
-            $student_id = htmlspecialchars($row['student_id']);
-            $student_name = htmlspecialchars($row['name']);
-            $title = htmlspecialchars($row['title']) . " - " . htmlspecialchars($row['description']);
-            $time_spent = calculate_used_time($row['attempt_id'], $conn) . "s";
-            $feedback = htmlspecialchars($row['feedback']);
-            // return $student_id, $student_name, $title, $time_spent, $feedback; canot return many value
-        }
-    }else{
-        echo "No quiz attempts found. Your quiz havnt got student attempts yet :(";
-    }
-}
+//     if ($result->num_rows > 0) {
+//         while ($row = $result->fetch_assoc()) {
+//             $student_id = htmlspecialchars($row['student_id']);
+//             $student_name = htmlspecialchars($row['name']);
+//             $title = htmlspecialchars($row['title']) . " - " . htmlspecialchars($row['description']);
+//             $time_spent = calculate_used_time($row['attempt_id'], $conn) . "s";
+//             $feedback = htmlspecialchars($row['feedback']);
+//             // return $student_id, $student_name, $title, $time_spent, $feedback; canot return many value
+//         }
+//     }else{
+//         echo "No quiz attempts found. Your quiz havnt got student attempts yet :(";
+//     }
+// }
 
 
 // display all student info

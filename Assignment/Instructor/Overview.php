@@ -1,27 +1,59 @@
 <?php
 include("../../main.php");
 include('../session.php');
-$display_attempt = display_attempt($conn);
-$total_quiz = calculate_total_quiz_created($conn);
-function view_available_quiz($conn) {
-  $sql = "SELECT title, description, time_limit FROM quiz";
+
+function display_attempt($conn) {
+  $sql = "SELECT a.attempt_id, a.student_id, u.name, q.title, q.description, r.time_remaining, r.feedback
+      FROM Attempt a
+      INNER JOIN Users u ON a.student_id = u.user_id
+      INNER JOIN Quiz q ON a.quiz_id = q.quiz_id
+      INNER JOIN Result r ON a.attempt_id = r.attempt_id";
   $result = $conn->query($sql);
 
   if ($result->num_rows > 0) {
       while ($row = $result->fetch_assoc()) {
+          $student_id = htmlspecialchars($row['student_id']);
+          $student_name = htmlspecialchars($row['name']);
+          $title = htmlspecialchars($row['title']) . " - " . htmlspecialchars($row['description']);
+          $time_spent = calculate_used_time($row['attempt_id'], $conn)*60 . "s";
+          $feedback = htmlspecialchars($row['feedback']);
+
+          // Generate a table row
+          echo "<tr>
+                  <td>{$student_id}</td>
+                  <td>{$student_name}</td>
+                  <td>{$title}</td>
+                  <td>{$time_spent}</td>
+                  <td>{$feedback}</td>
+                  <td class='edit'></td>
+                </tr>";
+      }
+  } else {
+      echo "<tr><td colspan='6'>No quiz attempts found. Your quiz hasn't got any student attempts yet :(</td></tr>";
+  }
+}
+ 
+function view_available_quiz($conn) {
+  $user_id=$_SESSION['user_id'];
+  $sql = "SELECT * FROM quiz WHERE creator_id = $user_id";
+  $result = $conn->query($sql);
+ 
+  if ($result->num_rows > 0) {
+      while ($row = $result->fetch_assoc()) {
           // Sanitize output to prevent XSS attacks
+          $quizid = htmlspecialchars($row['quiz_id']);
           $title = htmlspecialchars($row['title']);
           $description = htmlspecialchars($row['description']);
-          $total_questions = $total_quiz;
           $time_limit = htmlspecialchars($row['time_limit']);
-
+          $total_questions = total_question($row['quiz_id'], $conn);
+ 
           // Echo the HTML for each row
           echo "<tr>
                   <td>{$title}</td>
                   <td>{$description}</td>
                   <td>{$total_questions}</td>
                   <td>{$time_limit}</td>
-                  <td><a href='InstructorCreateQuiz.php'>Edit</a></td>
+                  <td><a href='InstructorEditQuiz.php?id={$quizid}'>Edit</a></td>
                 </tr>";
       }
   } else {
@@ -110,7 +142,7 @@ function view_available_quiz($conn) {
                 <tbody>
                   <tr>
                     <?php
-                    $display_attempt;
+                    display_attempt($conn);
                     ?>
                   </tr>
                 </tbody>
