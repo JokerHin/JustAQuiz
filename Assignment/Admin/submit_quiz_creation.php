@@ -26,5 +26,7 @@ foreach ($questions as $question) {
     }
 }
 
+end_quiz_create();
+
 echo json_encode(['status' => 'success', 'message' => 'Quiz created successfully']);
 ?>

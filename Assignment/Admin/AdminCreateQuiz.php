@@ -72,7 +72,7 @@ include('../session.php');
             </div>
         </div>
 
-        <button id="createQuizBtn" class="Create-Quiz" >Create-Quiz</button>
+        <button id="createQuizBtn" class="Create-Quiz" >Create Quiz</button>
 
         <script>
             questionCount = 1;

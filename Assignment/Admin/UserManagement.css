@@ -254,6 +254,16 @@ nav a {
     .bin:hover{
         border: 2px solid red;
     }
+    .Qbin{
+      background-image: url(../images/bin.png);
+      background-position: center;
+      background-size: 25px 30px;
+      background-repeat: no-repeat;
+      cursor: pointer;
+    }
+    .Qbin:hover{
+        border: 2px solid red;
+    }
     .edit {
         text-decoration: underline;
         cursor: pointer;

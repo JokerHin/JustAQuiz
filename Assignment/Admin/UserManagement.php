@@ -94,8 +94,8 @@ include('../session.php');
                             echo "<td>$title_description</td>";
                             echo "<td>$total_questions</td>";
                             echo "<td>$date</td>";
-                            echo "<td><a class='edit'>Edit</a></td>";
-                            echo "<td class='bin'></td>";
+                            echo "<td><a class='edit' href='AdminEditQuiz.php?id={$quizid}'>Edit</a></td>";
+                            echo "<td data-id='$quizid' class='Qbin'></td>";
                             echo '</tr>';
                           }
                       } else {
@@ -141,7 +141,7 @@ include('../session.php');
                               echo "<th scope='row' class='row'>$instructor_id</th>";
                               echo "<td>$instructor_name</td>";
                               echo "<td>$total_quiz_create</td>";
-                              echo "<td class='bin'></td>";
+                              echo "<td data-id='$instructor_id' class='bin'></td>";
                               echo '</tr>';
                           }
                       } else {
@@ -180,7 +180,7 @@ include('../session.php');
                               echo "<td>$student_name</td>";
                               echo "<td>$badges_collected</td>";
                               echo "<td>$quiz_completed</td>";
-                              echo "<td class='bin'></td>";
+                              echo "<td data-id='$student_id' class='bin'></td>";
                               echo '</tr>';
                           }
                       } else {
@@ -206,5 +206,40 @@ include('../session.php');
       <li></li>
       <li></li>
     </ul>
+
+    <script>
+    document.querySelectorAll('.Qbin').forEach(td => {
+        td.onclick = function () {
+            quizId = this.getAttribute('data-id');
+            fetch('delete_quiz.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ quizId: quizId })
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Simple feedback
+                alert(data.message);
+                location.reload(); // Reload page to reflect changes
+            });
+        };
+    });
+    document.querySelectorAll('.bin').forEach(td => {
+        td.onclick = function () {
+          userId = this.getAttribute('data-id');
+            fetch('delete_user.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ userId: userId })
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Simple feedback
+                alert(data.message);
+                location.reload(); // Reload page to reflect changes
+            });
+        };
+    });
+    </script>
 </body>
 </html>

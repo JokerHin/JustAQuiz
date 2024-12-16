@@ -232,10 +232,10 @@ function create_quiz($title, $description, $subject, $time_limit,  $conn){
 // edit quiz function (2 javascript alert)
 function edit_quiz($quiz_id, $updated_data, $conn) {
     // prevent instructor doing bad thing
-    $title = htmlspecialchars($updated_data['title']);
-    $description = htmlspecialchars($updated_data['description']);
-    $subject = htmlspecialchars($updated_data['subject']);
-    $time_limit = htmlspecialchars($updated_data['time_limit']);
+    $title = htmlspecialchars($updated_data[0]);
+    $description = htmlspecialchars($updated_data[1]);
+    $subject = htmlspecialchars($updated_data[2]);
+    $time_limit = htmlspecialchars($updated_data[3]);
 
     $sql = "UPDATE Quiz SET title = ?, description = ?, subject = ?, time_limit = ? WHERE quiz_id = ?";
     $stmt = $conn->prepare($sql);
