@@ -1,3 +1,36 @@
+<?php
+include("../../main.php");
+include('../session.php');
+$display_attempt = display_attempt($conn);
+$total_quiz = calculate_total_quiz_created($conn);
+function view_available_quiz($conn) {
+  $sql = "SELECT title, description, time_limit FROM quiz";
+  $result = $conn->query($sql);
+
+  if ($result->num_rows > 0) {
+      while ($row = $result->fetch_assoc()) {
+          // Sanitize output to prevent XSS attacks
+          $title = htmlspecialchars($row['title']);
+          $description = htmlspecialchars($row['description']);
+          $total_questions = $total_quiz;
+          $time_limit = htmlspecialchars($row['time_limit']);
+
+          // Echo the HTML for each row
+          echo "<tr>
+                  <td>{$title}</td>
+                  <td>{$description}</td>
+                  <td>{$total_questions}</td>
+                  <td>{$time_limit}</td>
+                  <td><a href='InstructorCreateQuiz.php'>Edit</a></td>
+                </tr>";
+      }
+  } else {
+      // No quizzes available
+      echo "<tr><td colspan='5'>No quiz available at the moment.</td></tr>";
+  }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -50,32 +83,15 @@
                     <th scope="col">Title</th>
                     <th scope="col">Description</th>
                     <th scope="col">Total Questions</th>
-                    <th scope="col">Date Created</th>
+                    <th scope="col">Time Limit</th>
                     <th scope="col"></th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <th scope="row" class="row">Introduction</th>
-                    <td>What is HTML?</td>
-                    <td>10</td>
-                    <td>10 October 2024</td>
-                    <td><a>Edit</a></td>
-                  </tr>
-                  <tr>
-                    <th scope="row" class="row">Form</th>
-                    <td>The form element</td>
-                    <td>10</td>
-                    <td>12 October 2024</td>
-                    <td><a>Edit</a></td>
-                  </tr>
-                  <tr>
-                    <th scope="row" class="row">images</th>
-                    <td>HTML images Syntax</td>
-                    <td>10</td>
-                    <td>16 October 2024</td>
-                    <td><a>Edit</a></td>
-                  </tr>
+                <?php
+                  // Ensure you have a valid database connection in $conn
+                  view_available_quiz($conn);
+                  ?>
                 </tbody>
               </table>  
             </div>
@@ -86,28 +102,16 @@
                   <tr>
                     <th scope="col">Student ID</th>
                     <th scope="col">Student Name</th>
-                    <th scope="col">Badges Collected</th>
-                    <th scope="col">Quizzes Completed</th>
+                    <th scope="col">Title-Description</th>
+                    <th scope="col">Time Spent</th>
+                    <th scope="col">Give Feedback</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td>ST12345</td>
-                    <td><a>Yong</a></td>
-                    <td>12</td>
-                    <td>50<td>
-                  </tr>
-                  <tr>
-                    <td>ST12345</td>
-                    <td><a>Yong</a></td>
-                    <td>12</td>
-                    <td>50<td>
-                  </tr>
-                  <tr>
-                    <td>ST12345</td>
-                    <td><a>Yong</a></td>
-                    <td>12</td>
-                    <td>50<td>
+                    <?php
+                    $display_attempt;
+                    ?>
                   </tr>
                 </tbody>
               </table>  
@@ -126,5 +130,14 @@
       <li></li>
       <li></li>
     </ul>
+    <div class="popup-edit"> 
+        <div class="popup-content">
+            <img id="close-button" src="../images/close.png" alt="close-button">
+            <h1>Feedback</h1>
+            <input class="pop-up-input" type="text"></input>
+            <button class="pop-up-submit">Submit</button>
+        </div>
+    </div>
+    <script src="Overview.js"></script>
 </body>
 </html>
