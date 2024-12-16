@@ -36,6 +36,19 @@ include('../session.php');
                 document.getElementById('tab3').style.background = '#3CAEA3';
             };
         }
+
+        function getQueryParam(param) {
+            urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+
+        // Automatically switch tabs based on the query parameter
+        document.addEventListener('DOMContentLoaded', function () {
+            tabParam = getQueryParam('tab');
+            if (tabParam) {
+                tab(parseInt(tabParam, 10)); // Call the `tab` function with the tab number
+            }
+        });
     </script>
 </head>
 <body>

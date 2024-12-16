@@ -60,6 +60,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_profile'])) {
     }
 }
 
+
+
 ?>
 
 
@@ -99,7 +101,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_profile'])) {
                 <p class="update">Last updated: Oct 22, 2024</p>
                 <p class="number"><?php echo $total_attempt; ?></p>
                 <p class="Total">Total Attempts</p>
-                <a class="link" href="Overview.php">VIEW</a>
+                <a class="link" href="Overview.php?tab=2">VIEW</a>
             </div>
         </div>
         <div class="right-container">

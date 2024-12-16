@@ -113,108 +113,25 @@ if (isset($_GET['id'])) {
         <button id="createQuizBtn" class="Create-Quiz" >Update Quiz</button>
 
         <script>
-            // questionCount = 1;
-            
-            // function addNewQuestion(event) {
-            //     questionCount++;
 
-            //     // Get the parent element where you want to insert the new question
-            //     mainElement = document.querySelector('main#question');
+            function changeCheckedRadio(value) {
+                radioButton = document.querySelector(`input[name="choice"][value="${value}"]`);
                 
-            //     // Find the question block where the new one should be inserted
-            //     targetQuestion = event.target.closest('.mainQ'); // Get the clicked question container
-                
-            //     if (!targetQuestion) {
-            //         targetQuestion = event.target.closest('.main');
-            //         if (!targetQuestion) {
-            //             console.error('Target question not found.');
-            //             return; // Exit if no target question is found
-            //         }
-            //     }
+                if (radioButton) {
+                    radioButton.checked = true;
 
-            //     // Create the new question HTML dynamically (same structure as your current questions)
-            //     newQuestionHTML = `
-            //         <div class="mainQ">
-            //             // <div class="Question-container-left">
-            //             //     <div class="tabQ1">Delete Question</div>
-            //             //     <div class="tabQ2">Add Question</div>
-            //             // </div>
-            //             <div class="Question-container-right">
-            //                 <div class="container">
-            //                     <span class="Question-num">Q${questionCount}</span>
-            //                     <input type="text" class="Question" placeholder="Type Question Here"></input>
-            //                     <div class="Option-box">
-            //                         <input type="text" class="Option" name="option_${questionCount}_A" placeholder="A. Type Answer Here">
-            //                         <input type="radio" name="correct_${questionCount}" value="A">
-            //                         <input type="text" class="Option" name="option_${questionCount}_B" placeholder="B. Type Answer Here">
-            //                         <input type="radio" name="correct_${questionCount}" value="B">
-            //                         <input type="text" class="Option" name="option_${questionCount}_C" placeholder="C. Type Answer Here">
-            //                         <input type="radio" name="correct_${questionCount}" value="C">
-            //                         <input type="text" class="Option" name="option_${questionCount}_D" placeholder="D. Type Answer Here">
-            //                         <input type="radio" name="correct_${questionCount}" value="D">
-            //                     </div>
-            //                 </div>
-            //             </div>
-            //         </div>`;
+                    flap = document.getElementById("flap");
+                    if (flap) {
+                        flap.querySelector(".content").textContent = value;
+                    }
+                } else {
+                    console.warn("No radio button found with the value:", value);
+                }
+            }
 
-            //     // Create a new question element from the HTML string
-            //     newQuestionElement = createElementFromHTML(newQuestionHTML);
+            subject='<?php echo $subject; ?>';
+            setTimeout(() => changeCheckedRadio(subject), 0);
 
-            //     // Insert the new question after the clicked question
-            //     targetQuestion.parentNode.insertBefore(newQuestionElement, targetQuestion.nextSibling);
-
-            //     // Update the question numbers for all existing questions
-            //     updateQuestionNumbers();
-
-            //     // Reattach event listeners to all "Add Question" buttons
-            //     attachAddQuestionListeners();
-            //     attachDeleteQuestionListeners();
-            // }
-
-            // function deleteQuestion(event) {
-            //     questionElement = event.target.closest('.mainQ');
-            //     if (questionElement) {
-            //         questionElement.remove(); // Remove the question from the DOM
-            //         updateQuestionNumbers();  // Update question numbers
-            //     }
-            // }
-
-            // function updateQuestionNumbers() {
-            //     questions = document.querySelectorAll('.Question-num');
-            //     questions.forEach((questionNum, index) => {
-            //         questionNum.textContent = `Q${index + 1}`;
-            //     });
-            // }
-
-            // // Function to convert HTML string to DOM element
-            // function createElementFromHTML(htmlString) {
-            //     div = document.createElement('div');
-            //     div.innerHTML = htmlString.trim();
-            //     return div.firstChild;
-            // }
-
-            // // Function to attach event listeners to all "Add Question" buttons
-            // function attachAddQuestionListeners() {
-            //     document.querySelectorAll('.tabQ2').forEach(button => {
-            //         button.removeEventListener('click', addNewQuestion); // Avoid duplicate listeners
-            //         button.addEventListener('click', addNewQuestion);
-            //     });
-            // }
-
-            // function attachDeleteQuestionListeners() {
-            //     document.querySelectorAll('.tabQ1').forEach(button => {
-            //         button.removeEventListener('click', deleteQuestion); // Remove old listeners
-            //         button.addEventListener('click', deleteQuestion); // Add new listeners
-            //     });
-            // }
-
-            // // Initial binding for the existing "Add Question" button
-            // attachAddQuestionListeners();
-            // attachDeleteQuestionListeners();
-            
-            // //top first add question button
-            // document.querySelector('.tab').addEventListener('click', addNewQuestion);
-            
             //create quiz button
             document.addEventListener('DOMContentLoaded', function() {
                 createQuizBtn = document.getElementById('createQuizBtn');

@@ -1,15 +1,33 @@
 <?php
 include("../../main.php");
 include('../session.php');
-
+ 
+ 
+// Handle the feedback submission via POST
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+  if (isset($_POST['result_id']) && isset($_POST['feedback'])) {
+      $result_id = intval($_POST['result_id']);
+      $feedback = $_POST['feedback'];
+ 
+      // Call the function to update the feedback
+      if (write_feedback($result_id, $feedback, $conn)) {
+          echo "Feedback updated successfully";
+      } else {
+          echo "Failed to update feedback";
+      }
+  }
+}
+ 
 function display_attempt($conn) {
+  $user_id = $_SESSION['user_id'];
   $sql = "SELECT a.attempt_id, a.student_id, u.name, q.title, q.description, r.time_remaining, r.feedback
       FROM Attempt a
       INNER JOIN Users u ON a.student_id = u.user_id
       INNER JOIN Quiz q ON a.quiz_id = q.quiz_id
-      INNER JOIN Result r ON a.attempt_id = r.attempt_id";
+      INNER JOIN Result r ON a.attempt_id = r.attempt_id
+      WHERE creator_id = $user_id";
   $result = $conn->query($sql);
-
+ 
   if ($result->num_rows > 0) {
       while ($row = $result->fetch_assoc()) {
           $student_id = htmlspecialchars($row['student_id']);
@@ -17,9 +35,9 @@ function display_attempt($conn) {
           $title = htmlspecialchars($row['title']) . " - " . htmlspecialchars($row['description']);
           $time_spent = calculate_used_time($row['attempt_id'], $conn)*60 . "s";
           $feedback = htmlspecialchars($row['feedback']);
-
+ 
           // Generate a table row
-          echo "<tr>
+          echo "<tr data-result-id='{$row['attempt_id']}'>
                   <td>{$student_id}</td>
                   <td>{$student_name}</td>
                   <td>{$title}</td>
@@ -62,7 +80,7 @@ function view_available_quiz($conn) {
   }
 }
 ?>
-
+ 
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -85,6 +103,19 @@ function view_available_quiz($conn) {
                 document.getElementById('tab2').style.background = 'white';
             };
         }
+
+        function getQueryParam(param) {
+            urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+
+        // Automatically switch tabs based on the query parameter
+        document.addEventListener('DOMContentLoaded', function () {
+            const tabParam = getQueryParam('tab');
+            if (tabParam) {
+                tab(parseInt(tabParam, 10)); // Call the `tab` function with the tab number
+            }
+        });
     </script>
 </head>
 <body>
@@ -93,14 +124,14 @@ function view_available_quiz($conn) {
             <div id="h1">JUST</div><div id="h2">A</div><div id="h3">QUIZ</div>
         </div>
     </header>
-
+ 
     <nav class="navbar">
         <a href="InstructorHome.php">HOME</a>
         <a href="InstructorCreateQuiz.php">CREATE QUIZ</a>
         <a href="Overview.php">OVERVIEW</a>
         <a href="../User/Login.php">LOGOUT</a>
     </nav>
-
+ 
     <main>
     <div id="main">
     <div class="flex-container-top">
@@ -162,7 +193,7 @@ function view_available_quiz($conn) {
       <li></li>
       <li></li>
     </ul>
-    <div class="popup-edit"> 
+    <div class="popup-edit">
         <div class="popup-content">
             <img id="close-button" src="../images/close.png" alt="close-button">
             <h1>Feedback</h1>

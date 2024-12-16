@@ -91,7 +91,7 @@ function creator_display_badges($conn) {
             if (isset($_POST['createBtn'])) {
 
                 if (!isset($_FILES['badgeimage']) || $_FILES['badgeimage']['error'] !== UPLOAD_ERR_OK) {
-                    echo '<script>alert("File upload faileds. Please try again.");</script>';
+                    echo '<script>alert("File upload failed. Please try again.");</script>';
                     exit;
                 }
 

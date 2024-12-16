@@ -299,25 +299,14 @@
             if ($status){
                 $user_id=$_SESSION['user_id'];
                 $user_role=$_SESSION['role_id'];
-                echo $user_id;
                 echo '<script>alert("Successful");
                         window.location.href = "Login.php";
                         </script>';
-                // if ($_POST['choice']=='3'){
-                //     echo '<script>alert("Successful");
-                //         window.location.href = "Home.php";
-                //         </script>';
-                // }else{
-                //     echo '<script>alert("Successful");
-                //         window.location.href = "../Instructor/InstructorHome.php";
-                //         </script>';
-                // }
             }else{
                 echo '<script>alert("Failed");
                     window.location.href = "Sign Up.php";
                     </script>';
             }
-            // mysqli_close($con);
         }
     ?>
 </body>

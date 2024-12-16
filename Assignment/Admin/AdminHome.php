@@ -58,6 +58,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_profile'])) {
     }
 }
 
+function total_quiz_ammount($conn) {
+  $sql = "SELECT COUNT(*) AS total FROM Quiz";
+  $stmt = $conn->prepare($sql);
+  $stmt->execute();
+  $result = $stmt->get_result();
+
+  if ($result->num_rows > 0) {
+      $row = $result->fetch_assoc();
+      return $row['total'];
+  } else {
+      return 0;
+  }
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -89,7 +103,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_profile'])) {
         <div class="left-container">
             <div class="box">
                 <p class="update">Last updated: <?php echo getTodayDate();?></p>
-                <p class="number"><?php echo calculate_total_quiz_created($conn);?></p>
+                <p class="number"><?php echo total_quiz_ammount($conn);?></p>
                 <p class="Total">Total Quizzes Created</p>
                 <a class="link" href="UserManagement.php">VIEW</a>
             </div>
@@ -97,13 +111,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_profile'])) {
                 <p class="update">Last updated: <?php echo getTodayDate();?></p>
                 <p class="number"><?php echo total_student($conn);?></p>
                 <p class="Total">Total Students</p>
-                <a class="link" href="UserManagement.php#tab3">VIEW</a>
+                <a class="link" href="UserManagement.php?tab=3">VIEW</a>
             </div>
             <div class="box">
                 <p class="update">Last updated: <?php echo getTodayDate();?></p>
                 <p class="number"><?php echo total_instructor($conn);?></p>
                 <p class="Total">Total Instructors</p>
-                <a class="link" href="UserManagement.php#tab2">VIEW</a>
+                <a class="link" href="UserManagement.php?tab=2">VIEW</a>
             </div>
             <div class="box">
                 <p class="update">Last updated: <?php echo getTodayDate();?></p>

@@ -621,15 +621,13 @@ function submit_answer($answers, $conn) { // add liao attempt id in table
 // feedback function
 function write_feedback($result_id, $feedback, $conn) {
     $feedback = htmlspecialchars($feedback);
-
-    $sql = "UPDATE Result SET feedback = ? WHERE result_id = ?";
+ 
+    $sql = "UPDATE result SET feedback = ? WHERE result_id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("si", $feedback, $result_id);
     if ($stmt->execute()) {
-        # echo // javascript alert box here
         return true;
     } else {
-        # echo // javascript alert box here
         return false;
     }
 }
