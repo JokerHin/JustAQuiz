@@ -3,8 +3,8 @@
 session_start();
 
 //connect to database
-$servername = "localhost"; // if your 3306 port used liao change to this: 127.0.0.1:3307
-$username = "root"; // i didnt set
+$servername = "localhost";
+$username = "root";
 $password = "";
 $dbname = "justaquiz";
 
@@ -16,7 +16,7 @@ if ($conn->connect_error) {
 }
 
 
-// Sign Up function  (6 javascript alert)
+// Sign Up function
 function sign_up($name, $password, $confirm_password, $email, $conn, $role) { // role id: 1 admin, 2 instructor 3 student
     // protect against xss server scripting attack ( not sure if needed)
     $name = htmlspecialchars($name);
@@ -29,12 +29,10 @@ function sign_up($name, $password, $confirm_password, $email, $conn, $role) { //
 
     // username oni can have alphanumeric, space n underscore
     if (! preg_match("/^[a-zA-Z0-9 _]+$/", $name)){
-        #echo // javascript alert box here
         return false;
     }
 
     if (strlen($name) > 15){
-        # echo // javascript here
         return false;
     }
 
@@ -46,12 +44,10 @@ function sign_up($name, $password, $confirm_password, $email, $conn, $role) { //
     $stmt->execute();
     $result = $stmt->get_result(); // get result with same user name
     if ($result->num_rows > 0) {
-        #echo // javascript alert box here
         return false;
     }
 
     if ($password !== $confirm_password) {
-        # echo // javascript alert box here ;
         return false;
     }
 
@@ -63,10 +59,8 @@ function sign_up($name, $password, $confirm_password, $email, $conn, $role) { //
     $stmt->bind_param("isss", $role, $name, $email, $hashed_password);
 
     if ($stmt->execute()) {
-        # echo // javascript alert box here
         return true;
     } else {
-        # echo // javascript alert box here
         return false;
     }
     $_SESSION['user_id'] = $user['user_id'];
@@ -76,17 +70,15 @@ function sign_up($name, $password, $confirm_password, $email, $conn, $role) { //
 }
 
 
-# login function (3 javascript alert)
+# login function
 function login($email, $password, $conn){
     $username = htmlspecialchars($email);
     $password = htmlspecialchars($password);
-
     $sql = "SELECT * FROM Users WHERE email = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $email);
     $stmt->execute();
     $result = $stmt->get_result();
-
     if ($result->num_rows === 1) {
         $user = $result->fetch_assoc(); // get the result row as an array form, column name with the value
         if (password_verify($password, $user['password_hash'])) {
@@ -94,64 +86,35 @@ function login($email, $password, $conn){
             $_SESSION['role_id'] = $user['role_id'];
             $_SESSION['username'] = $user['name'];
             $_SESSION['email'] = $user['email'];
-            #echo // javascript alert box here;
-            return true; //dk should return true or role_id bcz they have different interface
-        } else { // wrong password here
-            #echo // javascript alert box here;
+            return true;
+        } else { // wrong password
             return false;
         }
     } else { // not sign up yet
-        #echo // javascript alert box here;
         return false;
     }
 }
 
 
-// Logout function (1 javascript alert)
+// Logout function
 function logout_user(){ //not used
     session_unset();
     session_destroy();
-    #echo // javascript alert box here
     return true;
 }
 
 
-// Delete User (2 javascript alert)
-// function delete_user($user_id, $conn) {
-//     $user_id = htmlspecialchars($user_id);
-
-//     $sql = "DELETE FROM Users WHERE user_id = ?";
-//     $stmt = $conn->prepare($sql);
-//     $stmt->bind_param("i", $user_id);
-
-//     if ($stmt->execute()) { // make sure logout already
-//         if (isset($_SESSION['user_id']) && $_SESSION['user_id'] == $user_id) { // session is set and user id = delete account id
-//             logout_user();
-//         }
-//         #  echo // javascript alert box here
-//         return true;
-//     } else { // cant delete account
-//         # echo // javascript alert box here
-//         return false;
-//     }
-// }
-
-
-// Update User Function (change username or password or email) (4 javascript alert)
+// Update User Function (change username or password or email)
 function update_user($user_id, $updated_data, $conn){
     $new_name = htmlspecialchars($updated_data['name']);
     $new_password = htmlspecialchars($updated_data['password']);
     $new_email = htmlspecialchars($updated_data['email']);
-
-
-    // new de name mst be unique
-    $sql = "SELECT * FROM Users WHERE name = ? AND user_id != ?"; //make sure the username not own by yourself
+    $sql = "SELECT * FROM Users WHERE name = ? AND user_id != ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("si", $new_name, $user_id); // str n int
     $stmt->execute();
     $result = $stmt->get_result();
-    if ($result->num_rows > 0) { //username exists liao
-        #echo // javascript alert box here
+    if ($result->num_rows > 0) {
         return false;
     }
 
@@ -161,8 +124,7 @@ function update_user($user_id, $updated_data, $conn){
     $stmt->bind_param("si", $new_email, $user_id);
     $stmt->execute();
     $result = $stmt->get_result();
-    if ($result->num_rows > 0) { // email exists
-        # echo // javascript alert here
+    if ($result->num_rows > 0) { //email exists
         return false;
     }
 
@@ -173,10 +135,8 @@ function update_user($user_id, $updated_data, $conn){
     $stmt->bind_param("sssi", $new_name, $hashed_password, $new_email, $user_id);
 
     if ($stmt->execute()) {
-        #echo // javascript alert here
         return true;
     } else {
-        #echo // javascript alert here
         return false;
     }
 }
@@ -186,59 +146,48 @@ function update_user($user_id, $updated_data, $conn){
 function forgot_password($email, $new_password, $conn){
     $email = htmlspecialchars($email);
     $new_password = htmlspecialchars($new_password);
-
     // Check email exists anot
     $sql = "SELECT * FROM Users WHERE email = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $email);
     $stmt->execute();
     $result = $stmt->get_result();
-
     if ($result->num_rows === 1) {
         $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
         $sql = "UPDATE Users SET password_hash = ? WHERE email = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("ss", $hashed_password, $email);
         if ($stmt->execute()) {
-            # echo // javascript alert box here
             return true;
         } else {
-            # echo // javascript alert box here
             return false;
         }
     } else { // email no found
-        # echo // javascript alert box
         return false;
     }
 }
 
 
-// create quiz function (3 javascript alert)
+// create quiz function
 function create_quiz($title, $description, $subject, $time_limit,  $conn){
-    if (!isset($_SESSION['user_id'])) { //make sure admin/instructor login liao
-        # echo // javascript alert box here
+    if (!isset($_SESSION['user_id'])) {
         return false;
     }
-
     $creator_id = $_SESSION['user_id'];
-
     $sql = "INSERT INTO Quiz (creator_id, title, description, subject, time_limit) VALUES (?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("isssi", $creator_id, $title, $description, $subject, $time_limit);
     if ($stmt->execute()) {
-        $_SESSION['quiz_id'] = $conn->insert_id; // get auto increment quiz id
-        # echo // javascript alert box here
+        $_SESSION['quiz_id'] = $conn->insert_id;
         return true;
     } else {
-        # echo // javascript alert box here
         return false;
     }
 }
 
 
-// edit quiz function (2 javascript alert)
+// edit quiz function
 function edit_quiz($quiz_id, $updated_data, $conn) {
-    // prevent instructor doing bad thing
     $title = htmlspecialchars($updated_data[0]);
     $description = htmlspecialchars($updated_data[1]);
     $subject = htmlspecialchars($updated_data[2]);
@@ -248,47 +197,40 @@ function edit_quiz($quiz_id, $updated_data, $conn) {
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("sssii", $title, $description, $subject, $time_limit, $quiz_id);
     if ($stmt->execute()) {
-        # echo // javascript alert box here
         return true;
     } else {
-        # echo // javascript alert box here
         return false;
     }
 }
 
 
-// Delete Quiz Function (2 javascript alert box here)
+// Delete Quiz Function
 function delete_quiz($quiz_id, $conn) {
     $sql = "DELETE FROM Quiz WHERE quiz_id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $quiz_id);
     if ($stmt->execute()) {
-        # echo // javascript alert box here
         return true;
     } else {
-        # echo // javascript alert box here
         return false;
     }
 }
 
 
-// end quiz create function (2 javascript alert box here)
+// end quiz create function
 function end_quiz_create(){
     if (isset($_SESSION['quiz_id'])) {
-        unset($_SESSION['quiz_id']); // remove session quiz id
-        # echo // javascript alert box here (quiz complete create liao)
+        unset($_SESSION['quiz_id']);
         return true;
     } else {
-        # echo // javascript alert box here
         return false;
     }
 }
 
 
-// Add question function (2 js alert box here)
+// Add question function
 function add_question($question_text, $conn) {
-    if (!isset($_SESSION['quiz_id'])) { // no quiz selected (bug)
-        # echo // javascript alert box here
+    if (!isset($_SESSION['quiz_id'])) {
         return false;
     }
 
@@ -299,35 +241,31 @@ function add_question($question_text, $conn) {
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("is", $quiz_id, $question_text);
     if ($stmt->execute()) {
-        # echo // javascript alert box here
         $id = mysqli_query($conn, "SELECT LAST_INSERT_ID() AS id;");
         $row = mysqli_fetch_array($id);
         return $row['id'];
     } else {
-        # echo // javascript alert box here
         return false;
     }
 }
 
 
-// Delete Question Function (2 js alert box)
+// Delete Question Function
 function delete_question($quiz_id, $question_id, $conn) {
     // Delete the specific question
     $sql = "DELETE FROM Question WHERE question_id = ? AND quiz_id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ii", $question_id, $quiz_id);
     if ($stmt->execute()) {
-        # echo // javascript alert box here
         return true;
     } else {
-        #echo // js alert box here
         return false;
     }
 }
 
 
-// Update Question Function (2 javascript alert box)
-function update_question($question_id, $question_text, $conn) { // question id pass with html
+// Update Question Function
+function update_question($question_id, $question_text, $conn) {
     $question_text = htmlspecialchars($question_text);
     $quiz_id = $_SESSION['quiz_id'];
 
@@ -335,16 +273,14 @@ function update_question($question_id, $question_text, $conn) { // question id p
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("si", $question_text, $question_id);
     if ($stmt->execute()) {
-        # echo // javascript alert box here
         return true;
     } else {
-        # echo // javascript alert box here
         return false;
     }
 }
 
 
-// Add Choice Function (2 javascript alert box)
+// Add Choice Function
 function add_choice($question_id, $choice_text, $is_correct, $conn) {
     $choice_text = htmlspecialchars($choice_text);
 
@@ -352,16 +288,14 @@ function add_choice($question_id, $choice_text, $is_correct, $conn) {
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("isi", $question_id, $choice_text, $is_correct);
     if ($stmt->execute()) {
-        # echo // javascript alert box here
         return true;
     } else {
-        # echo // javascript alert box here
         return false;
     }
 }
 
 
-// Edit Choice Function (2 javascript alert box here)
+// Edit Choice Function
 function edit_choice($choice_id, $new_text, $is_correct, $conn) {
     $new_text = htmlspecialchars($new_text);
 
@@ -369,16 +303,14 @@ function edit_choice($choice_id, $new_text, $is_correct, $conn) {
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("sii", $new_text, $is_correct, $choice_id);
     if ($stmt->execute()) {
-        # echo // javascript alert box here
         return true;
     } else {
-        # echo // javascript alert box here
         return false;
     }
 }
 
 
-// Create Badge Function (gpt, not sure correct anot)
+// Create Badge Function
 function create_badge($creator_id, $achievement_name, $category, $criteria, $badge_file, $conn) {
     $creator_id = $_SESSION['user_id'];
     $achievement_name = htmlspecialchars($achievement_name);
@@ -403,10 +335,8 @@ function delete_badge($badge_id, $conn) {
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $badge_id);
     if ($stmt->execute()) {
-        # echo // javascript alert box here
         return true;
     } else {
-        #echo // javascript alert box here
         return false;
     }
 }
@@ -419,8 +349,7 @@ function award_badge($badge_id, $student_id, $conn) {
     $stmt->bind_param("ii", $badge_id, $student_id);
     $stmt->execute();
     $result = $stmt->get_result();
-    if ($result->num_rows > 0) { // this student got the badge ady
-        # echo // javascript alert box here
+    if ($result->num_rows > 0) {
         return false;
     }
 
@@ -428,36 +357,11 @@ function award_badge($badge_id, $student_id, $conn) {
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ii", $badge_id, $student_id);
     if ($stmt->execute()) {
-        # echo // javascript alert box here
         return true;
     } else {
-        # echo // javascript alert box here
         return false;
     }
 }
-
-
-// Display all badge created by admin (gpt)
-// function creator_display_badges($creator_id, $conn) {
-//     $creator_id = $_SESSION['user_id'];
-//     $sql = "SELECT * FROM Badges WHERE creator_id = ?";
-//     $stmt = $conn->prepare($sql);
-//     $stmt->bind_param("i", $creator_id);
-//     $stmt->execute();
-//     $result = $stmt->get_result();
-
-//     if ($result->num_rows > 0) {
-//         while ($row = $result->fetch_assoc()) {
-//             echo "<div class='badge'>";
-//             echo "<img src='data:" . htmlspecialchars($row['image_type']) . ";base64," . base64_encode($row['badge_image']) . "' alt='Badge Image' />";
-//             # html can write achievement name and category
-//             echo "</div>";
-//         }
-//     } else {
-//         echo "<p>No badges found for this creator.</p>";
-//     }
-// }
-
 
 // Display student obtain badges
 function student_obtained_badges($student_id, $conn) {
@@ -471,7 +375,6 @@ function student_obtained_badges($student_id, $conn) {
         while ($row = $result->fetch_assoc()) {
             echo "<div class='badge'>";
             echo "<img src='data:" . htmlspecialchars($row['image_type']) . ";base64," . base64_encode($row['badge_image']) . "' alt='Badge Image' />";
-            # put achievement text, category here
             echo "</div>";
         }
     } else {
@@ -512,33 +415,14 @@ function finish_quiz_attempt($attempt_id, $time_remaining, $conn) {
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("sis", $attempt_id, $time_remaining, $feedback);
         if ($stmt->execute()) { // then change result table
-            // unset($_SESSION['attempt_id']);
             return true;
         } else {
-            # echo // javascript alert box here
             return false;
         }
     } else {
-        # echo // javascript alert box here
         return false;
     }
 }
-
-
-// View all available quiz function
-// function view_available_quiz($conn) { //copied code to quiz.php, no need appear here anymore
-//     $sql = "SELECT * FROM Quiz";
-//     $result = $conn->query($sql);
-
-//     if ($result->num_rows > 0) {
-//         while ($row = $result->fetch_assoc()) {
-//             # echo html code here
-//         }
-//     } else {
-//         echo "No quiz available at the moment.";
-//     }
-// } //done copied
-
 
 // User Profile Function
 function user_profile($conn, $data) {
@@ -598,7 +482,7 @@ function calculate_total_badges_collected($student_id, $conn) {
 
 
 // Submit Answer Function
-function submit_answer($answers, $conn) { // add liao attempt id in table
+function submit_answer($answers, $conn) {
     $attempt_id = $_SESSION['attempt_id'];
     foreach ($answers as $choice_id) {
         $attempt_id = htmlspecialchars($attempt_id);
@@ -635,7 +519,7 @@ function write_feedback($result_id, $feedback, $conn) {
 
 // Calculate score function (add liao attempt id in table)
 function calculate_score($attempt_id, $conn){
-    $sql = "SELECT c.question_id, c.is_correct FROM Student_Answer sa INNER JOIN Choices c ON sa.choice_id = c.choice_id WHERE sa.attempt_id = ?"; // can use sum if want
+    $sql = "SELECT c.question_id, c.is_correct FROM Student_Answer sa INNER JOIN Choices c ON sa.choice_id = c.choice_id WHERE sa.attempt_id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $attempt_id);
     $stmt->execute();
@@ -710,62 +594,6 @@ function total_question($quiz_id, $conn){
         return 0;
     }
 }
-
-
-// Quiz result function
-function quiz_result($attempt_id, $conn){ //not working
-    $sql = "SELECT q.subject, q.title, a.attempt_id, q.quiz_id, r.time_remaining, r.date, r.feedback FROM Attempt a INNER JOIN Quiz q ON a.quiz_id = q.quiz_id INNER JOIN Result r ON r.attempt_id = a.attempt_id WHERE a.attempt_id = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $attempt_id);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    if ($result->num_rows > 0) {
-        $row = $result->fetch_assoc();
-        $subject = htmlspecialchars($row['subject']);
-        $title = htmlspecialchars($row['title']);
-        $question_answered = total_question($row['quiz_id'], $conn);
-        $total_score = calculate_score($attempt_id, $conn);
-        $completed_in = calculate_used_time($attempt_id, $conn) . "s";
-        $date = htmlspecialchars($row['date']);
-        $grade = calculate_grade($total_score, $question_answered);
-        $feedback = htmlspecialchars($row['feedback']);
-
-        // html or return here
-
-    } else {
-        # echo // javascript alert box here ;
-    }
-}
-
-
-// Get Student Recent Activity Function
-function get_student_recent_activity($conn) { //not using
-    $student_id = $_SESSION['user_id'];
-    $sql = "SELECT q.subject, q.title, q.description, r.date, r.feedback, a.attempt_id FROM Attempt a INNER JOIN Quiz q ON a.quiz_id = q.quiz_id INNER JOIN Result r ON r.attempt_id = a.attempt_id WHERE a.student_id = ? AND a.stat = 'completed' ORDER BY r.date DESC";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $student_id);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    if ($result->num_rows > 0) {
-        while ($row = $result->fetch_assoc()) {
-            $subject = htmlspecialchars($row['subject']);
-            $title_description = htmlspecialchars($row['title']) . " - " . htmlspecialchars($row['description']);
-            $score = calculate_score($row['attempt_id'], $conn);
-            $total_questions = total_questions($row['attempt_id'], $conn);
-            $quiz_summary = ($score / $total_questions) * 100 . "%";
-            $grade = calculate_grade($score, $total_questions);
-            $used_time = calculate_used_time($row['attempt_id'], $conn) . "s";
-            $date = htmlspecialchars($row['date']);
-            $fedback = htmlspecialchars($row['feedback']);
-
-        }
-    } else {
-        echo "No recent activity found. Find a quiz to do now :)";
-    }
-}
-
 
 // Calculate Total Student Function
 function total_student($conn) {
@@ -880,31 +708,6 @@ function total_quiz_attempt($conn){
     }
 }
 
-
-//Display all quiz attempt function
-// function display_attempt($conn){
-//     $sql = "SELECT a.attempt_id, a.student_id, u.name, q.title, q.description, r.time_remaining, r.feedback
-//         FROM Attempt a
-//         INNER JOIN Users u ON a.student_id = u.user_id
-//         INNER JOIN Quiz q ON a.quiz_id = q.quiz_id
-//         INNER JOIN Result r ON a.attempt_id = r.attempt_id";
-//     $result = $conn->query($sql);
-
-//     if ($result->num_rows > 0) {
-//         while ($row = $result->fetch_assoc()) {
-//             $student_id = htmlspecialchars($row['student_id']);
-//             $student_name = htmlspecialchars($row['name']);
-//             $title = htmlspecialchars($row['title']) . " - " . htmlspecialchars($row['description']);
-//             $time_spent = calculate_used_time($row['attempt_id'], $conn) . "s";
-//             $feedback = htmlspecialchars($row['feedback']);
-//             // return $student_id, $student_name, $title, $time_spent, $feedback; canot return many value
-//         }
-//     }else{
-//         echo "No quiz attempts found. Your quiz havnt got student attempts yet :(";
-//     }
-// }
-
-
 // display all student info
 function admin_students_info($conn) { //used in user management
     $sql = "SELECT user_id, name FROM Users WHERE role_id = 3";
@@ -926,7 +729,7 @@ function admin_students_info($conn) { //used in user management
 }
 
 
-function admin_instructors_info($conn) { //used in user management
+function admin_instructors_info($conn) {
     $sql = "SELECT user_id, name FROM Users WHERE role_id = 2";
     $result = $conn->query($sql);
 
@@ -970,8 +773,5 @@ function calculate_total_badges_created($conn) {
 function getTodayDate($format = "M j, Y") {
     return date($format);
 }
-
-//Timer function made with javascript
-// not sure want quiz summary report for a specific quiz anot. (average score, etc, total attempts) instructor n admin de
 
 ?>
