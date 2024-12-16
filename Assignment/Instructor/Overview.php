@@ -5,8 +5,10 @@ include('../session.php');
  
 // Handle the feedback submission via POST
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+  echo "<script>console.log('hi');</script>";
   if (isset($_POST['result_id']) && isset($_POST['feedback'])) {
       $result_id = intval($_POST['result_id']);
+      echo "<script>console.log('$result_id');</script>";
       $feedback = $_POST['feedback'];
  
       // Call the function to update the feedback

@@ -92,13 +92,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_profile'])) {
     <div class="container">
         <div class="left-container">
             <div class="box">
-                <p class="update">Last updated: Oct 22, 2024</p>
+                <p class="update">Last updated: <?php echo getTodayDate();?></p>
                 <p class="number"><?php echo $total_quiz; ?></p>
                 <p class="Total">Total Quizzes Created</p>
                 <a class="link" href="Overview.php">VIEW</a>
             </div>
             <div class="box">
-                <p class="update">Last updated: Oct 22, 2024</p>
+                <p class="update">Last updated: <?php echo getTodayDate();?></p>
                 <p class="number"><?php echo $total_attempt; ?></p>
                 <p class="Total">Total Attempts</p>
                 <a class="link" href="Overview.php?tab=2">VIEW</a>
