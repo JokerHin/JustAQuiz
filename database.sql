@@ -9,15 +9,19 @@ CREATE TABLE Users (
     email VARCHAR(100) NOT NULL UNIQUE,
     password_hash VARCHAR(255) NOT NULL,
     date_joined DATETIME DEFAULT CURRENT_TIMESTAMP,
+    profile_image LONGBLOB,
+    image_type varchar(100)
 );
 
 CREATE TABLE Badges (
     badge_id INT AUTO_INCREMENT PRIMARY KEY,
     creator_id INT,
-    badge_image BLOB,
+    badge_image LONGBLOB,
     image_type  VARCHAR(50),
     achievement_name VARCHAR(100) NOT NULL,
     category VARCHAR(50), -- HTML or CSS
+    criteria VARCHAR(100),
+    date DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (creator_id) REFERENCES Users(user_id)
 );
 
@@ -38,6 +42,7 @@ CREATE TABLE Quiz (
     description VARCHAR(100),
     subject VARCHAR(100),
     time_limit INT CHECK (time_limit > 0),
+    date_created DATETIME DEFAULT CURRENT_TIMESTAMP
     FOREIGN KEY (creator_id) REFERENCES Users(user_id)
 );
 
@@ -53,7 +58,7 @@ CREATE TABLE Choices (
     choice_id INT AUTO_INCREMENT PRIMARY KEY,
     question_id INT,
     text VARCHAR(255),
-    is_correct BOOLEAN,
+    is_correct tinyint(1),
     FOREIGN KEY (question_id) REFERENCES Question(question_id) ON DELETE CASCADE
 );
 
@@ -69,7 +74,7 @@ CREATE TABLE Attempt (
 CREATE TABLE Result (
     result_id INT AUTO_INCREMENT PRIMARY KEY,
     attempt_id INT,
-    date DATETIME,
+    datetime DATETIME DEFAULT CURRENT_TIMESTAMP,
     time_remaining INT,
     feedback TEXT,
     FOREIGN KEY (attempt_id) REFERENCES Attempt(attempt_id)
