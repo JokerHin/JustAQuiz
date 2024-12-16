@@ -285,7 +285,7 @@
                 <div class="input"><input type="password" name="password" placeholder="Password" required></div>
                 <div class="input"><input type="password" name="confirm-password" placeholder="confirm-password" required></div>
                 <p id="word">Already have an account?&nbsp<a href="Login.php" id="login-link">Login</a></p>
-                <button type="submit">Sign Up</button>
+                <button name='signupBtn' type="submit">Sign Up</button>
             </form>
         </div>
     </div>
@@ -297,15 +297,16 @@
             include("../../main.php");
             $status=sign_up($_POST['Name'], $_POST['password'], $_POST['confirm-password'], $_POST['Email'], $conn, $_POST['choice']);
             if ($status){
+                $user_id=$_SESSION['user_id'];
+                $user_role=$_SESSION['role_id'];
                 echo '<script>alert("Successful");
-                    window.location.href = "Home.php";
-                    </script>';
+                        window.location.href = "Login.php";
+                        </script>';
             }else{
                 echo '<script>alert("Failed");
                     window.location.href = "Sign Up.php";
                     </script>';
             }
-            // mysqli_close($con);
         }
     ?>
 </body>

@@ -17,12 +17,15 @@ if ($conn->connect_error) {
 
 
 // Sign Up function  (6 javascript alert)
-function sign_up($name, $password, $confirm_password, $email, $conn, $role="2") { // role id: 1 admin, 2 instructor 3 student
+function sign_up($name, $password, $confirm_password, $email, $conn, $role) { // role id: 1 admin, 2 instructor 3 student
     // protect against xss server scripting attack ( not sure if needed)
     $name = htmlspecialchars($name);
     $password = htmlspecialchars($password);
     $email = htmlspecialchars($email);
     $confirm_password = htmlspecialchars($confirm_password);
+    if (is_null($role)){
+        $role="2";
+    }
 
     // username oni can have alphanumeric, space n underscore
     if (! preg_match("/^[a-zA-Z0-9 _]+$/", $name)){
@@ -66,6 +69,10 @@ function sign_up($name, $password, $confirm_password, $email, $conn, $role="2") 
         # echo // javascript alert box here
         return false;
     }
+    $_SESSION['user_id'] = $user['user_id'];
+    $_SESSION['role_id'] = $user['role_id'];
+    $_SESSION['username'] = $user['name'];
+    $_SESSION['email'] = $user['email'];
 }
 
 
@@ -110,24 +117,24 @@ function logout_user(){ //not used
 
 
 // Delete User (2 javascript alert)
-function delete_user($user_id, $conn) {
-    $user_id = htmlspecialchars($user_id);
+// function delete_user($user_id, $conn) {
+//     $user_id = htmlspecialchars($user_id);
 
-    $sql = "DELETE FROM Users WHERE user_id = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $user_id);
+//     $sql = "DELETE FROM Users WHERE user_id = ?";
+//     $stmt = $conn->prepare($sql);
+//     $stmt->bind_param("i", $user_id);
 
-    if ($stmt->execute()) { // make sure logout already
-        if (isset($_SESSION['user_id']) && $_SESSION['user_id'] == $user_id) { // session is set and user id = delete account id
-            logout_user();
-        }
-        #  echo // javascript alert box here
-        return true;
-    } else { // cant delete account
-        # echo // javascript alert box here
-        return false;
-    }
-}
+//     if ($stmt->execute()) { // make sure logout already
+//         if (isset($_SESSION['user_id']) && $_SESSION['user_id'] == $user_id) { // session is set and user id = delete account id
+//             logout_user();
+//         }
+//         #  echo // javascript alert box here
+//         return true;
+//     } else { // cant delete account
+//         # echo // javascript alert box here
+//         return false;
+//     }
+// }
 
 
 // Update User Function (change username or password or email) (4 javascript alert)
@@ -232,10 +239,10 @@ function create_quiz($title, $description, $subject, $time_limit,  $conn){
 // edit quiz function (2 javascript alert)
 function edit_quiz($quiz_id, $updated_data, $conn) {
     // prevent instructor doing bad thing
-    $title = htmlspecialchars($updated_data['title']);
-    $description = htmlspecialchars($updated_data['description']);
-    $subject = htmlspecialchars($updated_data['subject']);
-    $time_limit = htmlspecialchars($updated_data['time_limit']);
+    $title = htmlspecialchars($updated_data[0]);
+    $description = htmlspecialchars($updated_data[1]);
+    $subject = htmlspecialchars($updated_data[2]);
+    $time_limit = htmlspecialchars($updated_data[3]);
 
     $sql = "UPDATE Quiz SET title = ?, description = ?, subject = ?, time_limit = ? WHERE quiz_id = ?";
     $stmt = $conn->prepare($sql);
@@ -519,18 +526,18 @@ function finish_quiz_attempt($attempt_id, $time_remaining, $conn) {
 
 
 // View all available quiz function
-function view_available_quiz($conn) { //copied code to quiz.php, no need appear here anymore
-    $sql = "SELECT * FROM Quiz";
-    $result = $conn->query($sql);
+// function view_available_quiz($conn) { //copied code to quiz.php, no need appear here anymore
+//     $sql = "SELECT * FROM Quiz";
+//     $result = $conn->query($sql);
 
-    if ($result->num_rows > 0) {
-        while ($row = $result->fetch_assoc()) {
-            # echo html code here
-        }
-    } else {
-        echo "No quiz available at the moment.";
-    }
-} //done copied
+//     if ($result->num_rows > 0) {
+//         while ($row = $result->fetch_assoc()) {
+//             # echo html code here
+//         }
+//     } else {
+//         echo "No quiz available at the moment.";
+//     }
+// } //done copied
 
 
 // User Profile Function
@@ -614,15 +621,13 @@ function submit_answer($answers, $conn) { // add liao attempt id in table
 // feedback function
 function write_feedback($result_id, $feedback, $conn) {
     $feedback = htmlspecialchars($feedback);
-
-    $sql = "UPDATE Result SET feedback = ? WHERE result_id = ?";
+ 
+    $sql = "UPDATE result SET feedback = ? WHERE result_id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("si", $feedback, $result_id);
     if ($stmt->execute()) {
-        # echo // javascript alert box here
         return true;
     } else {
-        # echo // javascript alert box here
         return false;
     }
 }
@@ -862,7 +867,7 @@ function overall_report($conn) {
 function total_quiz_attempt($conn){
     $creator_id = $_SESSION['user_id'];
     $sql = "SELECT COUNT(*) AS total FROM Attempt a INNER JOIN Quiz q ON a.quiz_id = q.quiz_id WHERE q.creator_id = ?";
-    $stmt = $conn-> prepare(sql);
+    $stmt = $conn-> prepare($sql);
     $stmt->bind_param("i", $creator_id);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -877,27 +882,27 @@ function total_quiz_attempt($conn){
 
 
 //Display all quiz attempt function
-function display_attempt($conn){
-    $sql = "SELECT a.attempt_id, a.student_id, u.name, q.title, q.description, r.time_remaining, r.feedback
-        FROM Attempt a
-        INNER JOIN Users u ON a.student_id = u.user_id
-        INNER JOIN Quiz q ON a.quiz_id = q.quiz_id
-        INNER JOIN Result r ON a.attempt_id = r.attempt_id";
-    $result = $conn->query($sql);
+// function display_attempt($conn){
+//     $sql = "SELECT a.attempt_id, a.student_id, u.name, q.title, q.description, r.time_remaining, r.feedback
+//         FROM Attempt a
+//         INNER JOIN Users u ON a.student_id = u.user_id
+//         INNER JOIN Quiz q ON a.quiz_id = q.quiz_id
+//         INNER JOIN Result r ON a.attempt_id = r.attempt_id";
+//     $result = $conn->query($sql);
 
-    if ($result->num_rows > 0) {
-        while ($row = $result->fetch_assoc()) {
-            $student_id = htmlspecialchars($row['student_id']);
-            $student_name = htmlspecialchars($row['name']);
-            $title = htmlspecialchars($row['title']) . " - " . htmlspecialchars($row['description']);
-            $time_spent = calculate_used_time($row['attempt_id'], $conn) . "s";
-            $feedback = htmlspecialchars($row['feedback']);
-            // return $student_id, $student_name, $title, $time_spent, $feedback; canot return many value
-        }
-    }else{
-        echo "No quiz attempts found. Your quiz havnt got student attempts yet :(";
-    }
-}
+//     if ($result->num_rows > 0) {
+//         while ($row = $result->fetch_assoc()) {
+//             $student_id = htmlspecialchars($row['student_id']);
+//             $student_name = htmlspecialchars($row['name']);
+//             $title = htmlspecialchars($row['title']) . " - " . htmlspecialchars($row['description']);
+//             $time_spent = calculate_used_time($row['attempt_id'], $conn) . "s";
+//             $feedback = htmlspecialchars($row['feedback']);
+//             // return $student_id, $student_name, $title, $time_spent, $feedback; canot return many value
+//         }
+//     }else{
+//         echo "No quiz attempts found. Your quiz havnt got student attempts yet :(";
+//     }
+// }
 
 
 // display all student info

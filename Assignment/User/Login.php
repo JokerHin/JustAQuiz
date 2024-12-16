@@ -185,7 +185,7 @@ session_start()
                 <h1>Login to your Account</h1>                
                 <div class="input"><input type="email" name="loginEmail" placeholder="Email" required></div>
                 <div class="input"><input type="password" name="loginPassword" placeholder="Password" required></div>
-                <p>Don't have an account?  <a  id="login-link" href="Sign Up.php">Sign Up</a></p>
+                <p>Don't have an account?&nbsp  <a  id="login-link" href="Sign Up.php">Sign Up</a></p>
                 <button type="submit" name="loginBtn">Login</button>
             </form>
         </div>
@@ -199,6 +199,7 @@ session_start()
             if ($status){
                 $user_id=$_SESSION['user_id'];
                 $user_role=$_SESSION['role_id'];
+                echo $user_id;
                 if ($user_role==1){
                     echo '<script>alert("Login successful")
                         window.location.href = "../Admin/AdminHome.php";
@@ -206,6 +207,10 @@ session_start()
                 }else if ($user_role==3){
                     echo '<script>alert("Login successful")
                         window.location.href = "Home.php";
+                        </script>';
+                }else if ($user_role==2){
+                    echo '<script>alert("Login successful")
+                        window.location.href = "../Instructor/InstructorHome.php";
                         </script>';
                 }
             }else{
