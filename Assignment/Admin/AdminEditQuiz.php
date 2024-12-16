@@ -41,22 +41,19 @@ if (isset($_GET['id'])) {
 
     <main id="questions">
         <div class="main">
-            <!-- <div class="flex-container-left">
-            <div class="tab">Add Question</div>
-            </div> -->
             <div class="flex-container-right">
             <p>CHOOSE QUIZ TYPE</p>
             <div class="container2">
-                <div class="toggle">  
+                <div class="toggle">
                     <input type="radio" id="choice1" name="choice" value="HTML">
                     <label for="choice1">HTML</label>
-            
+
                     <input type="radio" id="choice2" name="choice" value="CSS">
                     <label for="choice2">CSS</label>
-            
-                    <div id="flap"><span class="content">HTML</span></div>     
-                </div>            
-            </div> 
+
+                    <div id="flap"><span class="content">HTML</span></div>
+                </div>
+            </div>
             <input type="text" id="quizTitle" placeholder="Type Quiz Title here" value="<?php echo $title; ?>" class="TextBox">
             <input type="text" id="quizDesc" placeholder="Type Quiz Description here" value="<?php echo $description; ?>"  class="TextBox">
             <input type="number" id="quizTime" placeholder="Type Quiz Time Limit (minutes) here" value="<?php echo $time; ?>" class="TextBox">
@@ -66,17 +63,13 @@ if (isset($_GET['id'])) {
         <?php
             $sql = "SELECT * FROM question WHERE quiz_id=$id";
             $result = $conn->query($sql);
-        
+
             if ($result->num_rows > 0) {
                 $questionCount = 1;
                 while ($questionRow = $result->fetch_assoc()) {
                     $questionid=$questionRow['question_id'];
                     $question=$questionRow['question_text'];
                     echo "<div class='mainQ'>";
-                    // echo "<div class='Question-container-left'>";
-                    // echo "<div class='tabQ1'>Delete Question</div>";
-                    // echo "<div class='tabQ2'>Add Question</div>";
-                    // echo "</div>";
                     echo "<div class='Question-container-right'>";
                     echo "<div class='container'>";
                     echo "<span class='Question-num'>Q{$questionCount}</span>";
@@ -89,8 +82,6 @@ if (isset($_GET['id'])) {
                     while ($choiceRow = $Choiceresult->fetch_assoc()) {
                         $choiceText=$choiceRow['text'];
                         $choiceCorrect=$choiceRow['is_correct'];
-                        $optionnum="option_{$questionCount}_{$values[$selectingChoice]}";
-                        //echo $optionnum;
                         echo "<input type='text' class='Option' name='option_{$questionCount}_{$values[$selectingChoice]}' placeholder='{$values[$selectingChoice]}. Type Answer Here' value='$choiceText'>";
                         if ($choiceCorrect==1){
                             echo "<input type='radio' name='correct_{$questionCount}' value='{$values[$selectingChoice]}' checked>";
@@ -109,14 +100,13 @@ if (isset($_GET['id'])) {
                 echo "No quiz available at the moment.";
             }
         ?>
-        
 
         <button id="createQuizBtn" class="Create-Quiz" >Update Quiz</button>
 
         <script>
             function changeCheckedRadio(value) {
                 radioButton = document.querySelector(`input[name="choice"][value="${value}"]`);
-                
+
                 if (radioButton) {
                     radioButton.checked = true;
 
@@ -170,19 +160,8 @@ if (isset($_GET['id'])) {
                             questionsData.push({
                                 question: questionText,
                                 options: options,
-                            });
-                            console.log(questionText);
-                            console.log(options);
                         });
 
-                        console.log(quizId);
-                        console.log(quizSubject);
-                        console.log(quizTitle);
-                        console.log(quizDescription);
-                        console.log(quizTime);
-                        
-
-                        // Send data via AJAX
                         data = {
                             quizId : quizId,
                             quizSubject: quizSubject,
