@@ -36,13 +36,11 @@ include('../session.php');
                 <div class="toggle">  
                     <input type="radio" id="choice1" name="choice" value="HTML">
                     <label for="choice1">HTML</label>
-            
                     <input type="radio" id="choice2" name="choice" value="CSS">
                     <label for="choice2">CSS</label>
-            
-                    <div id="flap"><span class="content">HTML</span></div>     
-                </div>            
-            </div> 
+                    <div id="flap"><span class="content">HTML</span></div>
+                </div>
+            </div>
             <input type="text" id="quizTitle" placeholder="Type Quiz Title here" class="TextBox">
             <input type="text" id="quizDesc" placeholder="Type Quiz Description here" class="TextBox">
             <input type="number" id="quizTime" placeholder="Type Quiz Time Limit (minutes) here" class="TextBox">
@@ -76,25 +74,18 @@ include('../session.php');
 
         <script>
             questionCount = 1;
-            
+
             function addNewQuestion(event) {
                 questionCount++;
-
-                // Get the parent element where you want to insert the new question
                 mainElement = document.querySelector('main#question');
-                
-                // Find the question block where the new one should be inserted
                 targetQuestion = event.target.closest('.mainQ'); // Get the clicked question container
-                
                 if (!targetQuestion) {
                     targetQuestion = event.target.closest('.main');
                     if (!targetQuestion) {
                         console.error('Target question not found.');
-                        return; // Exit if no target question is found
+                        return;
                     }
                 }
-
-                // Create the new question HTML dynamically (same structure as your current questions)
                 newQuestionHTML = `
                     <div class="mainQ">
                         <div class="Question-container-left">
@@ -118,17 +109,9 @@ include('../session.php');
                             </div>
                         </div>
                     </div>`;
-
-                // Create a new question element from the HTML string
                 newQuestionElement = createElementFromHTML(newQuestionHTML);
-
-                // Insert the new question after the clicked question
                 targetQuestion.parentNode.insertBefore(newQuestionElement, targetQuestion.nextSibling);
-
-                // Update the question numbers for all existing questions
                 updateQuestionNumbers();
-
-                // Reattach event listeners to all "Add Question" buttons
                 attachAddQuestionListeners();
                 attachDeleteQuestionListeners();
             }
@@ -136,8 +119,8 @@ include('../session.php');
             function deleteQuestion(event) {
                 questionElement = event.target.closest('.mainQ');
                 if (questionElement) {
-                    questionElement.remove(); // Remove the question from the DOM
-                    updateQuestionNumbers();  // Update question numbers
+                    questionElement.remove();
+                    updateQuestionNumbers();
                 }
             }
 
@@ -148,36 +131,31 @@ include('../session.php');
                 });
             }
 
-            // Function to convert HTML string to DOM element
             function createElementFromHTML(htmlString) {
                 div = document.createElement('div');
                 div.innerHTML = htmlString.trim();
                 return div.firstChild;
             }
 
-            // Function to attach event listeners to all "Add Question" buttons
             function attachAddQuestionListeners() {
                 document.querySelectorAll('.tabQ2').forEach(button => {
-                    button.removeEventListener('click', addNewQuestion); // Avoid duplicate listeners
+                    button.removeEventListener('click', addNewQuestion);
                     button.addEventListener('click', addNewQuestion);
                 });
             }
 
             function attachDeleteQuestionListeners() {
                 document.querySelectorAll('.tabQ1').forEach(button => {
-                    button.removeEventListener('click', deleteQuestion); // Remove old listeners
-                    button.addEventListener('click', deleteQuestion); // Add new listeners
+                    button.removeEventListener('click', deleteQuestion);
+                    button.addEventListener('click', deleteQuestion);
                 });
             }
 
-            // Initial binding for the existing "Add Question" button
             attachAddQuestionListeners();
             attachDeleteQuestionListeners();
-            
-            //top first add question button
+
             document.querySelector('.tab').addEventListener('click', addNewQuestion);
-            
-            //create quiz button
+
             document.addEventListener('DOMContentLoaded', function() {
                 createQuizBtn = document.getElementById('createQuizBtn');
                 if (createQuizBtn) {
@@ -186,10 +164,8 @@ include('../session.php');
                         quizTitle = document.getElementById('quizTitle').value;
                         quizDescription = document.getElementById('quizDesc').value;
                         quizTime = document.getElementById('quizTime').value;
-
                         questionsData = [];
                         questions = document.querySelectorAll('.mainQ');
-                        
                         questions.forEach((questionElement, index) => {
                             questionText = questionElement.querySelector('.Question').value;
                             opname="option_" + (index + 1) + "_A"
@@ -218,7 +194,6 @@ include('../session.php');
                             });
                         });
 
-                        // Send data via AJAX
                         data = {
                             quizSubject: quizSubject,
                             quizTitle: quizTitle,
@@ -240,13 +215,9 @@ include('../session.php');
                             window.location.href = 'UserManagement.php';
                         })
                         .catch(error => {
-                            console.error('Error:', error);
                             alert('Error creating quiz');
                         });
-                        console.log('Create Quiz button clicked');
                     });
-                } else {
-                    console.error('Create Quiz button not found');
                 }
             });
 

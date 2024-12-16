@@ -42,7 +42,7 @@ CREATE TABLE Quiz (
     description VARCHAR(100),
     subject VARCHAR(100),
     time_limit INT CHECK (time_limit > 0),
-    date_created DATETIME DEFAULT CURRENT_TIMESTAMP
+    date_created DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (creator_id) REFERENCES Users(user_id)
 );
 
