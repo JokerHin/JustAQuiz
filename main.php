@@ -293,7 +293,9 @@ function add_question($question_text, $conn) {
     $stmt->bind_param("is", $quiz_id, $question_text);
     if ($stmt->execute()) {
         # echo // javascript alert box here
-        return true;
+        $id = mysqli_query($conn, "SELECT LAST_INSERT_ID() AS id;");
+        $row = mysqli_fetch_array($id);
+        return $row['id'];
     } else {
         # echo // javascript alert box here
         return false;
@@ -370,25 +372,23 @@ function edit_choice($choice_id, $new_text, $is_correct, $conn) {
 
 
 // Create Badge Function (gpt, not sure correct anot)
-function create_badge($creator_id, $achievement_name, $category, $badge_file, $conn) {
+function create_badge($creator_id, $achievement_name, $category, $criteria, $badge_file, $conn) {
     $creator_id = $_SESSION['user_id'];
     $achievement_name = htmlspecialchars($achievement_name);
     $category = htmlspecialchars($category);
+    $criteria = htmlspecialchars($criteria);
     $badge_image = file_get_contents($badge_file['tmp_name']);
     $image_type = htmlspecialchars($badge_file['type']);
-
-    $sql = "INSERT INTO Badges (creator_id, achievement_name, category, badge_image, image_type) VALUES (?, ?, ?, ?, ?)";
+ 
+    $sql = "INSERT INTO Badges (creator_id, achievement_name, category, criteria, badge_image, image_type) VALUES (?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("issss", $creator_id, $achievement_name, $category, $badge_image, $image_type);
+    $stmt->bind_param("isssss", $creator_id, $achievement_name, $category, $criteria, $badge_image, $image_type);
     if ($stmt->execute()) {
-        #echo // javascript alert box here
         return true;
     } else {
-        #echo // javascript alert box here
         return false;
     }
 }
-
 
 // Delete Badge Function
 function delete_badge($badge_id, $conn) {
@@ -431,25 +431,25 @@ function award_badge($badge_id, $student_id, $conn) {
 
 
 // Display all badge created by admin (gpt)
-function creator_display_badges($creator_id, $conn) {
-    $creator_id = $_SESSION['user_id'];
-    $sql = "SELECT * FROM Badges WHERE creator_id = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $creator_id);
-    $stmt->execute();
-    $result = $stmt->get_result();
+// function creator_display_badges($creator_id, $conn) {
+//     $creator_id = $_SESSION['user_id'];
+//     $sql = "SELECT * FROM Badges WHERE creator_id = ?";
+//     $stmt = $conn->prepare($sql);
+//     $stmt->bind_param("i", $creator_id);
+//     $stmt->execute();
+//     $result = $stmt->get_result();
 
-    if ($result->num_rows > 0) {
-        while ($row = $result->fetch_assoc()) {
-            echo "<div class='badge'>";
-            echo "<img src='data:" . htmlspecialchars($row['image_type']) . ";base64," . base64_encode($row['badge_image']) . "' alt='Badge Image' />";
-            # html can write achievement name and category
-            echo "</div>";
-        }
-    } else {
-        echo "<p>No badges found for this creator.</p>";
-    }
-}
+//     if ($result->num_rows > 0) {
+//         while ($row = $result->fetch_assoc()) {
+//             echo "<div class='badge'>";
+//             echo "<img src='data:" . htmlspecialchars($row['image_type']) . ";base64," . base64_encode($row['badge_image']) . "' alt='Badge Image' />";
+//             # html can write achievement name and category
+//             echo "</div>";
+//         }
+//     } else {
+//         echo "<p>No badges found for this creator.</p>";
+//     }
+// }
 
 
 // Display student obtain badges
@@ -530,7 +530,7 @@ function view_available_quiz($conn) { //copied code to quiz.php, no need appear 
     } else {
         echo "No quiz available at the moment.";
     }
-}
+} //done copied
 
 
 // User Profile Function
@@ -901,7 +901,7 @@ function display_attempt($conn){
 
 
 // display all student info
-function admin_students_info($conn) {
+function admin_students_info($conn) { //used in user management
     $sql = "SELECT user_id, name FROM Users WHERE role_id = 3";
     $result = $conn->query($sql);
 
@@ -921,7 +921,7 @@ function admin_students_info($conn) {
 }
 
 
-function admin_instructors_info($conn) {
+function admin_instructors_info($conn) { //used in user management
     $sql = "SELECT user_id, name FROM Users WHERE role_id = 2";
     $result = $conn->query($sql);
 
@@ -944,6 +944,26 @@ function admin_instructors_info($conn) {
     } else {
         echo "No instructors found.";
     }
+}
+
+function calculate_total_badges_created($conn) {
+    $creator_id = $_SESSION['user_id'];
+    $sql = "SELECT COUNT(*) AS total FROM badges WHERE creator_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $creator_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        return $row['total'];
+    } else {
+        return 0;
+    }
+}
+
+function getTodayDate($format = "M j, Y") {
+    return date($format);
 }
 
 //Timer function made with javascript

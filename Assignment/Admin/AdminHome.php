@@ -1,3 +1,12 @@
+<?php
+include("../../main.php");
+include('../session.php');
+$id = user_profile($conn, "user_id");
+$name = user_profile($conn, "name");
+$email = user_profile($conn, "email");
+echo "<script>console.log('$name');</script>";
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,45 +35,43 @@
     <div class="container">
         <div class="left-container">
             <div class="box">
-                <p class="update">Last updated: Oct 22, 2024</p>
-                <p class="number">103</p>
+                <p class="update">Last updated: <?php echo getTodayDate();?></p>
+                <p class="number"><?php echo calculate_total_quiz_created($conn);?></p>
                 <p class="Total">Total Quizzes Created</p>
-                <a class="link">VIEW</a>
+                <a class="link" href="UserManagement.php">VIEW</a>
             </div>
             <div class="box">
-                <p class="update">Last updated: Oct 22, 2024</p>
-                <p class="number">1120</p>
+                <p class="update">Last updated: <?php echo getTodayDate();?></p>
+                <p class="number"><?php echo total_student($conn);?></p>
                 <p class="Total">Total Students</p>
-                <a class="link">VIEW</a>
+                <a class="link" href="UserManagement.php#tab3">VIEW</a>
             </div>
             <div class="box">
-                <p class="update">Last updated: Oct 22, 2024</p>
-                <p class="number">2846</p>
+                <p class="update">Last updated: <?php echo getTodayDate();?></p>
+                <p class="number"><?php echo total_instructor($conn);?></p>
                 <p class="Total">Total Instructors</p>
-                <a class="link">VIEW</a>
+                <a class="link" href="UserManagement.php#tab2">VIEW</a>
             </div>
             <div class="box">
-                <p class="update">Last updated: Oct 22, 2024</p>
-                <p class="number">20</p>
+                <p class="update">Last updated: <?php echo getTodayDate();?></p>
+                <p class="number"><?php echo calculate_total_badges_created($conn);?></p>
                 <p class="Total">Total Badges Created</p>
-                <a class="link">VIEW</a>
+                <a class="link" href="Badges.php">VIEW</a>
             </div>
         </div>
         <div class="right-container">
             <div class="profile-box">
             <div class="profilepic">
-              <img class="profilepic__image" src="https://images.unsplash.com/photo-1510227272981-87123e259b17?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=3759e09a5b9fbe53088b23c615b6312e" width="150" height="150" alt="Profibild" />
-              <div class="profilepic__content">
-                  <span class="profilepic__icon"><i class="fas fa-camera"></i></span>
-                  <span class="profilepic__text">Edit Profile</span>
-              </div>
+            <img class="profilepic__image" src="https://images.unsplash.com/photo-1510227272981-87123e259b17?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=3759e09a5b9fbe53088b23c615b6312e" width="150" height="150" alt="Profibild" />
+            <div class="profilepic__content">
+                <span class="profilepic__icon"><i class="fas fa-camera"></i></span>
+                <span class="profilepic__text">Edit Profile</span>
+            </div>
             </div>
                 <div id="down">
-                    Admin ID: <span id="info1">123456</span> 
-                    <br> Name : <span id="info2">Yong Wai</span> 
-                    <br> Email : <span id="info3">yongwai@gmail.com</span>
-                    <br> Password : <span id="info4">********</span><br>
-                    <button class="del-button" onclick="window.location.href='../User/Login.php'">Delete Account</button>
+                    Admin ID: <span id="info1"><?php echo $id; ?></span> 
+                    <br> Name : <span id="info2"><?php echo $name; ?></span> 
+                    <br> Email : <span id="info3"><?php echo $email; ?></span>
                 </div>
                 </div>
             </div>
@@ -78,31 +85,28 @@
           <hr>
         
           <div class="input-info">
-            <label for="basic-name">Name</label>
-            <input type="text" id="basic-name" placeholder="Name" name="name" required />
+            <label for="basic-name">Title</label>
+            <input type="text" id="basic-name" placeholder="Song Title" name="Title-Name" required />
           </div>
         
           <div class="input-info">
-            <label for="additional-info">Email</label>
-            <input type="text" id="additional-info" placeholder="Email" name="Email" required/>
+            <label for="additional-info">Artist</label>
+            <input type="text" id="additional-info" placeholder="Artist Name" name="Artist-Name" required/>
           </div>
         
           <div class="input-info">
-            <label for="custom-label">Password</label>
-            <input type="text" id="custom-label" placeholder="Password" name="Password" required />
+            <label for="custom-label">URL (YouTube & MP3)</label>
+            <input type="text" id="custom-label" placeholder="Song URL" name="URL" />
           </div>
 
-          <div class="images-container">
-            <label for="images" class="drop-container" id="dropcontainer">
-              <p class="drop-title">Drop files here</p>
-              or
-              <br>
-              <input type="file" id="images" accept="image/*">
-            </label>
-          </div>
+          <label for="images" class="drop-container" id="dropcontainer">
+            <span class="drop-title">Drop files here</span>
+            or
+            <input type="file" id="images" accept="image/*">
+          </label>
         
           <div class="button-container">
-            <button type="submit" class="update-button">Update</button>
+            <button type="submit" class="upload-button">Upload</button>
           </div>
         </form>
       </div>
@@ -121,6 +125,6 @@
       <li></li>
       <li></li>
     </ul>
-    <script src="AdminHome.js"></script>
+    <script src="AdminHome.js"><script>
 </body>
 </html>
